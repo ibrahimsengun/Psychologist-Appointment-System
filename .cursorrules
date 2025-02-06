@@ -1,0 +1,75 @@
+# Project Overview
+
+This project is a website for a psychologist to introduce himself, manage appointments, and share blog posts. The website consists of the following pages:
+
+- **About**: Introduces the psychologist, describes his services, and shares past experiences.
+- **Contact Form**: A simple form where visitors can ask questions.
+- **Appointment**: Displays available dates and times for scheduling an appointment. Users can select a suitable time slot.
+- **Blog**: A section where the psychologist shares articles related to psychology.
+- **Admin Panel**: A private area for managing blog posts, appointment availability, received appointments, and contact form submissions. Authentication and security measures are required to restrict access.
+
+The project is built with **React, Next.js (App Router), TypeScript, Shadcn UI, Radix UI, Tailwind CSS, and Supabase**.
+
+---
+
+## Development Principles
+
+- Follow best practices for **Next.js App Router**.
+- Use **TypeScript** for type safety and maintainability.
+- Prefer **React Server Components (RSC)** where possible; minimize client-side rendering.
+- Use **functional programming** patterns, avoiding class-based components.
+- Structure the code for reusability and modularization.
+- Implement **Shadcn UI** and **Radix UI** for accessible UI components.
+- Optimize performance using **lazy loading, Suspense, and Next.js caching strategies**.
+- Use **Supabase** for authentication, database management, and backend operations.
+- Maintain a **responsive design** with Tailwind CSS, following a mobile-first approach.
+
+---
+
+## Authentication & Security
+
+- The **Admin Panel** should be protected with Supabase authentication.
+- Access control should be enforced using middleware to ensure only authorized users can access admin functionalities.
+- Secure **Supabase database** by restricting direct public access to sensitive tables.
+
+---
+
+## Routing & Data Fetching
+
+- Use **React Server Components** for fetching static and dynamic data.
+- Leverage **Next.js API routes or Supabase Edge Functions** for complex operations.
+- Avoid excessive client-side state management; prefer **React Context or Zustand** for necessary client state.
+
+---
+
+## Naming Conventions & Code Structure
+
+- Use **lowercase with dashes** for directories (e.g., `components/appointment-form`).
+- Favor **named exports** for components and utility functions.
+- Follow **TypeScript best practices**:
+  - Use **interfaces** instead of types when defining component props.
+  - Avoid **enums**, prefer **maps or union types**.
+  - Keep **components and hooks modular**.
+
+---
+
+## Performance Optimization
+
+- Optimize images with **WebP format, lazy loading, and aspect ratio preservation**.
+- Use **dynamic imports** for non-critical components.
+- Minimize usage of **`useEffect` and `useState`**, leveraging **Next.js Server Components** where applicable.
+- Ensure **good Core Web Vitals** scores (LCP, CLS, FID).
+
+---
+
+## Best Practices
+
+- Follow **Next.js documentation** for data fetching, rendering, and routing.
+- Structure files logically:
+  - **`components/`** → UI components
+  - **`hooks/`** → Custom hooks
+  - **`utils/`** → Utility functions
+  - **`app/`** → Route handlers
+  - **`actions/`** → Supabase interactions
+
+This ensures maintainability and scalability as the project evolves.
