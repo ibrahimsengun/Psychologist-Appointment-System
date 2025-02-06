@@ -18,47 +18,21 @@ import { AppointmentFormValues, appointmentFormSchema } from '@/types/appointmen
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 import { toast } from 'sonner';
-
-// Takvim için Türkçe metinler
-const calendarLabels = {
-  months: [
-    'Ocak',
-    'Şubat',
-    'Mart',
-    'Nisan',
-    'Mayıs',
-    'Haziran',
-    'Temmuz',
-    'Ağustos',
-    'Eylül',
-    'Ekim',
-    'Kasım',
-    'Aralık'
-  ],
-  weekDays: [
-    { short: 'Pzt', long: 'Pazartesi' },
-    { short: 'Sal', long: 'Salı' },
-    { short: 'Çar', long: 'Çarşamba' },
-    { short: 'Per', long: 'Perşembe' },
-    { short: 'Cum', long: 'Cuma' },
-    { short: 'Cmt', long: 'Cumartesi' },
-    { short: 'Paz', long: 'Pazar' }
-  ]
-};
 
 interface AppointmentFormProps {
   availableTimeSlots: {
     date: string;
     times: string[];
   }[];
-  onSubmit: (data: AppointmentFormValues) => Promise<void>;
+  action: (data: AppointmentFormValues) => Promise<any>;
 }
 
-export function AppointmentForm({ availableTimeSlots, onSubmit }: AppointmentFormProps) {
+export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormProps) {
   const form = useForm<AppointmentFormValues>({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
@@ -72,17 +46,35 @@ export function AppointmentForm({ availableTimeSlots, onSubmit }: AppointmentFor
     }
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const selectedDate = form.watch('date');
   const availableTimes = availableTimeSlots.find((slot) => slot.date === selectedDate)?.times || [];
 
   const handleSubmit = async (data: AppointmentFormValues) => {
-    data.birthDate = format(new Date(data.birthDate), 'yyyy-MM-dd');
     try {
-      await onSubmit(data);
-      toast.success('Randevunuz başarıyla oluşturuldu!');
-      form.reset();
+      setIsSubmitting(true);
+      // Doğum tarihini parse et (GG.AA.YYYY -> YYYY-MM-DD)
+      const [day, month, year] = data.birthDate.split('.');
+      if (!day || !month || !year) {
+        throw new Error('Geçersiz doğum tarihi formatı');
+      }
+
+      data.birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+      console.log('Form verileri:', data); // Debug için
+
+      await action(data);
+      const formattedDate = format(new Date(data.date), 'EEEE, d MMMM yyyy', { locale: tr });
+      window.location.href = `/appointment/success?date=${formattedDate}&time=${data.time}`;
     } catch (error) {
-      toast.error('Randevu oluşturulurken bir hata oluştu.');
+      console.error('Randevu oluşturma hatası:', error);
+      setIsSubmitting(false);
+
+      if (error instanceof Error) {
+        toast.error(`Randevu oluşturulamadı: ${error.message}`);
+      } else {
+        toast.error('Randevu oluşturulurken beklenmeyen bir hata oluştu.');
+      }
     }
   };
 
@@ -236,16 +228,18 @@ export function AppointmentForm({ availableTimeSlots, onSubmit }: AppointmentFor
               <FormItem>
                 <FormLabel>Telefon</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <IMaskInput
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      mask="+{9\0} 500 000 00 00"
-                      unmask={false}
-                      value={field.value}
-                      onAccept={(value) => field.onChange(value)}
-                      placeholder="+90 5XX XXX XX XX"
-                    />
-                  </div>
+                  <IMaskInput
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    mask="\0\500 000 00 00"
+                    definitions={{
+                      '0': /[0-9]/,
+                      '5': /[5]/
+                    }}
+                    unmask={false}
+                    value={field.value}
+                    onAccept={(value) => field.onChange(value)}
+                    placeholder="05XX XXX XX XX"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -262,7 +256,10 @@ export function AppointmentForm({ availableTimeSlots, onSubmit }: AppointmentFor
                   <div className="relative">
                     <IMaskInput
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      mask={Date}
+                      mask="00.00.0000"
+                      definitions={{
+                        '0': /[0-9]/
+                      }}
                       value={field.value}
                       onAccept={(value) => field.onChange(value)}
                       placeholder="GG.AA.YYYY"
@@ -292,8 +289,15 @@ export function AppointmentForm({ availableTimeSlots, onSubmit }: AppointmentFor
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Randevu Oluştur
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <span className="mr-2">Randevu Oluşturuluyor</span>
+              <Loader2 className="h-4 w-4 animate-spin" />
+            </>
+          ) : (
+            'Randevu Oluştur'
+          )}
         </Button>
       </form>
     </Form>

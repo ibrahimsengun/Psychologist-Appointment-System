@@ -1,6 +1,9 @@
 import { createAppointment, getAvailableTimeSlots } from '@/actions/appointment-actions';
 import { AppointmentForm } from '@/components/forms/appointment-form';
-import { AppointmentFormValues } from '@/types/appointments';
+
+// Sayfayı dinamik olarak işaretle
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AppointmentPage() {
   const availableTimeSlots = await getAvailableTimeSlots();
@@ -19,17 +22,12 @@ export default async function AppointmentPage() {
     []
   );
 
-  async function handleSubmit(data: AppointmentFormValues) {
-    'use server';
-    await createAppointment(data);
-  }
-
   return (
     <div className="container mx-auto py-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Randevu Al</h1>
         <div className="bg-white shadow-md rounded-lg p-6">
-          <AppointmentForm availableTimeSlots={formattedTimeSlots} onSubmit={handleSubmit} />
+          <AppointmentForm availableTimeSlots={formattedTimeSlots} action={createAppointment} />
         </div>
       </div>
     </div>

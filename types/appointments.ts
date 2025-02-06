@@ -33,7 +33,11 @@ export const appointmentFormSchema = z.object({
   email: z.string().email('Geçerli bir e-posta adresi girin'),
   phone: z
     .string()
-    .regex(/^\+90[0-9]{10}$/, 'Telefon numarası +90 ile başlamalı ve 10 haneli olmalıdır'),
+    .regex(
+      /^0[5][0-9]{2}\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2}$/,
+      'Telefon numarası 05XX XXX XX XX formatında olmalıdır'
+    )
+    .transform((val) => val.replace(/\s/g, '')),
   birthDate: z.string().min(1, 'Lütfen doğum tarihinizi seçin'),
   note: z.string().optional()
 });
@@ -48,3 +52,20 @@ export const availableTimeSlotFormSchema = z.object({
 });
 
 export type AvailableTimeSlotFormValues = z.infer<typeof availableTimeSlotFormSchema>;
+
+// Randevu iptal formu şeması
+export const appointmentCancelFormSchema = z.object({
+  phone: z
+    .string()
+    .regex(
+      /^0[5][0-9]{2}\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2}$/,
+      'Telefon numarası 05XX XXX XX XX formatında olmalıdır'
+    )
+    .transform((val) => val.replace(/\s/g, '')),
+  cancelCode: z
+    .string()
+    .length(6, 'İptal kodu 6 haneli olmalıdır')
+    .regex(/^[0-9]+$/, 'İptal kodu sadece rakamlardan oluşmalıdır')
+});
+
+export type AppointmentCancelFormValues = z.infer<typeof appointmentCancelFormSchema>;

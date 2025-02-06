@@ -7,56 +7,118 @@ import {
   AvailableTimeSlot,
   AvailableTimeSlotFormValues
 } from '@/types/appointments';
+import { sendAppointmentConfirmationEmail } from '@/utils/email';
 import { createClient } from '@/utils/supabase/server';
+import { generateToken } from '@/utils/token';
 
 // Randevu oluşturma
 export async function createAppointment(formData: AppointmentFormValues): Promise<Appointment> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from('appointments')
-    .insert({
-      date: formData.date,
-      time: formData.time,
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      birth_date: formData.birthDate,
-      note: formData.note,
-      status: 'pending' as AppointmentStatus,
-      created_at: new Date().toISOString()
-    })
-    .select()
-    .single();
+  try {
+    // İptal token ve kodu oluştur
+    const cancelToken = generateToken();
+    const cancelCode = Math.random().toString().slice(2, 8); // 6 haneli kod
 
-  if (error) {
-    throw new Error(error.message);
+    // Önce zaman aralığının müsait olup olmadığını kontrol et
+    const { data: timeSlot, error: timeSlotError } = await supabase
+      .from('available_time_slots')
+      .select('*')
+      .eq('date', formData.date)
+      .eq('start_time', formData.time)
+      .eq('is_booked', false)
+      .single();
+
+    if (timeSlotError || !timeSlot) {
+      throw new Error('Seçilen randevu saati artık müsait değil');
+    }
+
+    // Aynı tarih ve saatte aktif (iptal edilmemiş) randevu var mı kontrol et
+    const { data: existingAppointment, error: existingError } = await supabase
+      .from('appointments')
+      .select('*')
+      .eq('date', formData.date)
+      .eq('time', formData.time)
+      .neq('status', 'canceled')
+      .single();
+
+    if (existingAppointment) {
+      throw new Error('Seçilen randevu saati dolu');
+    }
+
+    // Randevuyu oluştur
+    const { data, error } = await supabase
+      .from('appointments')
+      .insert({
+        date: formData.date,
+        time: formData.time,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone.replace(/\s/g, ''), // Boşlukları kaldır
+        birth_date: formData.birthDate,
+        note: formData.note,
+        status: 'pending' as AppointmentStatus,
+        cancel_token: cancelToken,
+        cancel_code: cancelCode,
+        created_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Randevu oluşturma hatası:', error);
+      throw new Error('Randevu kaydı oluşturulamadı');
+    }
+
+    // Zaman aralığını dolu olarak işaretle
+    const { error: updateError } = await supabase
+      .from('available_time_slots')
+      .update({ is_booked: true })
+      .eq('id', timeSlot.id);
+
+    if (updateError) {
+      console.error('Zaman aralığı güncelleme hatası:', updateError);
+      // Randevuyu geri al
+      await supabase.from('appointments').delete().eq('id', data.id);
+      throw new Error('Randevu kaydedildi ancak zaman aralığı güncellenemedi');
+    }
+
+    // Onay e-postası gönder
+    try {
+      const emailResult = await sendAppointmentConfirmationEmail({
+        to: formData.email,
+        name: formData.name,
+        date: formData.date,
+        time: formData.time,
+        cancelToken,
+        cancelCode
+      });
+
+      if (!emailResult.success) {
+        console.error('E-posta gönderimi başarısız:', emailResult.error);
+      } else {
+        console.log('E-posta başarıyla gönderildi:', emailResult.data);
+      }
+    } catch (emailError) {
+      console.error('E-posta gönderme hatası:', emailError);
+    }
+
+    return {
+      id: data.id,
+      date: data.date,
+      time: data.time,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      birthDate: data.birth_date,
+      note: data.note,
+      status: data.status,
+      createdAt: data.created_at
+    };
+  } catch (error) {
+    console.error('Genel hata:', error);
+    throw error instanceof Error ? error : new Error('Beklenmeyen bir hata oluştu');
   }
-
-  // İlgili zaman aralığını dolu olarak işaretle
-  const { error: updateError } = await supabase
-    .from('available_time_slots')
-    .update({ is_booked: true })
-    .eq('date', formData.date)
-    .eq('start_time', formData.time);
-
-  if (updateError) {
-    throw new Error(updateError.message);
-  }
-
-  // Veritabanından gelen snake_case formatındaki verileri camelCase'e çeviriyoruz
-  return {
-    id: data.id,
-    date: data.date,
-    time: data.time,
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    birthDate: data.birth_date,
-    note: data.note,
-    status: data.status,
-    createdAt: data.created_at
-  };
 }
 
 // Randevu durumunu güncelleme
@@ -206,4 +268,87 @@ export async function getAvailableTimesForDate(date: string): Promise<string[]> 
   }
 
   return data?.map((slot) => slot.start_time) || [];
+}
+
+// Token ile randevu iptal etme
+export async function cancelAppointmentByToken(token: string): Promise<void> {
+  const supabase = await createClient();
+
+  // Önce randevuyu bul
+  const { data: appointment, error: findError } = await supabase
+    .from('appointments')
+    .select('*')
+    .eq('cancel_token', token)
+    .single();
+
+  if (findError || !appointment) {
+    throw new Error("Geçersiz iptal token'ı veya randevu bulunamadı");
+  }
+
+  if (appointment.status === 'canceled') {
+    throw new Error('Bu randevu zaten iptal edilmiş');
+  }
+
+  // Randevuyu iptal et
+  const { error: updateError } = await supabase
+    .from('appointments')
+    .update({ status: 'canceled' })
+    .eq('id', appointment.id);
+
+  if (updateError) {
+    throw new Error('Randevu iptal edilirken bir hata oluştu');
+  }
+
+  // Zaman aralığını tekrar müsait yap
+  const { error: timeSlotError } = await supabase
+    .from('available_time_slots')
+    .update({ is_booked: false })
+    .eq('date', appointment.date)
+    .eq('start_time', appointment.time);
+
+  if (timeSlotError) {
+    console.error('Zaman aralığı güncellenirken hata:', timeSlotError);
+  }
+}
+
+// Kod ve telefon numarası ile randevu iptal etme
+export async function cancelAppointmentByCode(phone: string, cancelCode: string): Promise<void> {
+  const supabase = await createClient();
+
+  // Randevuyu bul
+  const { data: appointment, error: findError } = await supabase
+    .from('appointments')
+    .select('*')
+    .eq('phone', phone)
+    .eq('cancel_code', cancelCode)
+    .single();
+
+  if (findError || !appointment) {
+    throw new Error('Geçersiz telefon numarası veya iptal kodu');
+  }
+
+  if (appointment.status === 'canceled') {
+    throw new Error('Bu randevu zaten iptal edilmiş');
+  }
+
+  // Randevuyu iptal et
+  const { error: updateError } = await supabase
+    .from('appointments')
+    .update({ status: 'canceled' })
+    .eq('id', appointment.id);
+
+  if (updateError) {
+    throw new Error('Randevu iptal edilirken bir hata oluştu');
+  }
+
+  // Zaman aralığını tekrar müsait yap
+  const { error: timeSlotError } = await supabase
+    .from('available_time_slots')
+    .update({ is_booked: false })
+    .eq('date', appointment.date)
+    .eq('start_time', appointment.time);
+
+  if (timeSlotError) {
+    console.error('Zaman aralığı güncellenirken hata:', timeSlotError);
+  }
 }
