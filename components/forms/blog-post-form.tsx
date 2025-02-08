@@ -18,19 +18,21 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { BlogPostFormValues, blogPostFormSchema } from '@/types/blog';
+import { BlogPost, BlogPostFormValues, blogPostFormSchema } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { TipTapEditor } from '../editor/tiptap-editor';
 import { ImageUpload } from '../image-upload';
 import { MinimalTiptapEditor } from '../minimal-tiptap';
+import { cn } from '@/lib/utils';
 
 interface BlogPostFormProps {
-  initialData?: BlogPostFormValues;
-  onSubmit: (data: BlogPostFormValues) => Promise<any>;
+  initialData?: BlogPost;
+  onSubmit:
+    | ((data: BlogPostFormValues) => Promise<any>)
+    | ((id: string, data: BlogPostFormValues) => Promise<any>);
 }
 
 export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
@@ -42,7 +44,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
       title: '',
       content: '',
       excerpt: '',
-      coverImage: '',
+      cover_image: '',
       status: 'draft'
     }
   });
@@ -50,7 +52,14 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
   const handleSubmit = async (data: BlogPostFormValues) => {
     try {
       setIsSubmitting(true);
-      await onSubmit(data);
+      if (initialData) {
+        await (onSubmit as (id: string, data: BlogPostFormValues) => Promise<any>)(
+          initialData.id,
+          data
+        );
+      } else {
+        await (onSubmit as (data: BlogPostFormValues) => Promise<any>)(data);
+      }
       toast.success(initialData ? 'Blog yazısı güncellendi' : 'Blog yazısı oluşturuldu');
       if (!initialData) {
         form.reset();
@@ -89,7 +98,20 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
             <FormItem>
               <FormLabel>İçerik</FormLabel>
               <FormControl>
-                <MinimalTiptapEditor value={field.value} onChange={field.onChange} />
+                <MinimalTiptapEditor
+                  {...field}
+                  className={cn('w-full', {
+                    'border-destructive focus-within:border-destructive':
+                      form.formState.errors.content
+                  })}
+                  output="html"
+                  autofocus={true}
+                  immediatelyRender={true}
+                  editable={true}
+                  injectCSS={true}
+                  editorClassName="focus:outline-none p-5 h-full"
+                  editorContentClassName="h-full"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -112,7 +134,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
 
         <FormField
           control={form.control}
-          name="coverImage"
+          name="cover_image"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Kapak Görseli</FormLabel>

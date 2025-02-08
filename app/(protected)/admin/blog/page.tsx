@@ -67,7 +67,7 @@ export default async function BlogPostsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Button asChild variant="ghost" size="sm">
-                      <Link href={`/admin/blog/${post.id}/edit`}>Düzenle</Link>
+                      <Link href={`/admin/blog/${post.id}`}>Düzenle</Link>
                     </Button>
                   </td>
                 </tr>

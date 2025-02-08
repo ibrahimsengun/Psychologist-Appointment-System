@@ -83,7 +83,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
       slug,
       content: formData.content,
       excerpt: formData.excerpt,
-      cover_image: formData.coverImage,
+      cover_image: formData.cover_image,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
       author_id: user.id,
@@ -132,7 +132,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
       title: formData.title,
       content: formData.content,
       excerpt: formData.excerpt,
-      cover_image: formData.coverImage,
+      cover_image: formData.cover_image,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
       updated_at: now
