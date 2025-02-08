@@ -25,15 +25,15 @@ export const updateSession = async (request: NextRequest) => {
         }
       }
     });
-    const user = await supabase.auth.getUser();
+    const {data: {user}} = await supabase.auth.getUser();
     const {
       data: { session }
     } = await supabase.auth.getSession();
-    if (!session && request.nextUrl.pathname.startsWith('/admin')) {
+    if (!session && !user && request.nextUrl.pathname.startsWith('/admin')) {
       return NextResponse.redirect(new URL('/sign-in', request.url));
     }
 
-    if (session && request.nextUrl.pathname === '/sign-in') {
+    if (session && user && request.nextUrl.pathname === '/sign-in') {
       return NextResponse.redirect(new URL('/admin', request.url));
     }
 

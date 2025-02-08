@@ -1,6 +1,7 @@
 import { getAppointments, updateAppointmentStatus } from '@/actions/appointment-actions';
 import { AppointmentsTable } from '@/components/appointments-table';
 import { AppointmentStatus } from '@/types/appointments';
+import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
 export default async function AdminPage() {

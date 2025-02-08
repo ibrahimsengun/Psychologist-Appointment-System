@@ -2,13 +2,9 @@
 
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export default function Footer() {
-  const pathname = usePathname();
-  return pathname.includes('/admin') ? (
-    <></>
-  ) : (
+  return (
     <footer className="bg-gray-800 text-white py-9">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">

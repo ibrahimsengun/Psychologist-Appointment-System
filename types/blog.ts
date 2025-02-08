@@ -8,12 +8,10 @@ export interface BlogPost {
   slug: string;
   content: string;
   excerpt: string;
-  coverImage?: string;
-  status: BlogStatus;
-  publishedAt?: string;
-  createdAt: string;
-  updatedAt: string;
-  authorId: string;
+  cover_image: string;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export const blogPostFormSchema = z.object({

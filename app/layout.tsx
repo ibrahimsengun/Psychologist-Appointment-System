@@ -1,8 +1,7 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -29,11 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
-        <Header />
-        {children}
-        <Footer />
-        <Toaster />
+      <body className="bg-background text-foreground" suppressHydrationWarning>
+        <TooltipProvider>
+          {children}
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   );

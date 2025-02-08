@@ -26,6 +26,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { TipTapEditor } from '../editor/tiptap-editor';
 import { ImageUpload } from '../image-upload';
+import { MinimalTiptapEditor } from '../minimal-tiptap';
 
 interface BlogPostFormProps {
   initialData?: BlogPostFormValues;
@@ -88,7 +89,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
             <FormItem>
               <FormLabel>İçerik</FormLabel>
               <FormControl>
-                <TipTapEditor content={field.value} onChange={field.onChange} />
+                <MinimalTiptapEditor value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
