@@ -9,7 +9,9 @@ export interface BlogPost {
   content: string;
   excerpt: string;
   cover_image: string;
-  published: boolean;
+  status: BlogStatus;
+  published_at: string | null;
+  author_id: string;
   created_at: string;
   updated_at: string;
 }

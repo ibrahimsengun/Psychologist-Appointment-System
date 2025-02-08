@@ -4,18 +4,68 @@ import { BlogPost, BlogPostFormValues } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import slugify from 'slugify';
 
+export async function getPublishedPosts() {
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data as BlogPost[];
+}
+
+export async function getPostBySlug(slug: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'published')
+    .single();
+
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+
+  return data as BlogPost;
+}
+
+
+export async function getBlogPostById(id: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    return null;
+  }
+
+  return data;
+} 
+
 // Blog yazısı oluşturma
 export async function createBlogPost(formData: BlogPostFormValues): Promise<BlogPost> {
   const supabase = await createClient();
 
-  // Slug oluştur
   const slug = slugify(formData.title, {
     lower: true,
     strict: true,
     locale: 'tr'
   });
 
-  // Kullanıcı bilgilerini al
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -54,20 +104,18 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     slug: data.slug,
     content: data.content,
     excerpt: data.excerpt,
-    coverImage: data.cover_image,
+    cover_image: data.cover_image,
     status: data.status,
-    publishedAt: data.published_at,
-    createdAt: data.created_at,
-    updatedAt: data.updated_at,
-    authorId: data.author_id
+    published_at: data.published_at,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    author_id: data.author_id
   };
 }
 
-// Blog yazısını güncelleme
 export async function updateBlogPost(id: string, formData: BlogPostFormValues): Promise<BlogPost> {
   const supabase = await createClient();
 
-  // Kullanıcı bilgilerini al
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -105,12 +153,12 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     slug: data.slug,
     content: data.content,
     excerpt: data.excerpt,
-    coverImage: data.cover_image,
+    cover_image: data.cover_image,
     status: data.status,
-    publishedAt: data.published_at,
-    createdAt: data.created_at,
-    updatedAt: data.updated_at,
-    authorId: data.author_id
+    published_at: data.published_at,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    author_id: data.author_id
   };
 }
 
@@ -159,14 +207,16 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     slug: post.slug,
     content: post.content,
     excerpt: post.excerpt,
-    coverImage: post.cover_image,
+    cover_image: post.cover_image,
     status: post.status,
-    publishedAt: post.published_at,
-    createdAt: post.created_at,
-    updatedAt: post.updated_at,
-    authorId: post.author_id
+    published_at: post.published_at,
+    created_at: post.created_at,
+    updated_at: post.updated_at,
+    author_id: post.author_id,
+
   }));
 }
+
 
 // Blog yazısı detayını getirme
 export async function getBlogPost(slug: string): Promise<BlogPost> {
@@ -185,11 +235,11 @@ export async function getBlogPost(slug: string): Promise<BlogPost> {
     slug: data.slug,
     content: data.content,
     excerpt: data.excerpt,
-    coverImage: data.cover_image,
+    cover_image: data.cover_image,
     status: data.status,
-    publishedAt: data.published_at,
-    createdAt: data.created_at,
-    updatedAt: data.updated_at,
-    authorId: data.author_id
+    published_at: data.published_at,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    author_id: data.author_id
   };
 }

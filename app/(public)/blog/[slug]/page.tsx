@@ -1,4 +1,4 @@
-import { getPostBySlug } from '@/actions/blog';
+import { getPostBySlug } from '@/actions/blog-actions';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 

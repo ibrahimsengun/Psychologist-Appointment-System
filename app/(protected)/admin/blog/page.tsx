@@ -60,10 +60,10 @@ export default async function BlogPostsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {format(new Date(post.createdAt), 'PPP', { locale: tr })}
+                    {format(new Date(post.created_at), 'PPP', { locale: tr })}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {format(new Date(post.updatedAt), 'PPP', { locale: tr })}
+                    {format(new Date(post.created_at), 'PPP', { locale: tr })}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Button asChild variant="ghost" size="sm">
