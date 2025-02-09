@@ -1,27 +1,61 @@
-import { getAppointments, updateAppointmentStatus } from '@/actions/appointment-actions';
+'use client';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppointmentsTable } from '@/components/appointments-table';
-import { AppointmentStatus } from '@/types/appointments';
-import { createClient } from '@/utils/supabase/server';
-import { revalidatePath } from 'next/cache';
+import { useAppointments } from '@/hooks/use-appointments';
+import { isAfter, startOfDay } from 'date-fns';
 
-export default async function AdminPage() {
-  const appointments = await getAppointments();
+export default function AdminPage() {
+  const { appointments, updateAppointmentStatus } = useAppointments();
+  const today = new Date();
 
-  async function handleStatusChange(id: string, status: AppointmentStatus) {
-    'use server';
-    await updateAppointmentStatus(id, status);
-    revalidatePath('/admin');
-  }
+  const activeAppointments = appointments.filter((appointment) =>
+    isAfter(new Date(`${appointment.date} ${appointment.time}`), today)
+  );
+
+  const pastAppointments = appointments.filter(
+    (appointment) => !isAfter(new Date(appointment.date), today)
+  );
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Randevular</h1>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            Toplam aktif randevu: {activeAppointments.length}
+          </span>
+        </div>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg">
-        <AppointmentsTable appointments={appointments} onStatusChange={handleStatusChange} />
-      </div>
+      <Tabs defaultValue="active" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="active" className="relative">
+            Aktif Randevular
+            {activeAppointments.length > 0 && (
+              <span className="ml-2 bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">
+                {activeAppointments.length}
+              </span>
+            )}
+          </TabsTrigger>
+          <TabsTrigger value="past">Geçmiş Randevular</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="active" className="space-y-4">
+          <AppointmentsTable
+            appointments={activeAppointments}
+            onStatusChange={updateAppointmentStatus}
+          />
+        </TabsContent>
+
+        <TabsContent value="past" className="space-y-4">
+          <AppointmentsTable
+            appointments={pastAppointments}
+            onStatusChange={updateAppointmentStatus}
+            isPastView
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
