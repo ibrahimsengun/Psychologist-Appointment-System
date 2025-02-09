@@ -13,7 +13,7 @@ export default function Hero() {
         </p>
         <div className="flex justify-center space-x-4">
           <Link
-            href="#randevu"
+            href="/appointment"
             className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-150 ease-in-out"
           >
             Randevu Al
@@ -25,13 +25,6 @@ export default function Hero() {
             Daha Fazla Bilgi
           </Link>
         </div>
-      </div>
-      <div className="absolute inset-0 -z-[1px] opacity-20">
-        <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          <circle cx="75" cy="75" r="20" fill="none" stroke="currentColor" strokeWidth="0.5" />
-        </svg>
       </div>
     </section>
   );

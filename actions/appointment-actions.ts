@@ -7,7 +7,7 @@ import {
   AvailableTimeSlot,
   AvailableTimeSlotFormValues
 } from '@/types/appointments';
-import { sendAppointmentConfirmationEmail } from '@/utils/email';
+import { sendAppointmentConfirmedEmail, sendAppointmentRejectedEmail, sendAppointmentRequestEmail } from '@/utils/email';
 import { createClient } from '@/utils/supabase/server';
 import { generateToken } from '@/utils/token';
 
@@ -85,13 +85,12 @@ export async function createAppointment(formData: AppointmentFormValues): Promis
 
     // Onay e-postası gönder
     try {
-      const emailResult = await sendAppointmentConfirmationEmail({
+      const emailResult = await sendAppointmentRequestEmail({
         to: formData.email,
         name: formData.name,
         date: formData.date,
         time: formData.time,
-        cancelToken,
-        cancelCode
+        cancelToken
       });
 
       if (!emailResult.success) {
@@ -153,8 +152,23 @@ export async function updateAppointmentStatus(
     if (updateError) {
       throw new Error(updateError.message);
     }
+    await sendAppointmentRejectedEmail({
+      to: appointment.email,
+      name: appointment.name,
+      date: appointment.date,
+      time: appointment.time
+    });
+  }
+  if (status === 'confirmed' && appointment) {
+    await sendAppointmentConfirmedEmail({
+      to: appointment.email,
+      name: appointment.name,
+      date: appointment.date,
+      time: appointment.time
+    });
   }
 }
+
 
 // Randevuları listeleme
 export async function getAppointments(): Promise<Appointment[]> {

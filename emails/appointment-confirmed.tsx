@@ -5,7 +5,6 @@ import {
   Heading,
   Hr,
   Html,
-  Link,
   Preview,
   Section,
   Text
@@ -13,35 +12,29 @@ import {
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
-interface AppointmentConfirmationEmailProps {
+interface AppointmentConfirmedEmailProps {
   name: string;
   date: string;
   time: string;
-  cancelToken: string;
-  cancelCode: string;
 }
 
-export default function AppointmentConfirmationEmail({
+export default function AppointmentConfirmedEmail({
   name,
   date,
-  time,
-  cancelToken,
-  cancelCode
-}: AppointmentConfirmationEmailProps) {
-  const formattedDate = format(new Date(date), 'EEEE, d MMMM yyyy', {
-    locale: tr
-  });
+  time
+}: AppointmentConfirmedEmailProps) {
+  const formattedDate = format(new Date(date), 'EEEE, d MMMM yyyy', { locale: tr });
 
   return (
     <Html>
       <Head />
-      <Preview>Randevu Onayı - Lokman Yılmaz</Preview>
+      <Preview>Randevunuz Onaylandı - Lokman Yılmaz</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Randevunuz Onaylandı</Heading>
           <Text style={text}>Sayın {name},</Text>
           <Text style={text}>
-            Randevunuz başarıyla oluşturuldu. Randevu detaylarınız aşağıdadır:
+            Randevu talebiniz onaylanmıştır. Randevu detaylarınız aşağıdadır:
           </Text>
 
           <Section style={section}>
@@ -53,32 +46,9 @@ export default function AppointmentConfirmationEmail({
             </Text>
           </Section>
 
-          <Hr style={hr} />
-
           <Text style={text}>
-            Randevunuzu iptal etmek isterseniz, aşağıdaki linki kullanabilir veya iptal kodunuzu
-            kullanabilirsiniz:
-          </Text>
-
-          <Section style={section}>
-            <Link
-              href={`${process.env.NEXT_PUBLIC_SITE_URL}/appointment/cancel?token=${cancelToken}`}
-              style={button}
-            >
-              Randevuyu İptal Et
-            </Link>
-          </Section>
-
-          <Text style={text}>
-            <strong>İptal Kodunuz:</strong> {cancelCode}
-          </Text>
-
-          <Text style={text}>
-            İptal kodunuzu{' '}
-            <Link href={`${process.env.NEXT_PUBLIC_SITE_URL}/appointment/cancel`} style={link}>
-              iptal sayfasında
-            </Link>{' '}
-            kullanabilirsiniz.
+            Randevunuza zamanında gelmenizi rica ederiz. Herhangi bir değişiklik durumunda size
+            bilgi verilecektir.
           </Text>
 
           <Hr style={hr} />
@@ -92,7 +62,6 @@ export default function AppointmentConfirmationEmail({
     </Html>
   );
 }
-
 const main = {
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif'
@@ -131,25 +100,6 @@ const section = {
   backgroundColor: '#f9fafb',
   borderRadius: '12px',
   marginBottom: '24px'
-};
-
-const button = {
-  backgroundColor: '#2563eb',
-  borderRadius: '6px',
-  color: '#fff',
-  fontSize: '16px',
-  fontWeight: '600',
-  lineHeight: '100%',
-  textDecoration: 'none',
-  textAlign: 'center' as const,
-  display: 'block',
-  padding: '12px',
-  marginBottom: '16px'
-};
-
-const link = {
-  color: '#2563eb',
-  textDecoration: 'underline'
 };
 
 const hr = {
