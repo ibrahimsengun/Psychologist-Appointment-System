@@ -15,7 +15,7 @@ export default async function Home() {
       <Hero />
       <About />
       <Services />
-      <Blog blogPosts={blogPosts.slice(0, 4)} />
+      <Blog blogPosts={blogPosts.slice(0, 3)} />
       <Contact />
       <Footer />
     </main>

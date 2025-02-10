@@ -6,7 +6,14 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function EditBlogPostPage({ params }: { params: { id: string } }) {
+type Props = {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function EditBlogPostPage({ params }: Props) {
   const blogPost = await getBlogPostById(params.id);
 
   if (!blogPost) {

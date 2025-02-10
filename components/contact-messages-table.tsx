@@ -19,6 +19,7 @@ export default function ContactMessagesTable({
         <TableRow>
           <TableHead>İsim</TableHead>
           <TableHead>E-posta</TableHead>
+          <TableHead>Telefon</TableHead>
           <TableHead>Mesaj</TableHead>
           <TableHead>Tarih</TableHead>
         </TableRow>
@@ -28,6 +29,7 @@ export default function ContactMessagesTable({
           <TableRow key={item.id}>
             <TableCell>{item.name}</TableCell>
             <TableCell>{item.email}</TableCell>
+            <TableCell>{item.phone}</TableCell>
             <TableCell>{item.message}</TableCell>
             <TableCell>{new Date(item.createdAt).toLocaleDateString('tr-TR')}</TableCell>
           </TableRow>

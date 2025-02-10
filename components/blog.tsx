@@ -1,5 +1,6 @@
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
+import { BlogCard } from './blog/blog-card';
 
 export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
   return (
@@ -8,25 +9,13 @@ export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
         <h2 className="text-3xl font-bold mb-12 text-center">Blog</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`}>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <img
-                  src={post.cover_image}
-                  alt={post.title}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                />
-                <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <div className="flex justify-end">
-                  <p className="text-sm text-gray-500">
-                    {post.published_at
-                      ? new Date(post.published_at).toLocaleDateString('tr-TR')
-                      : ''}
-                  </p>
-                </div>
-              </div>
-            </Link>
+            <BlogCard key={post.id} post={post} />
           ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          <Link href="/blog" className="text-blue-500 hover:text-blue-600">
+            Tümünü Gör
+          </Link>
         </div>
       </div>
     </section>

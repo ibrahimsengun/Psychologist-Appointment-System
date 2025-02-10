@@ -11,7 +11,7 @@ export default async function BlogPostsPage() {
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Blog Yazıları</h1>
+        <h1 className="text-xl md:text-3xl font-bold">Blog Yazıları</h1>
         <Button asChild>
           <Link href="/admin/blog/new" className="flex items-center gap-2">
             <PlusCircle className="w-4 h-4" />

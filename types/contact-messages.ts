@@ -18,4 +18,5 @@ export interface ContactMessage {
   email: string;
   phone: string;
   message: string;
+  createdAt: string;
 }
