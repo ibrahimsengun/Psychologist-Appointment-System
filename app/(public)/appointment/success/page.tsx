@@ -1,12 +1,16 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { use } from 'react';
 
-export default function AppointmentSuccessPage({
-  searchParams
-}: {
-  searchParams: { date?: string; time?: string };
-}) {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default function AppointmentSuccessPage(props: { searchParams: SearchParams }) {
+  const searchParams = use(props.searchParams);
+  const { date, time } = searchParams;
+
   return (
     <div className="container mx-auto py-8">
       <div className="max-w-md mx-auto text-center">
@@ -16,11 +20,11 @@ export default function AppointmentSuccessPage({
           </div>
           <h1 className="text-2xl font-bold mb-4">Randevunuz Başarıyla Oluşturuldu</h1>
 
-          {searchParams.date && searchParams.time && (
+          {date && time && (
             <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
               <p className="text-blue-800 font-medium">Randevu Detayları</p>
               <p className="text-blue-600">
-                {searchParams.date} - {searchParams.time}
+                {date} - {time}
               </p>
             </div>
           )}

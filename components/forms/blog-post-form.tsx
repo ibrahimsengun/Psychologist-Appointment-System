@@ -104,7 +104,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                   })}
                   output="html"
                   autofocus={true}
-                  immediatelyRender={true}
+                  immediatelyRender={false}
                   editable={true}
                   injectCSS={true}
                   editorClassName="focus:outline-none p-5 h-full"

@@ -2,16 +2,11 @@ import { getPostBySlug } from '@/actions/blog-actions';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
-
 export const revalidate = 3600;
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
