@@ -19,7 +19,7 @@ import { Appointment, AppointmentStatus } from '@/types/appointments';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import {
   Select,
   SelectContent,
@@ -28,6 +28,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 interface AppointmentsTableProps {
   appointments: Appointment[];
@@ -74,6 +75,17 @@ export function AppointmentsTable({
       setSortOrder('asc');
     }
   };
+
+  const handleStatusChange = useCallback(
+    async (id: string, newStatus: AppointmentStatus) => {
+      try {
+        await onStatusChange(id, newStatus);
+      } catch (error) {
+        toast.error('Durum güncellenirken bir hata oluştu');
+      }
+    },
+    [onStatusChange]
+  );
 
   const filteredAndSortedAppointments = appointments
     .filter((appointment) => {
@@ -187,7 +199,7 @@ export function AppointmentsTable({
                         <DropdownMenuItem
                           key={status}
                           onClick={() =>
-                            onStatusChange(appointment.id, status as AppointmentStatus)
+                            handleStatusChange(appointment.id, status as AppointmentStatus)
                           }
                           disabled={status === appointment.status}
                         >

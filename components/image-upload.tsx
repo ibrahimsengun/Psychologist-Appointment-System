@@ -44,11 +44,11 @@ export function ImageUpload({ value, onChange, onRemove }: ImageUploadProps) {
   return (
     <div>
       {value ? (
-        <div className="relative w-full h-[200px] mb-4">
+        <div className="relative w-full h-[600px] mb-4">
           <Image
             src={value}
             alt="Kapak görseli"
-            className="object-cover rounded-lg"
+            className="object-contain rounded-lg"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

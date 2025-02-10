@@ -18,12 +18,6 @@ export default function Hero() {
           >
             Randevu Al
           </Link>
-          <Link
-            href="#hakkimda"
-            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 transition duration-150 ease-in-out"
-          >
-            Daha Fazla Bilgi
-          </Link>
         </div>
       </div>
     </section>

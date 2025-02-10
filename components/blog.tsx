@@ -17,6 +17,13 @@ export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
                 />
                 <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                 <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex justify-end">
+                  <p className="text-sm text-gray-500">
+                    {post.published_at
+                      ? new Date(post.published_at).toLocaleDateString('tr-TR')
+                      : ''}
+                  </p>
+                </div>
               </div>
             </Link>
           ))}

@@ -21,10 +21,8 @@ export function useAppointments() {
     }
   }, []);
 
-  const updateAppointmentStatus = useCallback(async (id: string, status: AppointmentStatus) => {
-    try {
-      await updateStatus(id, status);
-      
+  const updateAppointmentStatus = useCallback(
+    async (id: string, status: AppointmentStatus) => {
       // Optimistik güncelleme
       setAppointments((prev) =>
         prev.map((appointment) =>
@@ -32,17 +30,17 @@ export function useAppointments() {
         )
       );
 
-      toast.success('Randevu durumu güncellendi');
-      
-      // Güncel verileri getir
-      fetchAppointments();
-    } catch (error) {
-      toast.error('Randevu durumu güncellenirken bir hata oluştu');
-      console.error('Randevu durumu güncelleme hatası:', error);
-      // Hata durumunda güncel verileri getir
-      fetchAppointments();
-    }
-  }, [fetchAppointments]);
+      try {
+        await updateStatus(id, status);
+        toast.success('Randevu durumu güncellendi');
+      } catch (error) {
+        // Hata durumunda orijinal listeyi geri yükle
+        fetchAppointments();
+        throw error;
+      }
+    },
+    [fetchAppointments]
+  );
 
   useEffect(() => {
     fetchAppointments();
