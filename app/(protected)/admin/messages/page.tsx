@@ -3,7 +3,7 @@ import ContactMessagesTable from '@/components/contact-messages-table';
 
 export default async function MessagesPage() {
   const messages = await getContactMessages();
-
+  console.log({ messages });
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">

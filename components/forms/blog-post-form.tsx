@@ -17,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { BlogPost, BlogPostFormValues, blogPostFormSchema } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
@@ -27,6 +26,7 @@ import { toast } from 'sonner';
 import { ImageUpload } from '../image-upload';
 import { MinimalTiptapEditor } from '../minimal-tiptap';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 interface BlogPostFormProps {
   initialData?: BlogPost;
@@ -36,6 +36,7 @@ interface BlogPostFormProps {
 }
 
 export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<BlogPostFormValues>({
@@ -43,7 +44,6 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
     defaultValues: initialData || {
       title: '',
       content: '',
-      excerpt: '',
       cover_image: '',
       status: 'draft'
     }
@@ -61,9 +61,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
         await (onSubmit as (data: BlogPostFormValues) => Promise<any>)(data);
       }
       toast.success(initialData ? 'Blog yazısı güncellendi' : 'Blog yazısı oluşturuldu');
-      if (!initialData) {
-        form.reset();
-      }
+      router.push('/admin/blog');
     } catch (error) {
       console.error('Form gönderme hatası:', error);
       toast.error(
@@ -112,20 +110,6 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                   editorClassName="focus:outline-none p-5 h-full"
                   editorContentClassName="h-full"
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="excerpt"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Özet</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

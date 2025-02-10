@@ -19,7 +19,6 @@ export interface BlogPost {
 export const blogPostFormSchema = z.object({
   title: z.string().min(1, 'Başlık zorunludur'),
   content: z.string().min(1, 'İçerik zorunludur'),
-  excerpt: z.string().min(1, 'Özet zorunludur').max(300, 'Özet en fazla 300 karakter olabilir'),
   cover_image: z.string().optional(),
   status: z.enum(['draft', 'published']),
   publishedAt: z.string().optional()

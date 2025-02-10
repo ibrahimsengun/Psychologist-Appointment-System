@@ -56,6 +56,16 @@ export async function getBlogPostById(id: string) {
   return data;
 } 
 
+function generateExcerpt(content: string, maxLength: number = 300): string {
+  const plainText = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (plainText.length <= maxLength) return plainText;
+  
+  const truncated = plainText.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  return truncated.slice(0, lastSpace) + '...';
+}
+
 // Blog yazısı oluşturma
 export async function createBlogPost(formData: BlogPostFormValues): Promise<BlogPost> {
   const supabase = await createClient();
@@ -75,6 +85,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
   }
 
   const now = new Date().toISOString();
+  const excerpt = generateExcerpt(formData.content);
 
   const { data, error } = await supabase
     .from('blog_posts')
@@ -82,7 +93,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
       title: formData.title,
       slug,
       content: formData.content,
-      excerpt: formData.excerpt,
+      excerpt,
       cover_image: formData.cover_image,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
@@ -125,13 +136,14 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
   }
 
   const now = new Date().toISOString();
+  const excerpt = generateExcerpt(formData.content);
 
   const { data, error } = await supabase
     .from('blog_posts')
     .update({
       title: formData.title,
       content: formData.content,
-      excerpt: formData.excerpt,
+      excerpt,
       cover_image: formData.cover_image,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
