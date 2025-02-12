@@ -31,7 +31,7 @@ export default function AppointmentSuccessPage(props: { searchParams: SearchPara
 
           <p className="text-gray-600 mb-6">
             Randevu detayları e-posta adresinize gönderildi. Randevunuzu iptal etmek isterseniz,
-            e-postadaki iptal bağlantısını kullanabilir veya iptal kodunu kullanabilirsiniz.
+            e-postadaki iptal bağlantısını kullanabilirsiniz.
           </p>
           <div className="space-y-4">
             <Button asChild variant="outline" className="w-full">

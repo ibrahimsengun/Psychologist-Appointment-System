@@ -1,6 +1,6 @@
 'use client';
 
-import { BookText, Calendar, LogOut, Mail, Menu, Users } from 'lucide-react';
+import { BookText, Briefcase, Calendar, LogOut, Mail, Menu, Users } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -12,7 +12,8 @@ const adminLinks = [
   { name: 'Randevular', url: '/admin', icon: Calendar },
   { name: 'Müsait Zamanlar', url: '/admin/available-times', icon: Users },
   { name: 'Blog Yazıları', url: '/admin/blog', icon: BookText },
-  { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail }
+  { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail },
+  { name: 'Hizmetler', url: '/admin/services', icon: Briefcase }
 ];
 
 export default function ProtectedLayout({

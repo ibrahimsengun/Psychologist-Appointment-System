@@ -27,7 +27,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 text-center text-sm">
-          &copy; {new Date().getFullYear()} Lokman Yılmaz. Tüm Hakları Saklıdır.
+          &copy; {new Date().getFullYear()}{' '}
+          <a href="https://github.com/ibrahimsengun" target="_blank" rel="noopener noreferrer">
+            ibrahimsengun
+          </a>
+          . Tüm Hakları Saklıdır.
         </div>
       </div>
     </footer>

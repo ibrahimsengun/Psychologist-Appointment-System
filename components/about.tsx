@@ -7,7 +7,7 @@ export default function About() {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <Image
-              src="/placeholder.svg"
+              src="https://arcjovhaayeezgzrbpwj.supabase.co/storage/v1/object/public/blog-images//public.avif"
               alt="Lokman Yılmaz"
               width={400}
               height={400}
