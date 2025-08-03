@@ -5,15 +5,7 @@ export default function About() {
     <section id="hakkimda" className="py-20">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <Image
-              src="https://arcjovhaayeezgzrbpwj.supabase.co/storage/v1/object/public/blog-images//public.avif"
-              alt="Lokman Yılmaz"
-              width={400}
-              height={400}
-              className="rounded-lg shadow-lg"
-            />
-          </div>
+          <div className="md:w-1/2 mb-8 md:mb-0"></div>
           <div className="md:w-1/2 md:pl-12">
             <h2 className="text-3xl font-bold mb-6">Hakkımda</h2>
             <p className="text-lg mb-6">
