@@ -9,7 +9,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Uzman Psk. Lokman Yılmaz - Klinik Psikolog',
+  title: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
   description: 'Psikolojik sağlığınız için profesyonel destek'
 };
 
