@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Contact() {
   return (
-    <section id="iletisim" className="bg-gray-50 py-20">
+    <section id="iletisim" className="bg-gray-50 py-6 md:py-20">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-8">Size nasıl yardımcı olabilirim?</h2>
         <div className="flex justify-center space-x-4">
