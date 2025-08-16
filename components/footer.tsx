@@ -31,16 +31,16 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Hızlı Linkler</h3>
             <div className="space-y-2">
-              <Link href="/" className="block hover:text-primary transition-colors">
+              <Link href="/" className="block hover:text-white transition-colors">
                 Ana Sayfa
               </Link>
-              <Link href="/blog" className="block hover:text-primary transition-colors">
+              <Link href="/blog" className="block hover:text-white transition-colors">
                 Blog
               </Link>
-              <Link href="/contact" className="block hover:text-primary transition-colors">
+              <Link href="/contact" className="block hover:text-white transition-colors">
                 İletişim
               </Link>
-              <Link href="/appointment" className="block hover:text-primary transition-colors">
+              <Link href="/appointment" className="block hover:text-white transition-colors">
                 Randevu Al
               </Link>
             </div>
@@ -57,21 +57,21 @@ export default function Footer() {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="text-gray-400 hover:text-primary transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-primary transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-primary transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p>© {new Date().getFullYear()} Psk. Lokman Yılmaz. Tüm hakları saklıdır.</p>
+          <p>© {new Date().getFullYear()} Uzman Psk. Lokman Yılmaz. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>
