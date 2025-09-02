@@ -1,8 +1,35 @@
 import { getPostBySlug } from '@/actions/blog-actions';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import type { Metadata, ResolvingMetadata } from 'next';
+
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 export const revalidate = 3600;
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  // fetch post information
+  const post = await getPostBySlug(slug);
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: `https://lokmanyilmaz.vercel.app/blog/${slug}`,
+      languages: {
+        'tr-TR': `/tr-TR/blog/${slug}`
+      }
+    }
+  };
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -18,11 +18,18 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary text-white" />
-                <p>+90 (555) 123 45 67</p>
+                <a href="tel:+905448322091" className="hover:text-white transition-colors">
+                  +90 (544) 832 20 91
+                </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary text-white" />
-                <p>info@lokmanyilmaz.com</p>
+                <a
+                  href="mailto:psk.lokmanylmz@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  psk.lokmanylmz@gmail.com
+                </a>
               </div>
             </div>
           </div>
@@ -50,27 +57,12 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Çalışma Saatleri</h3>
             <div className="space-y-2 mb-6">
-              <p>Pazartesi - Cuma: 09:00 - 18:00</p>
-              <p>Cumartesi: 09:00 - 14:00</p>
-              <p>Pazar: Kapalı</p>
+              <p>Her gün: 10:00 - 21:00</p>
+              <p>Saatleri arasında yüzyüze ve online görüşmeler yapılmaktadır</p>
             </div>
             <div className="flex gap-4">
               <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/psikologlokmanyilmaz/"
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
