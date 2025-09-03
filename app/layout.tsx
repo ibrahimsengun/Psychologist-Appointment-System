@@ -17,20 +17,20 @@ export const metadata: Metadata = {
   creator: 'Lokman Yılmaz',
   publisher: 'Lokman Yılmaz',
   alternates: {
-    canonical: 'https://lokmanyilmaz.vercel.app'
+    canonical: 'https://lokmanyilmaz.com.tr'
   },
   openGraph: {
     title: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
     description: 'Psikolojik sağlığınız için profesyonel destek',
-    url: 'https://lokmanyilmaz.vercel.app',
+    url: 'https://lokmanyilmaz.com.tr',
     siteName: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
     locale: 'tr_TR',
-    type: 'website',
+    type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
-    description: 'Psikolojik sağlığınız için profesyonel destek',
+    description: 'Psikolojik sağlığınız için profesyonel destek'
   },
   robots: {
     index: true,
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
       follow: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+      'max-snippet': -1
+    }
+  }
 };
 
 const geistSans = Inter({
@@ -59,13 +59,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Lokman Yılmaz",
-    "jobTitle": "Aile Danışmanı",
-    "description": "Uzman Psk. Lokman Yılmaz - Aile Danışmanı. Psikolojik sağlığınız için profesyonel destek.",
-    "url": "https://lokmanyilmaz.vercel.app",
-    "sameAs": []
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Lokman Yılmaz',
+    jobTitle: 'Aile Danışmanı',
+    description:
+      'Uzman Psk. Lokman Yılmaz - Aile Danışmanı. Psikolojik sağlığınız için profesyonel destek.',
+    url: 'https://lokmanyilmaz.com.tr',
+    sameAs: []
   };
 
   return (

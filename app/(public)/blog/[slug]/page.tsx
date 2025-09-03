@@ -23,7 +23,7 @@ export async function generateMetadata(
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `https://lokmanyilmaz.vercel.app/blog/${slug}`,
+      canonical: `https://lokmanyilmaz.com.tr/blog/${slug}`,
       languages: {
         'tr-TR': `/tr-TR/blog/${slug}`
       }

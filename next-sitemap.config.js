@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://lokmanyilmaz.vercel.app', // kendi domainini yaz
-  generateRobotsTxt: true, // robots.txt de otomatik oluşsun
+  siteUrl: 'https://lokmanyilmaz.com.tr',
+  generateRobotsTxt: true,
   sitemapSize: 5000
 };

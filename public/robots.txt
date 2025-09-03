@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://lokmanyilmaz.vercel.app
+Host: https://lokmanyilmaz.com.tr
 
 # Sitemaps
-Sitemap: https://lokmanyilmaz.vercel.app/sitemap.xml
+Sitemap: https://lokmanyilmaz.com.tr/sitemap.xml
