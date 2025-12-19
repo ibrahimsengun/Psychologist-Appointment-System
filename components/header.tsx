@@ -2,77 +2,133 @@
 
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { CalendarDays, Menu, Phone } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { CalendarDays, Menu, Phone, X } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Header() {
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="font-semibold text-xl">
-          Uzman Psk. Lokman Yılmaz
-        </Link>
+  const [isOpen, setIsOpen] = useState(false);
 
-        {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link href="/" className="text-sm font-medium hover:text-primary">
-            Ana Sayfa
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <div className="container">
+        {/* Ana Header */}
+        <div className="flex h-18 items-center justify-between py-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="hidden sm:block">
+              <p className="font-semibold text-foreground leading-tight">Uzm. Psk. Lokman Yılmaz</p>
+              <p className="text-xs text-muted-foreground">Psikolog & Aile Danışmanı</p>
+            </div>
+            <p className="sm:hidden font-semibold text-foreground">Uzm. Psk. Lokman Yılmaz</p>
           </Link>
-          <Link href="/blog" className="text-sm font-medium hover:text-primary">
-            Blog
-          </Link>
-          <div className="flex items-center gap-2">
-            <Button asChild variant="outline" size="sm">
+
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center gap-1">
+            <Link
+              href="/"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Ana Sayfa
+            </Link>
+            <Link
+              href="/#hakkimda"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Hakkımda
+            </Link>
+            <Link
+              href="/#hizmetler"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Hizmetler
+            </Link>
+            <Link
+              href="/blog"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Blog
+            </Link>
+          </nav>
+
+          {/* Desktop CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
               <Link href="/contact">
                 <Phone className="mr-2 h-4 w-4" />
-                İletişime Geç
+                İletişim
               </Link>
             </Button>
-            <Button asChild size="sm">
+            <Button asChild size="sm" className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
               <Link href="/appointment">
                 <CalendarDays className="mr-2 h-4 w-4" />
                 Randevu Al
               </Link>
             </Button>
           </div>
-        </nav>
 
-        {/* Mobile Menu */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Menü</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Uzman Psk. Lokman Yılmaz</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col gap-4 mt-6">
-              <Link href="/" className="text-lg font-medium hover:text-primary">
-                Ana Sayfa
-              </Link>
-              <Link href="/blog" className="text-lg font-medium hover:text-primary">
-                Blog
-              </Link>
-              <div className="flex flex-col gap-2 mt-4">
-                <Button asChild variant="outline">
-                  <Link href="/contact">
-                    <Phone className="mr-2 h-4 w-4" />
-                    İletişime Geç
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/appointment">
-                    <CalendarDays className="mr-2 h-4 w-4" />
-                    Randevu Al
-                  </Link>
-                </Button>
-              </div>
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <span className="sr-only">Menü</span>
+          </Button>
+        </div>
+
+        {/* Collapsible Mobile Menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4' : 'max-h-0'
+            }`}
+        >
+          <nav className="flex flex-col gap-1 pt-2 border-t border-border/50">
+            <Link
+              href="/"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Ana Sayfa
+            </Link>
+            <Link
+              href="/#hakkimda"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Hakkımda
+            </Link>
+            <Link
+              href="/#hizmetler"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Hizmetler
+            </Link>
+            <Link
+              href="/blog"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Blog
+            </Link>
+
+            <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
+              <Button asChild variant="outline" className="w-full justify-center rounded-xl">
+                <Link href="/contact" onClick={() => setIsOpen(false)}>
+                  <Phone className="mr-2 h-4 w-4" />
+                  İletişim
+                </Link>
+              </Button>
+              <Button asChild className="w-full justify-center rounded-xl shadow-lg shadow-primary/25">
+                <Link href="/appointment" onClick={() => setIsOpen(false)}>
+                  <CalendarDays className="mr-2 h-4 w-4" />
+                  Randevu Al
+                </Link>
+              </Button>
             </div>
-          </SheetContent>
-        </Sheet>
+          </nav>
+        </div>
       </div>
     </header>
   );

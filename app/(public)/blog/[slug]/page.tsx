@@ -22,6 +22,14 @@ export async function generateMetadata(
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.created_at,
+      authors: ['Lokman Yılmaz'],
+      images: post.cover_image ? [{ url: post.cover_image }] : undefined
+    },
     alternates: {
       canonical: `https://lokmanyilmaz.com.tr/blog/${slug}`,
       languages: {
@@ -39,8 +47,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    image: post.cover_image ? [post.cover_image] : [],
+    datePublished: post.created_at,
+    author: {
+      '@type': 'Person',
+      name: 'Lokman Yılmaz'
+    },
+    description: post.excerpt
+  };
+
   return (
     <article className="container py-8 max-w-4xl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 
       <div className="text-muted-foreground mb-8">

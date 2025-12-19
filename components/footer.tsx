@@ -1,79 +1,162 @@
 'use client';
 
-import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import { Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* İletişim Bilgileri */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">İletişim</h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 mt-1 text-primary text-white" />
-                <p>Atakum, Samsun, Türkiye</p>
+    <footer className="relative bg-foreground text-background overflow-hidden">
+      {/* Dekoratif Arka Plan */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+      <div className="container relative z-10 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+
+          {/* Logo ve Açıklama */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3 mb-6 group">
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                <span className="text-primary font-bold text-xl">LY</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-primary text-white" />
-                <a href="tel:+905448322091" className="hover:text-white transition-colors">
-                  +90 (544) 832 20 91
-                </a>
+              <div>
+                <p className="font-semibold text-background leading-tight">Uzm. Psk. Lokman Yılmaz</p>
+                <p className="text-xs text-background/60">Psikolog & Aile Danışmanı</p>
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-primary text-white" />
-                <a
-                  href="mailto:psk.lokmanylmz@gmail.com"
-                  className="hover:text-white transition-colors"
-                >
-                  psk.lokmanylmz@gmail.com
-                </a>
-              </div>
+            </Link>
+            <p className="text-background/70 text-sm leading-relaxed mb-6">
+              Bilimsel temelli yaklaşımlarla güvenli, empatik ve gizliliğe dayalı profesyonel psikolojik destek.
+            </p>
+            {/* Sosyal Medya */}
+            <div className="flex gap-3">
+              <a
+                href="https://www.instagram.com/psikologlokmanyilmaz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:psk.lokmanylmz@gmail.com"
+                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
+                aria-label="E-posta"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
+              <a
+                href="tel:+905448322091"
+                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
+                aria-label="Telefon"
+              >
+                <Phone className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
           {/* Hızlı Linkler */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Hızlı Linkler</h3>
-            <div className="space-y-2">
-              <Link href="/" className="block hover:text-white transition-colors">
+            <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
+              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
+              Hızlı Linkler
+            </h3>
+            <div className="space-y-3">
+              <Link href="/" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Ana Sayfa
               </Link>
-              <Link href="/blog" className="block hover:text-white transition-colors">
+              <Link href="/#hakkimda" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Hakkımda
+              </Link>
+              <Link href="/#hizmetler" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Hizmetler
+              </Link>
+              <Link href="/blog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Blog
               </Link>
-              <Link href="/contact" className="block hover:text-white transition-colors">
-                İletişim
-              </Link>
-              <Link href="/appointment" className="block hover:text-white transition-colors">
+              <Link href="/appointment" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Randevu Al
               </Link>
             </div>
           </div>
 
-          {/* Sosyal Medya ve Çalışma Saatleri */}
+          {/* İletişim */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Çalışma Saatleri</h3>
-            <div className="space-y-2 mb-6">
-              <p>Her gün: 10:00 - 21:00</p>
-              <p>Saatleri arasında yüzyüze ve online görüşmeler yapılmaktadır</p>
-            </div>
-            <div className="flex gap-4">
-              <a
-                href="https://www.instagram.com/psikologlokmanyilmaz/"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
+            <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
+              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
+              İletişim
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 group cursor-pointer">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
+                  <MapPin className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
+                </div>
+                <div>
+                  <p className="text-white/90 font-medium">Psikodemy</p>
+                  <p className="text-white/60 text-sm">Atakum, Samsun</p>
+                </div>
+              </div>
+              <a href="tel:+905448322091" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
+                  <Phone className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
+                </div>
+                <span className="text-white/70 group-hover:text-white transition-colors">
+                  +90 (544) 832 20 91
+                </span>
+              </a>
+              <a href="mailto:psk.lokmanylmz@gmail.com" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
+                  <Mail className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
+                </div>
+                <span className="text-white/70 group-hover:text-white transition-colors text-sm">
+                  psk.lokmanylmz@gmail.com
+                </span>
               </a>
             </div>
           </div>
+
+          {/* Çalışma Saatleri */}
+          <div>
+            <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
+              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
+              Çalışma Saatleri
+            </h3>
+            <div className="space-y-4">
+              <div className="bg-background/5 rounded-2xl p-4 border border-background/10">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-background/70 text-sm">Her Gün</span>
+                  <span className="text-background font-semibold">10:00 - 21:00</span>
+                </div>
+                <p className="text-background/50 text-xs">
+                  Yüz yüze ve online görüşme
+                </p>
+              </div>
+              <div className="bg-primary/20 rounded-2xl p-4">
+                <p className="text-sm text-background/90 font-medium mb-2">Online Danışmanlık</p>
+                <p className="text-background/60 text-xs">
+                  Türkiye'nin her yerinden güvenli görüntülü görüşme
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p>© {new Date().getFullYear()} Uzman Psk. Lokman Yılmaz. Tüm hakları saklıdır.</p>
+        {/* Alt Kısım */}
+        <div className="border-t border-background/10 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-background/50 text-sm text-center md:text-left">
+              © {new Date().getFullYear()} Uzm. Psk. Lokman Yılmaz. Tüm hakları saklıdır.
+            </p>
+            <div className="flex items-center gap-6 text-sm">
+              <Link href="/privacy" className="text-background/50 hover:text-background transition-colors">
+                Gizlilik Politikası
+              </Link>
+              <Link href="/terms" className="text-background/50 hover:text-background transition-colors">
+                Kullanım Şartları
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

@@ -2,55 +2,195 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <section id="hakkimda" className="py-6 md:py-20">
+    <section id="hakkimda" className="py-12 md:py-24">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <Image
-              src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/cc3d6def-ccd8-43e0-a46f-9fa1516f391b.jpg"
-              className="rounded-xl shadow-xl"
-              alt="About"
-              width={600}
-              height={500}
-            />
+
+        {/* Bölüm 1: Görsel Sol, Metin Sağ */}
+        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16 mb-16 lg:mb-24">
+          {/* Görsel */}
+          <div className="lg:w-5/12 w-full">
+            <div className="sticky top-24">
+              <Image
+                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-20%20at%2000.42.54.jpeg"
+                className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+                alt="Uzman Psikolog Lokman Yılmaz"
+                width={600}
+                height={750}
+              />
+            </div>
           </div>
-          <div className="md:w-1/2 md:pl-12">
-            <h2 className="text-3xl font-bold mb-6">Hakkımda</h2>
-            <p className="text-lg mb-6 text-justify">
-              Lokman Yılmaz, lisans eğitimini Ondokuz Mayıs Üniversitesi Psikoloji bölümünde onur
-              derecesiyle tamamlamıştır. Ardından Ondokuz Mayıs Üniversitesi Evlilik ve Aile
-              Danışmanlığı bölümünde yüksek lisansını yüksek onur derecesiyle tamamlamış ve (aile
-              danışmanı) uzman ünvanını almıştır.
+
+          {/* İçerik */}
+          <div className="lg:w-7/12 w-full">
+            <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
+              Samsun Psikolog Hakkında
             </p>
-            <p className="text-lg mb-6 text-justify">
-              Yılmaz, lisans sürecinde Psikoloji yönetim kurulunda yer almış ve çalışmalarda
-              bulunmuş ayrıyeten Malatya ASB kapsamında deprem zamanında, deprem bölgesinde
-              depremzedeler üzerine, Malatya özel eğitim kurumunda öğrenci ve aileler üzerine,
-              Samsunda birden çok özel klinikte genç, ergen ve yetişkin üzerine çalışmış ve
-              stajlarını tamamlamıştır.
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Uzm. Psikolog Lokman Yılmaz Kimdir?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              <strong className="text-foreground">Uzman Psikolog & Aile Danışmanı Lokman Yılmaz</strong>, Ondokuz Mayıs Üniversitesi Psikoloji Bölümü'nden onur derecesiyle, ardından aynı üniversitenin Evlilik ve Aile Danışmanlığı Programı'ndan yüksek onur derecesiyle mezun olarak Aile Danışmanı unvanını almıştır.
             </p>
-            <p className="text-lg mb-6 text-justify">
-              2024 yılında Samsun İlkadım Psikoloji Merkezinde profesyonel olarak yetişkin, ergen ve
-              çocuklara danışmanlık hizmeti vermiştir.
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              Çocuklar, ergenler ve yetişkinlerle çalışan Yılmaz; Samsun'da yüz yüze, Türkiye'nin her yerine online psikolojik destek sunmaktadır.
             </p>
-            <p className="text-lg mb-6 text-justify">
-              Uzmanlık alanını nitelikli kılmak adına; Ondokuz Mayıs Üniversitesi Psikoloji
-              bölümünden Bilişsel Davranışçı Terapi, Oyun Terapisi ve Psikolojik Testler
-              eğitimlerini almıştır fakat bunlara ek olarak Yüksek Psikoloji Akademisi adı altında
-              Uzman Klinik Psikolog Nurdan ÖKTEN'den “Bilişsel Davranışçı Terapi Uygulayıcı
-              Eğitimini, Prof. Dr Veli DUYAN'dan Çözüm Odaklı Terapi Uygulayıcı
-              Eğitimini,Uz.Kl.Psk.Dan Raşide YILMAZ'dan Oyun Terapisi Uyguayıcı Eğtimini ve Prof.Dr.
-              Doğan Şahin'den Psikodinamik Terapi eğitimini tamamlamıştır. Ek olarak Süpervizyon
-              eğtimleri almıştır.
-            </p>
-            <p className="text-lg mb-6 text-justify">
-              “Kendine faydası olmayanın başkasına nasıl faydası olabilir ki?” anlayışıyla sürekli
-              kendini geliştirmeyi amaçlayan Lokman Yılmaz, Şuanda yine Samsunda yüzyüze Psikodemy
-              bünyesi altında danışmanlık hizmeti vermekle beraber Online Danışmanlık hizmeti
-              sunmaktan memnuniyet duymaktadır.
-            </p>
+
+            {/* Uzmanlık Alanları Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Yetişkin Danışmanlığı</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Ergen Danışmanlığı</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Çocuk Danışmanlığı</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Aile ve Çift Danışmanlığı</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Bağlanma Odaklı Danışmanlık</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Kaygı ve Stres Yönetimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Travma ve Kriz Sonrası Destek</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Duygu Düzenleme Terapileri</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Obsesif Düşünceler ve Kontrol</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-foreground">Öz Değer ve Kişisel Sınırlar</span>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Ayraç */}
+        <div className="border-t border-border my-12 lg:my-16"></div>
+
+        {/* Bölüm 2: Metin Sol, Görsel Sağ */}
+        <div className="flex flex-col-reverse lg:flex-row items-start gap-8 lg:gap-16">
+          {/* İçerik */}
+          <div className="lg:w-7/12 w-full">
+            <h3 className="text-2xl md:text-3xl font-bold mb-6">
+              Danışmanlık Yaklaşımı
+            </h3>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Lokman Yılmaz, her bireyin yaşam hikâyesinin benzersiz olduğunu kabul eden bütüncül bir yaklaşımı benimser. Bilimsel temelli yöntemlerle güvenli, empatik ve gizliliğe dayalı bir çalışma ortamı oluşturur.
+            </p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Danışanlarının iç dünyalarını keşfetmelerine, duygularını anlamalarına ve daha işlevsel bir yaşam kurmalarına profesyonel şekilde rehberlik eder.
+            </p>
+
+            <blockquote className="border-l-4 border-primary pl-6 py-2 my-8 bg-primary/5 rounded-r-lg">
+              <p className="text-xl italic text-foreground font-medium">
+                "Kendine faydası olmayanın başkasına nasıl faydası olabilir ki?"
+              </p>
+            </blockquote>
+
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              Bu ilkeyi benimseyen Lokman Yılmaz, mesleki gelişimini sürekli güncelleyerek eğitim ve süpervizyon süreçlerine aktif biçimde devam etmektedir.
+            </p>
+
+            {/* Eğitimler */}
+            <h4 className="text-xl font-semibold mb-4">Aldığı Eğitimler</h4>
+            <div className="space-y-3 mb-8">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Bilişsel Davranışçı Terapi Uygulayıcı Eğitimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Çözüm Odaklı Terapi Uygulayıcı Eğitimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Psikodinamik Terapi Eğitimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Oyun Terapisi Uygulayıcı Eğitimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Hipnoterapi Eğitimi</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-muted-foreground">Klinik Görüşme ve Görüşme Teknikleri Eğitimi</span>
+              </div>
+            </div>
+
+            {/* Hizmet Bilgisi */}
+            <div className="bg-muted/50 rounded-xl p-6">
+              <p className="text-lg text-foreground">
+                <strong>Psikodemy</strong> bünyesinde Samsun'da yüz yüze, Türkiye genelinde ise <strong>online danışmanlık</strong> hizmeti sunulmaktadır.
+              </p>
+            </div>
+          </div>
+
+          {/* Görsel */}
+          <div className="lg:w-5/12 w-full">
+            <div className="sticky top-24">
+              <Image
+                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35.jpeg"
+                className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+                alt="Lokman Yılmaz Danışmanlık"
+                width={600}
+                height={750}
+              />
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
