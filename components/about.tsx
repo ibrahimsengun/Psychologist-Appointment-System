@@ -7,8 +7,8 @@ export default function About() {
 
         {/* Bölüm 1: Görsel Sol, Metin Sağ */}
         <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16 mb-16 lg:mb-24">
-          {/* Görsel */}
-          <div className="lg:w-5/12 w-full">
+          {/* Görsel - Mobilde gizli, masaüstünde görünür */}
+          <div className="hidden lg:block lg:w-5/12">
             <div className="sticky top-24">
               <Image
                 src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-20%20at%2000.42.54.jpeg"
