@@ -11,7 +11,7 @@ export default function About() {
           <div className="hidden lg:block lg:w-5/12">
             <div className="sticky top-24">
               <Image
-                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-20%20at%2000.42.54.jpeg"
+                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-20%20at%2013.06.30%20(1).jpeg"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 alt="Uzman Psikolog Lokman Yılmaz"
                 width={600}
@@ -181,7 +181,7 @@ export default function About() {
           <div className="lg:w-5/12 w-full">
             <div className="sticky top-24">
               <Image
-                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35.jpeg"
+                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35%20(1)%20(2).jpeg"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 alt="Lokman Yılmaz Danışmanlık"
                 width={600}
