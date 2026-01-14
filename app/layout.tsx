@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { ClarityAnalytics } from '@/components/clarity-analytics';
 import type { Metadata } from 'next';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -90,6 +91,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Psk. Lokman Yılmaz" />
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>
+        <ClarityAnalytics />
         <TooltipProvider>
           {children}
           <Toaster />
