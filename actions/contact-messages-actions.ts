@@ -23,3 +23,12 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
 
   return data as ContactMessage[];
 }
+
+export async function deleteContactMessage(id: number) {
+  const supabase = await createClient();
+  const { error } = await supabase.from(CONTACT_MESSAGES).delete().eq('id', id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
