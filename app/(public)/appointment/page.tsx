@@ -1,5 +1,6 @@
 import { createAppointment, getAvailableTimeSlots } from '@/actions/appointment-actions';
 import { AppointmentForm } from '@/components/forms/appointment-form';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 
 // Sayfayı dinamik olarak işaretle
 export const dynamic = 'force-dynamic';
@@ -30,6 +31,7 @@ export default async function AppointmentPage() {
       <div className="absolute bottom-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
+        <Breadcrumb items={[{ label: 'Randevu Al' }]} />
         <div className="max-w-2xl mx-auto">
           {/* Başlık Bölümü */}
           <div className="text-center mb-10">

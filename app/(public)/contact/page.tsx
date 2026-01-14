@@ -1,4 +1,5 @@
 import { ContactForm } from '@/components/forms/contact-form';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
 export const metadata = {
@@ -10,6 +11,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="container mx-auto py-12">
+      <Breadcrumb items={[{ label: 'İletişim' }]} />
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <h1 className="text-3xl font-bold mb-6">İletişime Geçin</h1>

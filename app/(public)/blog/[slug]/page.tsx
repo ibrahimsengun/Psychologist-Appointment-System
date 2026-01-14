@@ -1,4 +1,5 @@
 import { getPostBySlug } from '@/actions/blog-actions';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -62,6 +63,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="container py-8 max-w-4xl">
+      <Breadcrumb
+        items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -87,6 +87,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <meta name="apple-mobile-web-app-title" content="Psk. Lokman Yılmaz" />
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>
         <TooltipProvider>
