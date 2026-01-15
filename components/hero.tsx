@@ -91,8 +91,10 @@ export default function Hero() {
                   alt="Uzman Psikolog Lokman Yılmaz"
                   width={550}
                   height={700}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
                   className="w-full h-auto object-cover max-h-[700px]"
                   priority
+                  fetchPriority="high"
                 />
               </div>
 
