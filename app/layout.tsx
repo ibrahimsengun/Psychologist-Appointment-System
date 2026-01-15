@@ -4,6 +4,7 @@ import './globals.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ClarityAnalytics } from '@/components/clarity-analytics';
 import type { Metadata } from 'next';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -92,6 +93,7 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>
         <ClarityAnalytics />
+        <SpeedInsights />
         <TooltipProvider>
           {children}
           <Toaster />
