@@ -1,6 +1,10 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /sign-in
+Disallow: /reset-password
+Disallow: /auth
 
 # Host
 Host: https://lokmanyilmaz.com.tr

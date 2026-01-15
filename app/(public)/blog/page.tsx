@@ -1,6 +1,27 @@
 import { getPublishedPosts } from '@/actions/blog-actions';
 import { BlogCard } from '@/components/blog/blog-card';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog | Psikoloji Yazıları - Uzman Psk. Lokman Yılmaz',
+  description:
+    'Psikoloji, terapi, aile danışmanlığı ve ruh sağlığı hakkında faydalı blog yazıları. Samsun psikolog Lokman Yılmaz tarafından hazırlanan içerikler.',
+  keywords:
+    'psikoloji blog, terapi yazıları, ruh sağlığı, aile danışmanlığı, samsun psikolog blog, psikolojik destek',
+  alternates: {
+    canonical: 'https://lokmanyilmaz.com.tr/blog'
+  },
+  openGraph: {
+    title: 'Blog | Psikoloji Yazıları - Uzman Psk. Lokman Yılmaz',
+    description:
+      'Psikoloji, terapi ve ruh sağlığı hakkında faydalı blog yazıları.',
+    url: 'https://lokmanyilmaz.com.tr/blog',
+    siteName: 'Uzman Psk. Lokman Yılmaz',
+    locale: 'tr_TR',
+    type: 'website'
+  }
+};
 
 export const revalidate = 3600;
 
