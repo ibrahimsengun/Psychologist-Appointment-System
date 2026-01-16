@@ -6,7 +6,7 @@ import slugify from 'slugify';
 
 export async function getPublishedPosts() {
   const supabase = await createClient();
-  
+
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
@@ -54,15 +54,15 @@ export async function getBlogPostById(id: string) {
   }
 
   return data;
-} 
+}
 
 function generateExcerpt(content: string, maxLength: number = 300): string {
   const plainText = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   if (plainText.length <= maxLength) return plainText;
-  
+
   const truncated = plainText.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
-  
+
   return truncated.slice(0, lastSpace) + '...';
 }
 
@@ -95,6 +95,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
       content: formData.content,
       excerpt,
       cover_image: formData.cover_image,
+      meta_description: formData.meta_description,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
       author_id: user.id,
@@ -116,6 +117,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     content: data.content,
     excerpt: data.excerpt,
     cover_image: data.cover_image,
+    meta_description: data.meta_description,
     status: data.status,
     published_at: data.published_at,
     created_at: data.created_at,
@@ -145,6 +147,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
       content: formData.content,
       excerpt,
       cover_image: formData.cover_image,
+      meta_description: formData.meta_description,
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
       updated_at: now
@@ -166,6 +169,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     content: data.content,
     excerpt: data.excerpt,
     cover_image: data.cover_image,
+    meta_description: data.meta_description,
     status: data.status,
     published_at: data.published_at,
     created_at: data.created_at,
@@ -220,12 +224,12 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     content: post.content,
     excerpt: post.excerpt,
     cover_image: post.cover_image,
+    meta_description: post.meta_description,
     status: post.status,
     published_at: post.published_at,
     created_at: post.created_at,
     updated_at: post.updated_at,
-    author_id: post.author_id,
-
+    author_id: post.author_id
   }));
 }
 
@@ -248,6 +252,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost> {
     content: data.content,
     excerpt: data.excerpt,
     cover_image: data.cover_image,
+    meta_description: data.meta_description,
     status: data.status,
     published_at: data.published_at,
     created_at: data.created_at,

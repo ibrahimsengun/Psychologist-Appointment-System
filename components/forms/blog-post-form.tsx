@@ -31,8 +31,8 @@ import { useRouter } from 'next/navigation';
 interface BlogPostFormProps {
   initialData?: BlogPost;
   onSubmit:
-    | ((data: BlogPostFormValues) => Promise<any>)
-    | ((id: string, data: BlogPostFormValues) => Promise<any>);
+  | ((data: BlogPostFormValues) => Promise<any>)
+  | ((id: string, data: BlogPostFormValues) => Promise<any>);
 }
 
 export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
@@ -45,6 +45,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
       title: '',
       content: '',
       cover_image: '',
+      meta_description: '',
       status: 'draft'
     }
   });
@@ -128,6 +129,37 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                   onChange={field.onChange}
                   onRemove={() => field.onChange('')}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="meta_description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Meta Açıklama (SEO)</FormLabel>
+              <FormControl>
+                <div className="space-y-2">
+                  <textarea
+                    {...field}
+                    value={field.value ?? ''}
+                    className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+                    placeholder="Arama motorlarında görünecek açıklama (önerilen: 150-160 karakter)"
+                    maxLength={160}
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Arama sonuçlarında görünecek açıklama</span>
+                    <span className={cn(
+                      (field.value?.length || 0) > 160 ? 'text-destructive' : '',
+                      (field.value?.length || 0) >= 140 && (field.value?.length || 0) <= 160 ? 'text-green-600' : ''
+                    )}>
+                      {field.value?.length || 0}/160
+                    </span>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

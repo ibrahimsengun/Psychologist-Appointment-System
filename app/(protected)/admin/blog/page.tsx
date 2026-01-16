@@ -2,7 +2,7 @@ import { getBlogPosts } from '@/actions/blog-actions';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
-import { PlusCircle } from 'lucide-react';
+import { Edit, ExternalLink, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function BlogPostsPage() {
@@ -50,11 +50,10 @@ export default async function BlogPostsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        post.status === 'published'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${post.status === 'published'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                        }`}
                     >
                       {post.status === 'published' ? 'Yayında' : 'Taslak'}
                     </span>
@@ -66,9 +65,18 @@ export default async function BlogPostsPage() {
                     {format(new Date(post.created_at), 'PPP', { locale: tr })}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Button asChild variant="ghost" size="sm">
-                      <Link href={`/admin/blog/${post.id}`}>Düzenle</Link>
-                    </Button>
+                    <div className="flex items-center justify-end gap-2">
+                      <Button asChild variant="ghost" size="sm">
+                        <Link href={`/blog/${post.slug}`} target="_blank" className="flex items-center gap-1">
+                          <ExternalLink className="w-4 h-4" />
+                        </Link>
+                      </Button>
+                      <Button asChild variant="ghost" size="sm">
+                        <Link href={`/admin/blog/${post.id}`} className="flex items-center gap-1">
+                          <Edit className="w-4 h-4" />
+                          Düzenle</Link>
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

@@ -9,6 +9,7 @@ export interface BlogPost {
   content: string;
   excerpt: string;
   cover_image: string;
+  meta_description?: string;
   status: BlogStatus;
   published_at: string | null;
   author_id: string;
@@ -20,6 +21,7 @@ export const blogPostFormSchema = z.object({
   title: z.string().min(1, 'Başlık zorunludur'),
   content: z.string().min(1, 'İçerik zorunludur'),
   cover_image: z.string().optional(),
+  meta_description: z.string().max(160, 'Meta açıklama en fazla 160 karakter olmalıdır').optional(),
   status: z.enum(['draft', 'published']),
   publishedAt: z.string().optional()
 });
