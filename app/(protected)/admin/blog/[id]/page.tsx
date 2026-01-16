@@ -15,24 +15,21 @@ export default async function EditBlogPostPage({ params }: { params: Promise<{ i
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">{blogPost.title}</h1>
-            <Button size="icon" variant="outline" asChild>
-              <Link href={`/blog/${blogPost.slug}`} target="_blank">
-                <SquareArrowOutUpRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <DeleteBlogPost id={blogPost.id} />
+    <div className="container mx-auto py-8 px-4">
+      <div className="flex justify-between items-center mb-8">
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold">{blogPost.title}</h1>
+          <Button size="icon" variant="outline" asChild>
+            <Link href={`/blog/${blogPost.slug}`} target="_blank">
+              <SquareArrowOutUpRight className="h-4 w-4" />
+            </Link>
+          </Button>
         </div>
-
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <BlogPostForm onSubmit={updateBlogPost} initialData={blogPost} />
-        </div>
+        <DeleteBlogPost id={blogPost.id} />
       </div>
+
+      <BlogPostForm onSubmit={updateBlogPost} initialData={blogPost} />
     </div>
   );
 }
+
