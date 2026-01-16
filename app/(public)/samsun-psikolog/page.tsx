@@ -120,6 +120,28 @@ export default async function SamsunPsikologPage() {
         ]
     };
 
+    const personJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Lokman Yılmaz',
+        jobTitle: 'Uzman Psikolog ve Aile Danışmanı',
+        description: 'Samsun\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
+        image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
+        url: 'https://lokmanyilmaz.com.tr/samsun-psikolog',
+        address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Samsun',
+            addressRegion: 'Samsun',
+            addressCountry: 'TR'
+        },
+        telephone: '+905448322091',
+        email: 'psk.lokmanylmz@gmail.com',
+        worksFor: {
+            '@type': 'Organization',
+            name: 'Psikodemy'
+        }
+    };
+
     return (
         <>
             <script
@@ -133,6 +155,10 @@ export default async function SamsunPsikologPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
             />
 
             {/* Hero Section */}

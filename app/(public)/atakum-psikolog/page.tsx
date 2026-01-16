@@ -121,6 +121,29 @@ export default async function AtakumPsikologPage() {
         ]
     };
 
+    const personJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Lokman Yılmaz',
+        jobTitle: 'Uzman Psikolog ve Aile Danışmanı',
+        description: 'Atakum\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
+        image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
+        url: 'https://lokmanyilmaz.com.tr/atakum-psikolog',
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Psikodemy',
+            addressLocality: 'Atakum',
+            addressRegion: 'Samsun',
+            addressCountry: 'TR'
+        },
+        telephone: '+905448322091',
+        email: 'psk.lokmanylmz@gmail.com',
+        worksFor: {
+            '@type': 'Organization',
+            name: 'Psikodemy'
+        }
+    };
+
     return (
         <>
             <script
@@ -134,6 +157,10 @@ export default async function AtakumPsikologPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
             />
 
             {/* Hero Section */}

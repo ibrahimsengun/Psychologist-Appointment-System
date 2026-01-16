@@ -17,9 +17,13 @@ export default async function Home() {
     '@type': 'ProfessionalService',
     name: 'Uzman Psk. Lokman Yılmaz',
     description: 'Samsun Aile Danışmanı ve Psikolojik Destek',
+    image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
+    logo: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
+    url: 'https://www.lokmanyilmaz.com',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Samsun',
+      addressRegion: 'Atakum',
       addressCountry: 'TR'
     },
     telephone: '+905448322091',
@@ -40,11 +44,36 @@ export default async function Home() {
     ]
   };
 
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Lokman Yılmaz',
+    jobTitle: 'Uzman Psikolog ve Aile Danışmanı',
+    description: 'Samsun Atakum\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
+    image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
+    url: 'https://www.lokmanyilmaz.com',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Samsun',
+      addressRegion: 'Atakum',
+      addressCountry: 'TR'
+    },
+    telephone: '+905448322091',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Psikodemy'
+    }
+  };
+
   return (
     <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
       <Header />
       <Hero />
