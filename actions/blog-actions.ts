@@ -137,10 +137,27 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     throw new Error('Yetkilendirme hatası');
   }
 
+  // Mevcut blog yazısını kontrol et
+  const { data: existingPost, error: fetchError } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (fetchError || !existingPost) {
+    console.error('Blog yazısı bulunamadı:', fetchError);
+    throw new Error('Blog yazısı bulunamadı');
+  }
+
   const now = new Date().toISOString();
   const excerpt = generateExcerpt(formData.content);
 
-  const { data, error } = await supabase
+  // published_at: Eğer zaten yayında ise mevcut tarihi koru, değilse yeni tarih ata
+  const publishedAt = formData.status === 'published'
+    ? (existingPost.published_at || now)
+    : null;
+
+  const { error: updateError } = await supabase
     .from('blog_posts')
     .update({
       title: formData.title,
@@ -149,32 +166,41 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
       cover_image: formData.cover_image,
       meta_description: formData.meta_description,
       status: formData.status,
-      published_at: formData.status === 'published' ? now : null,
+      published_at: publishedAt,
       updated_at: now
     })
+    .eq('id', id);
+
+  if (updateError) {
+    console.error('Blog yazısı güncelleme hatası:', updateError);
+    throw new Error('Blog yazısı güncellenemedi: ' + updateError.message);
+  }
+
+  // Güncellenmiş veriyi ayrı bir sorgu ile al
+  const { data: updatedPost, error: refetchError } = await supabase
+    .from('blog_posts')
+    .select('*')
     .eq('id', id)
-    .eq('author_id', user.id)
-    .select()
     .single();
 
-  if (error) {
-    console.error('Blog yazısı güncelleme hatası:', error);
-    throw new Error('Blog yazısı güncellenemedi');
+  if (refetchError || !updatedPost) {
+    console.error('Güncellenmiş blog yazısı getirilemedi:', refetchError);
+    throw new Error('Blog yazısı güncellendi ancak veri getirilemedi');
   }
 
   return {
-    id: data.id,
-    title: data.title,
-    slug: data.slug,
-    content: data.content,
-    excerpt: data.excerpt,
-    cover_image: data.cover_image,
-    meta_description: data.meta_description,
-    status: data.status,
-    published_at: data.published_at,
-    created_at: data.created_at,
-    updated_at: data.updated_at,
-    author_id: data.author_id
+    id: updatedPost.id,
+    title: updatedPost.title,
+    slug: updatedPost.slug,
+    content: updatedPost.content,
+    excerpt: updatedPost.excerpt,
+    cover_image: updatedPost.cover_image,
+    meta_description: updatedPost.meta_description,
+    status: updatedPost.status,
+    published_at: updatedPost.published_at,
+    created_at: updatedPost.created_at,
+    updated_at: updatedPost.updated_at,
+    author_id: updatedPost.author_id
   };
 }
 
