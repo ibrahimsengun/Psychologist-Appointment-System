@@ -48,18 +48,6 @@ export default function Header() {
             >
               Blog
             </Link>
-            <Link
-              href="/samsun-psikolog"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Samsun Psikolog
-            </Link>
-            <Link
-              href="/atakum-psikolog"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Atakum Psikolog
-            </Link>
           </nav>
 
           {/* Desktop CTA Buttons */}
