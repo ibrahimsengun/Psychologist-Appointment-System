@@ -40,7 +40,7 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="flex flex-col gap-2">
         <Label htmlFor="name">Adınız</Label>
-        <Input id="name" {...register('name')} placeholder="Adınızı girin" />
+        <Input id="name" {...register('name')} placeholder="Adınızı girin" autoComplete="name" />
         {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       </div>
 
@@ -51,6 +51,7 @@ export function ContactForm() {
           type="email"
           {...register('email')}
           placeholder="E-posta adresinizi girin"
+          autoComplete="email"
         />
         {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
       </div>
@@ -67,6 +68,8 @@ export function ContactForm() {
               value={value}
               onChange={(e: any) => onChange(e.target.value)}
               placeholder="(5XX) XXX XX XX"
+              autoComplete="tel"
+              inputMode="tel"
             />
           )}
         />

@@ -156,7 +156,7 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {initialData ? 'Güncelleniyor...' : 'Oluşturuluyor...'}
+                      {initialData ? 'Güncelleniyor…' : 'Oluşturuluyor…'}
                     </>
                   ) : (
                     <>

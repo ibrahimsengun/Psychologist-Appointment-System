@@ -48,6 +48,18 @@ export default function Header() {
             >
               Blog
             </Link>
+            <Link
+              href="/samsun-psikolog"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Samsun Psikolog
+            </Link>
+            <Link
+              href="/atakum-psikolog"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Atakum Psikolog
+            </Link>
           </nav>
 
           {/* Desktop CTA Buttons */}
@@ -112,6 +124,20 @@ export default function Header() {
             >
               Blog
             </Link>
+            <Link
+              href="/samsun-psikolog"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Samsun Psikolog
+            </Link>
+            <Link
+              href="/atakum-psikolog"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Atakum Psikolog
+            </Link>
 
             <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
               <Button asChild variant="outline" className="w-full justify-center rounded-xl">
@@ -122,7 +148,7 @@ export default function Header() {
               </Button>
               <Button asChild className="w-full justify-center rounded-xl shadow-lg shadow-primary/25">
                 <Link href="/appointment" onClick={() => setIsOpen(false)}>
-                  <CalendarDays className="mr-2 h-4 w-4" />
+                  <CalendarDays className="ml-auto h-4 w-4 opacity-50" aria-hidden="true" />
                   Randevu Al
                 </Link>
               </Button>

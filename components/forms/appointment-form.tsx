@@ -105,7 +105,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
                         ) : (
                           <span>Tarih seçin</span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" aria-hidden="true" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -200,7 +200,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
               <FormItem>
                 <FormLabel>Ad Soyad</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} autoComplete="name" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -214,7 +214,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
               <FormItem>
                 <FormLabel>E-posta</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input type="email" {...field} autoComplete="email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -239,6 +239,8 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
                     value={field.value}
                     onAccept={(value) => field.onChange(value)}
                     placeholder="05XX XXX XX XX"
+                    autoComplete="tel"
+                    inputMode="tel"
                   />
                 </FormControl>
                 <FormMessage />
@@ -263,6 +265,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
                       value={field.value}
                       onAccept={(value) => field.onChange(value)}
                       placeholder="GG.AA.YYYY"
+                      autoComplete="bday"
                     />
                   </div>
                 </FormControl>
@@ -292,7 +295,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
         <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <span className="mr-2">Randevu Oluşturuluyor</span>
+              <span className="mr-2">Randevu Oluşturuluyor…</span>
               <Loader2 className="h-4 w-4 animate-spin" />
             </>
           ) : (

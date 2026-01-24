@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function About() {
   return (
@@ -172,7 +173,10 @@ export default function About() {
             {/* Hizmet Bilgisi */}
             <div className="bg-muted/50 rounded-xl p-6">
               <p className="text-lg text-foreground">
-                <strong>Psikodemy</strong> bünyesinde Samsun'da yüz yüze, Türkiye genelinde ise <strong>online danışmanlık</strong> hizmeti sunulmaktadır.
+                <strong>Psikodemy</strong> bünyesinde{' '}
+                <Link href="/samsun-psikolog" className="text-primary hover:underline font-semibold">
+                  Samsun'da yüz yüze
+                </Link>, Türkiye genelinde ise <strong>online danışmanlık</strong> hizmeti sunulmaktadır.
               </p>
             </div>
           </div>

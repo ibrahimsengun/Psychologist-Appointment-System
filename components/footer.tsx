@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
       <div className="container relative z-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-6">
 
           {/* Logo ve Açıklama */}
           <div className="lg:col-span-1">
@@ -77,6 +77,27 @@ export default function Footer() {
               <Link href="/appointment" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Randevu Al
               </Link>
+            </div>
+          </div>
+
+          {/* Hizmet Bölgeleri */}
+          <div>
+            <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
+              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
+              Hizmet Bölgeleri
+            </h3>
+            <div className="space-y-3">
+              <Link href="/samsun-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Samsun Psikolog
+              </Link>
+              <Link href="/atakum-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Atakum Psikolog
+              </Link>
+              <div className="pt-2 border-t border-background/10">
+                <p className="text-background/50 text-sm">
+                  İlkadım, Canik, Bafra ve tüm Samsun ilçeleri
+                </p>
+              </div>
             </div>
           </div>
 

@@ -12,11 +12,11 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Uzman Psk. Lokman Yılmaz | Samsun Atakum Psikolog & Aile Danışmanı',
+  title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz | Atakum Aile Danışmanı',
   description:
-    'Samsun Atakum bölgesinde uzman psikolog ve aile danışmanı Lokman Yılmaz ile psikolojik destek alın. Bireysel terapi, çift terapisi ve ergen danışmanlığı hizmetleri.',
+    'Samsun\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile psikolojik destek alın. Atakum, İlkadım, Canik bölgelerinde yüz yüze ve online terapi hizmetleri.',
   keywords:
-    'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, samsun terapi, atakum aile terapisti, online terapi',
+    'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, samsun terapi, atakum aile terapisti, online terapi, ilkadım psikolog, canik psikolog',
   authors: [{ name: 'Lokman Yılmaz' }],
   creator: 'Lokman Yılmaz',
   publisher: 'Lokman Yılmaz',
@@ -85,6 +85,7 @@ export default function RootLayout({
   return (
     <html lang="tr" className={geistSans.className} suppressHydrationWarning>
       <head>
+        <meta name="color-scheme" content="light dark" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -92,6 +93,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Psk. Lokman Yılmaz" />
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg"
+        >
+          Ana içeriğe geç
+        </a>
         <ClarityAnalytics />
         <SpeedInsights />
         <TooltipProvider>

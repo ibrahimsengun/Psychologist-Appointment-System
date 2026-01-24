@@ -26,6 +26,45 @@ export default async function Home() {
       addressRegion: 'Atakum',
       addressCountry: 'TR'
     },
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'Samsun',
+        '@id': 'https://www.wikidata.org/wiki/Q79876'
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Atakum',
+        containedIn: {
+          '@type': 'City',
+          name: 'Samsun'
+        }
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'İlkadım',
+        containedIn: {
+          '@type': 'City',
+          name: 'Samsun'
+        }
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Canik',
+        containedIn: {
+          '@type': 'City',
+          name: 'Samsun'
+        }
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Bafra',
+        containedIn: {
+          '@type': 'City',
+          name: 'Samsun'
+        }
+      }
+    ],
     telephone: '+905448322091',
     priceRange: '$$',
     openingHoursSpecification: [
