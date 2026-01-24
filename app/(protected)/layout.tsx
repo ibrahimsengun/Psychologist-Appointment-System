@@ -1,6 +1,6 @@
 'use client';
 
-import { BookText, Briefcase, Calendar, Home, LogOut, Mail, Menu, Users } from 'lucide-react';
+import { BookText, Briefcase, Calendar, Home, LogOut, Mail, Menu, Users, ChartBarStacked } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -12,6 +12,7 @@ const adminLinks = [
   { name: 'Randevular', url: '/admin', icon: Calendar },
   { name: 'Müsait Zamanlar', url: '/admin/available-times', icon: Users },
   { name: 'Blog Yazıları', url: '/admin/blog', icon: BookText },
+  { name: 'Blog Kategorileri', url: '/admin/categories', icon: ChartBarStacked },
   { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail },
   { name: 'Hizmetler', url: '/admin/services', icon: Briefcase }
 ];
@@ -57,8 +58,8 @@ export default function ProtectedLayout({
                     key={link.url}
                     href={link.url}
                     className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${active
-                        ? 'bg-white text-foreground shadow-sm'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-white/50'
+                      ? 'bg-white text-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-white/50'
                       }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -123,8 +124,8 @@ export default function ProtectedLayout({
                           href={link.url}
                           onClick={() => setIsOpen(false)}
                           className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${active
-                              ? 'bg-primary/10 text-primary font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                            ? 'bg-primary/10 text-primary font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                             }`}
                         >
                           <Icon className="w-5 h-5" />

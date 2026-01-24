@@ -1,6 +1,9 @@
 import { getPostBySlug } from '@/actions/blog-actions';
+import { getBlogPostCategories } from '@/actions/category-actions';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 
@@ -76,6 +79,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const wordCount = getWordCount(post.content);
   const description = post.meta_description || post.excerpt;
 
+  // Load categories
+  const categories = await getBlogPostCategories(post.id);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -98,7 +104,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://lokmanyilmaz.com.tr/blog/${slug}`
-    }
+    },
+    keywords: categories.map(cat => cat.name).join(', '),
+    articleSection: categories.length > 0 ? categories[0].name : 'Genel'
   };
 
   return (
@@ -123,6 +131,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <span>•</span>
         <span>{readingTime} dk okuma</span>
       </div>
+
+      {/* Kategoriler */}
+      {categories.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-6">
+          {categories.map((category) => (
+            <Link key={category.id} href={`/blog/category/${category.slug}`}>
+              <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+                {category.name}
+              </Badge>
+            </Link>
+          ))}
+        </div>
+      )}
 
       {post.cover_image && (
         <div className="relative aspect-video mb-8">

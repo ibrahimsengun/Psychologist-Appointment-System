@@ -20,13 +20,15 @@ import {
 import { BlogPost, BlogPostFormValues, blogPostFormSchema } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, Save } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { ImageUpload } from '../image-upload';
 import { MinimalTiptapEditor } from '../minimal-tiptap';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { CategoryMultiSelect } from '../category-multi-select';
+import { getBlogPostCategories, updateBlogPostCategories } from '@/actions/category-actions';
 
 interface BlogPostFormProps {
   initialData?: BlogPost;
@@ -38,6 +40,7 @@ interface BlogPostFormProps {
 export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [initialCategoryIds, setInitialCategoryIds] = useState<string[]>([]);
 
   const form = useForm<BlogPostFormValues>({
     resolver: zodResolver(blogPostFormSchema),
@@ -46,21 +49,43 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
       content: '',
       cover_image: '',
       meta_description: '',
-      status: 'draft'
+      status: 'draft',
+      category_ids: []
     }
   });
+
+  // Load initial categories if editing
+  useEffect(() => {
+    if (initialData?.id) {
+      getBlogPostCategories(initialData.id).then((categories) => {
+        const categoryIds = categories.map((cat) => cat.id);
+        setInitialCategoryIds(categoryIds);
+        form.setValue('category_ids', categoryIds);
+      });
+    }
+  }, [initialData?.id, form]);
 
   const handleSubmit = async (data: BlogPostFormValues) => {
     try {
       setIsSubmitting(true);
+      let postId: string;
+
       if (initialData) {
         await (onSubmit as (id: string, data: BlogPostFormValues) => Promise<any>)(
           initialData.id,
           data
         );
+        postId = initialData.id;
       } else {
-        await (onSubmit as (data: BlogPostFormValues) => Promise<any>)(data);
+        const result = await (onSubmit as (data: BlogPostFormValues) => Promise<any>)(data);
+        postId = result.id;
       }
+
+      // Update categories
+      if (data.category_ids) {
+        await updateBlogPostCategories(postId, data.category_ids);
+      }
+
       toast.success(initialData ? 'Blog yazısı güncellendi' : 'Blog yazısı oluşturuldu');
       router.push('/admin/blog');
     } catch (error) {
@@ -198,6 +223,33 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                           </SelectItem>
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Kategoriler */}
+              <div className="bg-card border rounded-lg p-4 shadow-sm space-y-4">
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                  Kategoriler
+                </h3>
+                <FormField
+                  control={form.control}
+                  name="category_ids"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm">Blog Kategorileri</FormLabel>
+                      <FormControl>
+                        <CategoryMultiSelect
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          disabled={isSubmitting}
+                        />
+                      </FormControl>
+                      <p className="text-xs text-muted-foreground">
+                        Bu yazı için uygun kategorileri seçin
+                      </p>
                       <FormMessage />
                     </FormItem>
                   )}

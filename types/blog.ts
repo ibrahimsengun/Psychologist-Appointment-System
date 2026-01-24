@@ -15,6 +15,7 @@ export interface BlogPost {
   author_id: string;
   created_at: string;
   updated_at: string;
+  categories?: { id: string; name: string; slug: string; description?: string }[];
 }
 
 export const blogPostFormSchema = z.object({
@@ -23,7 +24,8 @@ export const blogPostFormSchema = z.object({
   cover_image: z.string().optional(),
   meta_description: z.string().max(160, 'Meta açıklama en fazla 160 karakter olmalıdır').optional(),
   status: z.enum(['draft', 'published']),
-  publishedAt: z.string().optional()
+  publishedAt: z.string().optional(),
+  category_ids: z.array(z.string()).optional()
 });
 
 export type BlogPostFormValues = z.infer<typeof blogPostFormSchema>;

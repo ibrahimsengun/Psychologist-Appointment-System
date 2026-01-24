@@ -1,9 +1,12 @@
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getBlogPostCategories } from '@/actions/category-actions';
+import { Badge } from '@/components/ui/badge';
 
 interface BlogCardProps {
   post: BlogPost;
+  categories?: { id: string; name: string; slug: string }[];
 }
 
 export function BlogCard({ post }: BlogCardProps) {
@@ -46,6 +49,17 @@ export function BlogCard({ post }: BlogCardProps) {
           <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
             {post.title}
           </h3>
+
+          {/* Kategoriler */}
+          {post.categories && post.categories.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {post.categories.slice(0, 3).map((category: any) => (
+                <Badge key={category.id} variant="secondary" className="text-xs">
+                  {category.name}
+                </Badge>
+              ))}
+            </div>
+          )}
 
           {/* Özet */}
           <p className="text-muted-foreground line-clamp-2 mb-4">
