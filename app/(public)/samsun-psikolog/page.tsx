@@ -6,16 +6,16 @@ import Image from 'next/image';
 export const metadata: Metadata = {
     title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
     description:
-        'Samsun\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel terapi, çift terapisi, aile danışmanlığı ve online terapi hizmetleri.',
+        'Samsun\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel danışmanlık, çift danışmanlığı, aile danışmanlığı ve online görüşme hizmetleri.',
     keywords:
-        'samsun psikolog, samsun psikolojik danışman, samsun aile danışmanı, samsun terapi, samsun psikolog randevu, samsun online psikolog',
+        'samsun psikolog, samsun psikolojik danışman, samsun aile danışmanı, samsun psikolog randevu, samsun online psikolog',
     alternates: {
         canonical: 'https://lokmanyilmaz.com.tr/samsun-psikolog'
     },
     openGraph: {
         title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
-            'Samsun\'da uzman psikolog hizmeti. Bireysel terapi, aile danışmanlığı ve online terapi.',
+            'Samsun\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
         url: 'https://lokmanyilmaz.com.tr/samsun-psikolog',
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
@@ -30,14 +30,14 @@ const faqItems = [
             'Web sitemiz üzerinden online randevu sistemi ile veya telefonla arayarak randevu alabilirsiniz. Randevu için uygun gün ve saatleri seçerek kolayca rezervasyon yapabilirsiniz.'
     },
     {
-        question: 'Samsun\'da online terapi hizmeti var mı?',
+        question: 'Samsun\'da online görüşme hizmeti var mı?',
         answer:
-            'Evet, Samsun\'da yaşayan danışanlarımıza hem yüz yüze hem de online terapi hizmeti sunuyoruz. Online görüşmeler güvenli video konferans platformları üzerinden gerçekleştirilmektedir.'
+            'Evet, Samsun\'da yaşayan danışanlarımıza hem yüz yüze hem de online görüşme hizmeti sunuyoruz. Online görüşmeler güvenli video konferans platformları üzerinden gerçekleştirilmektedir.'
     },
     {
         question: 'İlk psikolojik görüşme nasıl geçer?',
         answer:
-            'İlk görüşmede sizinle tanışır, beklentilerinizi ve ihtiyaçlarınızı dinleriz. Güvenli ve yargısız bir ortamda kendinizi rahatça ifade edebilirsiniz. Bu görüşme sonrasında size uygun terapi planı oluşturulur.'
+            'İlk görüşmede sizinle tanışır, beklentilerinizi ve ihtiyaçlarınızı dinleriz. Güvenli ve yargısız bir ortamda kendinizi rahatça ifade edebilirsiniz. Bu görüşme sonrasında size uygun danışmanlık planı oluşturulur.'
     },
     {
         question: 'Hangi terapi yöntemleri kullanılıyor?',
@@ -196,7 +196,7 @@ export default async function SamsunPsikologPage() {
 
                             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                                 Samsun&apos;da profesyonel psikolojik destek ve aile danışmanlığı hizmeti.
-                                <span className="text-foreground font-medium"> Yüz yüze ve online</span> terapi
+                                <span className="text-foreground font-medium"> Yüz yüze ve online</span> görüşme
                                 seçenekleriyle yanınızdayız.
                             </p>
 
@@ -293,7 +293,7 @@ export default async function SamsunPsikologPage() {
                             </div>
                             <div className="bg-background rounded-xl p-4 border border-border/50">
                                 <div className="text-2xl font-bold text-primary mb-1">Online</div>
-                                <div className="text-sm text-muted-foreground">Terapi Hizmeti</div>
+                                <div className="text-sm text-muted-foreground">Online Görüşme</div>
                             </div>
                         </div>
                     </div>

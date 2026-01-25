@@ -75,7 +75,7 @@ export default function TermsPage() {
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <span className="text-primary mt-1">•</span>
-                                        <span>Online terapi hizmetleri</span>
+                                        <span>Online görüşme hizmetleri</span>
                                     </li>
                                 </ul>
                             </div>

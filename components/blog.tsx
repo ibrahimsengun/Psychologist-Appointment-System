@@ -18,7 +18,7 @@ export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
             Blog
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Psikoloji, terapi ve kişisel gelişim üzerine güncel yazılar
+            Psikoloji ve kişisel gelişim üzerine güncel yazılar
           </p>
         </div>
 

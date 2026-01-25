@@ -112,20 +112,6 @@ export default function Header() {
             >
               Blog
             </Link>
-            <Link
-              href="/samsun-psikolog"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Samsun Psikolog
-            </Link>
-            <Link
-              href="/atakum-psikolog"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Atakum Psikolog
-            </Link>
 
             <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
               <Button asChild variant="outline" className="w-full justify-center rounded-xl">

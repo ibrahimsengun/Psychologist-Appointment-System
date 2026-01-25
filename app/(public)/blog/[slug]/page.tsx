@@ -1,7 +1,9 @@
 import { getPostBySlug } from '@/actions/blog-actions';
 import { getBlogPostCategories } from '@/actions/category-actions';
+import { getRelatedPosts } from '@/actions/related-posts-actions';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Badge } from '@/components/ui/badge';
+import { RelatedPosts } from '@/components/blog/related-posts';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -82,6 +84,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Load categories
   const categories = await getBlogPostCategories(post.id);
 
+  // Load related posts
+  const relatedPosts = await getRelatedPosts(post.id, 3);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -110,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   };
 
   return (
-    <article className="container py-8 max-w-4xl">
+    <article className="container py-8 max-w-6xl">
       <Breadcrumb
         items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]}
       />
@@ -161,6 +166,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         className="prose prose-lg dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      {/* Related Posts */}
+      <RelatedPosts posts={relatedPosts} />
     </article>
   );
 }

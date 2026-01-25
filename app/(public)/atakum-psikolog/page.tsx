@@ -6,16 +6,16 @@ import Image from 'next/image';
 export const metadata: Metadata = {
     title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
     description:
-        'Atakum\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel terapi, çift terapisi, aile danışmanlığı ve online terapi hizmetleri.',
+        'Atakum\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel danışmanlık, çift danışmanlığı, aile danışmanlığı ve online görüşme hizmetleri.',
     keywords:
-        'atakum psikolog, atakum psikolojik danışman, atakum aile danışmanı, atakum terapi, atakum psikolog randevu, samsun atakum psikolog',
+        'atakum psikolog, atakum psikolojik danışman, atakum aile danışmanı, atakum psikolog randevu, samsun atakum psikolog',
     alternates: {
         canonical: 'https://lokmanyilmaz.com.tr/atakum-psikolog'
     },
     openGraph: {
         title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
-            'Atakum\'da uzman psikolog hizmeti. Bireysel terapi, aile danışmanlığı ve online terapi.',
+            'Atakum\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
         url: 'https://lokmanyilmaz.com.tr/atakum-psikolog',
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
@@ -30,19 +30,19 @@ const faqItems = [
             'Web sitemiz üzerinden online randevu sistemi ile veya telefonla arayarak randevu alabilirsiniz. Psikodemy ofisimiz Atakum\'da merkezi bir konumda yer almaktadır.'
     },
     {
-        question: 'Atakum\'da yüz yüze terapi hizmeti veriliyor mu?',
+        question: 'Atakum\'da yüz yüze görüşme hizmeti veriliyor mu?',
         answer:
-            'Evet, Atakum bölgesindeki Psikodemy ofisimizde yüz yüze terapi hizmeti sunuyoruz. Ayrıca online terapi seçeneği de mevcuttur.'
+            'Evet, Atakum bölgesindeki Psikodemy ofisimizde yüz yüze görüşme hizmeti sunuyoruz. Ayrıca online görüşme seçeneği de mevcuttur.'
     },
     {
         question: 'İlk psikolojik görüşme nasıl geçer?',
         answer:
-            'İlk görüşmede sizinle tanışır, beklentilerinizi ve ihtiyaçlarınızı dinleriz. Güvenli ve yargısız bir ortamda kendinizi rahatça ifade edebilirsiniz. Bu görüşme sonrasında size uygun terapi planı oluşturulur.'
+            'İlk görüşmede sizinle tanışır, beklentilerinizi ve ihtiyaçlarınızı dinleriz. Güvenli ve yargısız bir ortamda kendinizi rahatça ifade edebilirsiniz. Bu görüşme sonrasında size uygun danışmanlık planı oluşturulur.'
     },
     {
         question: 'Hangi yaş gruplarına hizmet veriliyor?',
         answer:
-            'Çocuklar, ergenler ve yetişkinlerle çalışıyoruz. Bireysel terapi, aile danışmanlığı ve çift terapisi hizmetleri sunulmaktadır.'
+            'Çocuklar, ergenler ve yetişkinlerle çalışıyoruz. Bireysel danışmanlık, aile danışmanlığı ve çift danışmanlığı hizmetleri sunulmaktadır.'
     }
 ];
 
@@ -198,7 +198,7 @@ export default async function AtakumPsikologPage() {
 
                             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                                 Atakum&apos;da Psikodemy ofisimizde profesyonel psikolojik destek.
-                                <span className="text-foreground font-medium"> Yüz yüze ve online</span> terapi
+                                <span className="text-foreground font-medium"> Yüz yüze ve online</span> görüşme
                                 seçenekleriyle yanınızdayız.
                             </p>
 
@@ -314,7 +314,7 @@ export default async function AtakumPsikologPage() {
                             </div>
                             <div className="bg-background rounded-xl p-4 border border-border/50">
                                 <div className="text-2xl font-bold text-primary mb-1">Atakum</div>
-                                <div className="text-sm text-muted-foreground">Yüz Yüze Terapi</div>
+                                <div className="text-sm text-muted-foreground">Yüz Yüze Görüşme</div>
                             </div>
                         </div>
                     </div>
