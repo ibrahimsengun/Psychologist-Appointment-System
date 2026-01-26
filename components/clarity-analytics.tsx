@@ -1,12 +1,19 @@
 'use client';
 
 import Script from 'next/script';
+import { usePathname } from 'next/navigation';
 
 export function ClarityAnalytics() {
     const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+    const pathname = usePathname();
 
     // Don't render if no Clarity ID is set
     if (!clarityId) {
+        return null;
+    }
+
+    // Don't track admin pages
+    if (pathname?.startsWith('/admin') || pathname?.startsWith('/sign-in') || pathname?.startsWith('/reset-password')) {
         return null;
     }
 
