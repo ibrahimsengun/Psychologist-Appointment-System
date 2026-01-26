@@ -141,7 +141,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {categories.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {categories.map((category) => (
-            <Link key={category.id} href={`/blog/category/${category.slug}`}>
+            <Link key={category.id} href={`/blog/kategori/${category.slug}`}>
               <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
                 {category.name}
               </Badge>
