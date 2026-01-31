@@ -1,8 +1,10 @@
 import { getBlogPosts } from '@/actions/blog-actions';
+import { getHomepageFAQs } from '@/actions/faq-actions';
 import { getServices } from '@/actions/service-actions';
 import About from '@/components/about';
 import Blog from '@/components/blog';
 import Contact from '@/components/contact';
+import { FAQSection } from '@/components/faq-section';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import Hero from '@/components/hero';
@@ -11,6 +13,7 @@ import Services from '@/components/services';
 export default async function Home() {
   const blogPosts = await getBlogPosts();
   const services = await getServices();
+  const faqs = await getHomepageFAQs();
 
   const businessJsonLd = {
     '@context': 'https://schema.org',
@@ -119,6 +122,7 @@ export default async function Home() {
       <About />
       <Services services={services} />
       <Blog blogPosts={blogPosts.slice(0, 3)} />
+      <FAQSection faqs={faqs} />
       <Contact />
       <Footer />
     </main>

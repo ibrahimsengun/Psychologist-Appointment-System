@@ -16,9 +16,6 @@ export default function Footer() {
           {/* Logo ve Açıklama */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                <span className="text-primary font-bold text-xl">LY</span>
-              </div>
               <div>
                 <p className="font-semibold text-background leading-tight">Uzm. Psk. Lokman Yılmaz</p>
                 <p className="text-xs text-background/60">Psikolog & Aile Danışmanı</p>
@@ -58,7 +55,6 @@ export default function Footer() {
           {/* Hızlı Linkler */}
           <div>
             <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
-              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
               Hızlı Linkler
             </h3>
             <div className="space-y-3">
@@ -74,6 +70,9 @@ export default function Footer() {
               <Link href="/blog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Blog
               </Link>
+              <Link href="/sss" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                SSS
+              </Link>
               <Link href="/appointment" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Randevu Al
               </Link>
@@ -83,7 +82,6 @@ export default function Footer() {
           {/* Hizmet Bölgeleri */}
           <div>
             <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
-              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
               Hizmet Bölgeleri
             </h3>
             <div className="space-y-3">
@@ -104,7 +102,6 @@ export default function Footer() {
           {/* İletişim */}
           <div>
             <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
-              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
               İletişim
             </h3>
             <div className="space-y-4">
@@ -139,7 +136,6 @@ export default function Footer() {
           {/* Çalışma Saatleri */}
           <div>
             <h3 className="text-background font-semibold text-lg mb-6 flex items-center gap-2">
-              <span className="w-8 h-0.5 bg-primary rounded-full"></span>
               Çalışma Saatleri
             </h3>
             <div className="space-y-4">

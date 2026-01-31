@@ -1,6 +1,7 @@
 import { createAppointment, getAvailableTimeSlots } from '@/actions/appointment-actions';
 import { AppointmentForm } from '@/components/forms/appointment-form';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
+import Link from 'next/link';
 
 // Sayfayı dinamik olarak işaretle
 export const dynamic = 'force-dynamic';
@@ -67,6 +68,21 @@ export default async function AppointmentPage() {
 
               {/* Form */}
               <AppointmentForm availableTimeSlots={formattedTimeSlots} action={createAppointment} />
+            </div>
+
+            {/* SSS Linki */}
+            <div className="relative z-20 text-center mt-6">
+              <p className="text-sm text-muted-foreground">
+                Sorularınız mı var?{' '}
+                <Link href="/sss" className="text-primary hover:underline font-medium">
+                  SSS
+                </Link>{' '}
+                sayfamızı inceleyebilir veya{' '}
+                <Link href="/contact" className="text-primary hover:underline font-medium">
+                  iletişim formu
+                </Link>{' '}
+                ile bize ulaşabilirsiniz.
+              </p>
             </div>
           </div>
         </div>
