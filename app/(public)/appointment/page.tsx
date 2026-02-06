@@ -1,4 +1,4 @@
-import { createAppointment, getAvailableTimeSlots } from '@/actions/appointment-actions';
+import { createAppointment, getAvailableTimeSlotsNew } from '@/actions/appointment-actions';
 import { AppointmentForm } from '@/components/forms/appointment-form';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function AppointmentPage() {
-  const availableTimeSlots = await getAvailableTimeSlots();
+  const availableTimeSlots = await getAvailableTimeSlotsNew();
 
   // Müsait zaman aralıklarını form için uygun formata dönüştürme
   const formattedTimeSlots = availableTimeSlots.reduce<{ date: string; times: string[] }[]>(

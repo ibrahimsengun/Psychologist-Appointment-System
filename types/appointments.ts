@@ -69,3 +69,53 @@ export const appointmentCancelFormSchema = z.object({
 });
 
 export type AppointmentCancelFormValues = z.infer<typeof appointmentCancelFormSchema>;
+
+// Haftalık şablon için gün tanımı
+export interface WeeklyScheduleDay {
+  id: string;
+  dayOfWeek: number; // 0-6 (Pazar-Cumartesi)
+  isEnabled: boolean;
+  startTime: string; // "09:00"
+  endTime: string; // "18:00"
+}
+
+// Zaman bloğu (site dışı randevu, tatil vb.)
+export interface TimeBlock {
+  id: string;
+  date: string; // "2026-02-10"
+  startTime: string | null; // null ise tüm gün
+  endTime: string | null;
+  reason?: string;
+  blockType: 'manual' | 'booked';
+  appointmentId?: string;
+  createdAt: string;
+}
+
+// Haftalık şablon form şeması
+export const weeklyScheduleDaySchema = z.object({
+  dayOfWeek: z.number().min(0).max(6),
+  isEnabled: z.boolean(),
+  startTime: z.string(),
+  endTime: z.string()
+});
+
+// Zaman bloğu form şeması
+export const timeBlockFormSchema = z
+  .object({
+    date: z.string().min(1, 'Lütfen bir tarih seçin'),
+    isFullDay: z.boolean().default(false),
+    startTime: z.string().optional(),
+    endTime: z.string().optional(),
+    reason: z.string().optional()
+  })
+  .refine(
+    (data) => {
+      if (!data.isFullDay) {
+        return data.startTime && data.endTime;
+      }
+      return true;
+    },
+    { message: 'Saat aralığı seçmelisiniz', path: ['startTime'] }
+  );
+
+export type TimeBlockFormValues = z.infer<typeof timeBlockFormSchema>;
