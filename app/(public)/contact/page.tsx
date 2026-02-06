@@ -49,8 +49,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-semibold mb-1">E-posta</h3>
-                <a href="mailto:info@lokmanyilmaz.com" className="text-gray-600 hover:text-primary">
-                  info@lokmanyilmaz.com
+                <a href="mailto:psk.lokmanylmz@gmail.com" className="text-gray-600 hover:text-primary">
+                  psk.lokmanylmz@gmail.com
                 </a>
               </div>
             </div>
