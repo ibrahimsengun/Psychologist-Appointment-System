@@ -27,13 +27,22 @@ export default function About() {
               Samsun Psikolog Hakkında
             </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Uzm. Psikolog Lokman Yılmaz Kimdir?
+              Uzm. Psk. Lokman Yılmaz | Samsun Atakum Psikolog
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              <strong className="text-foreground">Uzman Psikolog & Aile Danışmanı Lokman Yılmaz</strong>, Ondokuz Mayıs Üniversitesi Psikoloji Bölümü'nden onur derecesiyle, ardından aynı üniversitenin Evlilik ve Aile Danışmanlığı Programı'ndan yüksek onur derecesiyle mezun olarak Aile Danışmanı unvanını almıştır.
+              Merhabalar, ben <strong className="text-foreground">Uzm. Psk. Lokman Yılmaz</strong>. Ondokuz Mayıs Üniversitesi Psikoloji lisans eğitimimi onur derecesiyle, Evlilik ve Aile Danışmanlığı yüksek lisans eğitimimi ise yüksek onur derecesiyle tamamladım. Eğitim sürecimde hem özel hem de devlet kurumlarında staj yaparak farklı danışmanlık alanlarında deneyim kazandım.
+            </p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Şu anda Samsun Atakum&apos;da psikolog olarak yüz yüze ve online psikolojik danışmanlık hizmeti vermekteyim. Bireysel, çift ve aile danışmanlığı alanlarında; bilimsel temelli ve etik ilkelere bağlı bir anlayışla çalışmaktayım.
+            </p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Danışmanlık sürecinde psikodinamik yaklaşım, bilişsel davranışçı yaklaşım (BDT) ve çözüm odaklı yaklaşım çerçevesinden faydalanmaktayım. Her danışanın sürecini, bireysel ihtiyaç ve hedefleri doğrultusunda yapılandırılmış ve kişiye özel bir danışmanlık planı çerçevesinde yürütmekteyim.
+            </p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              Atakum&apos;daki ofisimizde yüz yüze görüşmelerin yanı sıra, online psikolog Samsun hizmeti kapsamında şehir dışından ve yurt dışından danışanlarla da çalışmaktayım.
             </p>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Çocuklar, ergenler ve yetişkinlerle çalışan Yılmaz; Samsun'da yüz yüze, Türkiye'nin her yerine online psikolojik destek sunmaktadır.
+              Eğer siz de Samsun psikolog veya Atakum psikolog arayışındaysanız, yüz yüze ya da online psikolojik danışmanlık için benimle iletişime geçebilirsiniz.
             </p>
 
             {/* Uzmanlık Alanları Grid */}
