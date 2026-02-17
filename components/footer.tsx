@@ -91,6 +91,12 @@ export default function Footer() {
               <Link href="/atakum-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Atakum Psikolog
               </Link>
+              <Link href="/samsun-atakum-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Samsun Atakum Psikolog
+              </Link>
+              <Link href="/atakum-samsun-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Atakum Samsun Psikolog
+              </Link>
               <div className="pt-2 border-t border-background/10">
                 <p className="text-background/50 text-sm">
                   İlkadım, Canik, Bafra ve tüm Samsun ilçeleri
