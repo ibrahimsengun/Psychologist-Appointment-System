@@ -14,8 +14,8 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // Use modern formats for smaller file sizes
     formats: ['image/avif', 'image/webp'],
-    // Reduce quality slightly for faster loading (default is 75)
-    // minimumCacheTTL: 60 * 60 * 24 * 30, // Cache for 30 days
+    // Cache images for 30 days
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   }
 };
 

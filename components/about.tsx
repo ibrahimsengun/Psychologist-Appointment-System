@@ -17,6 +17,8 @@ export default function About() {
                 alt="Uzman Psikolog Lokman Yılmaz"
                 width={600}
                 height={750}
+                loading="lazy"
+                quality={75}
               />
             </div>
           </div>
@@ -199,6 +201,8 @@ export default function About() {
                 alt="Lokman Yılmaz Danışmanlık"
                 width={600}
                 height={750}
+                loading="lazy"
+                quality={75}
               />
             </div>
           </div>

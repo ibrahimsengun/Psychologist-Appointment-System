@@ -2,6 +2,8 @@
 
 import { FAQ, FAQFormValues } from '@/types/faq';
 import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
+import { unstable_cache } from 'next/cache';
 
 // Public: Aktif FAQ'ları sıralı getir
 export async function getActiveFAQs(): Promise<FAQ[]> {
@@ -23,21 +25,29 @@ export async function getActiveFAQs(): Promise<FAQ[]> {
 
 // Public: Anasayfada gösterilecek FAQ'ları getir
 export async function getHomepageFAQs(): Promise<FAQ[]> {
-    const supabase = await createClient();
+    const cachedFn = unstable_cache(
+        async () => {
+            const supabase = createPublicClient();
 
-    const { data, error } = await supabase
-        .from('faqs')
-        .select('*')
-        .eq('is_active', true)
-        .eq('show_on_homepage', true)
-        .order('display_order', { ascending: true });
+            const { data, error } = await supabase
+                .from('faqs')
+                .select('*')
+                .eq('is_active', true)
+                .eq('show_on_homepage', true)
+                .order('display_order', { ascending: true });
 
-    if (error) {
-        console.error('Anasayfa FAQ getirme hatası:', error);
-        throw new Error('Anasayfa FAQ verileri yüklenemedi');
-    }
+            if (error) {
+                console.error('Anasayfa FAQ getirme hatası:', error);
+                throw new Error('Anasayfa FAQ verileri yüklenemedi');
+            }
 
-    return data as FAQ[];
+            return data as FAQ[];
+        },
+        ['homepage-faqs'],
+        { revalidate: 300, tags: ['faqs'] }
+    );
+
+    return cachedFn();
 }
 
 // Admin: Tüm FAQ'ları getir

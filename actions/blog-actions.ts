@@ -2,6 +2,8 @@
 
 import { BlogPost, BlogPostFormValues } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
+import { unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
 export async function getPublishedPosts() {
@@ -231,32 +233,40 @@ export async function deleteBlogPost(id: string): Promise<void> {
 
 // Blog yazılarını listeleme
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const supabase = await createClient();
+  const cachedFn = unstable_cache(
+    async () => {
+      const supabase = createPublicClient();
 
-  const { data, error } = await supabase
-    .from('blog_posts')
-    .select('*')
-    .order('created_at', { ascending: false });
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Blog yazıları listeleme hatası:', error);
-    throw new Error('Blog yazıları listelenemedi');
-  }
+      if (error) {
+        console.error('Blog yazıları listeleme hatası:', error);
+        throw new Error('Blog yazıları listelenemedi');
+      }
 
-  return data.map((post) => ({
-    id: post.id,
-    title: post.title,
-    slug: post.slug,
-    content: post.content,
-    excerpt: post.excerpt,
-    cover_image: post.cover_image,
-    meta_description: post.meta_description,
-    status: post.status,
-    published_at: post.published_at,
-    created_at: post.created_at,
-    updated_at: post.updated_at,
-    author_id: post.author_id
-  }));
+      return data.map((post) => ({
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
+        excerpt: post.excerpt,
+        cover_image: post.cover_image,
+        meta_description: post.meta_description,
+        status: post.status,
+        published_at: post.published_at,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
+        author_id: post.author_id
+      }));
+    },
+    ['blog-posts'],
+    { revalidate: 300, tags: ['blog-posts'] }
+  );
+
+  return cachedFn();
 }
 
 

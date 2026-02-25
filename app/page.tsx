@@ -11,9 +11,11 @@ import Hero from '@/components/hero';
 import Services from '@/components/services';
 
 export default async function Home() {
-  const blogPosts = await getBlogPosts();
-  const services = await getServices();
-  const faqs = await getHomepageFAQs();
+  const [blogPosts, services, faqs] = await Promise.all([
+    getBlogPosts(),
+    getServices(),
+    getHomepageFAQs()
+  ]);
 
   const businessJsonLd = {
     '@context': 'https://schema.org',

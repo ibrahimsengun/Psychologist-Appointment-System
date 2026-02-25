@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ClarityAnalytics } from '@/components/clarity-analytics';
+import { GoogleAnalytics } from '@/components/google-analytics';
 import type { Metadata } from 'next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
@@ -99,7 +99,7 @@ export default function RootLayout({
         >
           Ana içeriğe geç
         </a>
-        <ClarityAnalytics />
+        <GoogleAnalytics />
         <SpeedInsights />
         <TooltipProvider>
           {children}

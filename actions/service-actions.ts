@@ -1,22 +1,32 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import { ServiceFormValues } from '@/types/service';
 import { revalidatePath } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 export async function getServices() {
-  const supabase = await createClient();
+  const cachedFn = unstable_cache(
+    async () => {
+      const supabase = createPublicClient();
 
-  const { data, error } = await supabase
-    .from('services')
-    .select('*')
-    .order('created_at', { ascending: false });
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  if (error) {
-    throw new Error('Hizmetler yüklenirken bir hata oluştu');
-  }
+      if (error) {
+        throw new Error('Hizmetler yüklenirken bir hata oluştu');
+      }
 
-  return data;
+      return data;
+    },
+    ['services'],
+    { revalidate: 300, tags: ['services'] }
+  );
+
+  return cachedFn();
 }
 
 export async function getServiceById(id: string) {
@@ -47,6 +57,7 @@ export async function createService(data: ServiceFormValues) {
   }
 
   revalidatePath('/admin/services');
+  revalidatePath('/');
 }
 
 export async function updateService(id: string, data: ServiceFormValues) {
@@ -62,6 +73,7 @@ export async function updateService(id: string, data: ServiceFormValues) {
   }
 
   revalidatePath('/admin/services');
+  revalidatePath('/');
 }
 
 export async function deleteService(id: string) {
@@ -77,4 +89,5 @@ export async function deleteService(id: string) {
   }
 
   revalidatePath('/admin/services');
+  revalidatePath('/');
 } 

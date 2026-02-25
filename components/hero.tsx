@@ -96,6 +96,9 @@ export default function Hero() {
                   className="w-full h-auto object-cover max-h-[700px]"
                   priority
                   fetchPriority="high"
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgcI/8QAIhAAAQMEAgIDAAAAAAAAAAAAAQIDBAAFBhEHIRIxQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAABAX/xAAaEQACAgMAAAAAAAAAAAAAAAABAgADERIh/9oADAMBAAIRAxEAPwCa4ryCmFbLHAjQkvTpMdL7ynH/ABQ2FKA0BonZHenaj+S8lzbxNdadurgEdtRR4REaA7/VGiiUjXod1hqaHGdl2TJ/Gf/Z"
                 />
               </div>
 
