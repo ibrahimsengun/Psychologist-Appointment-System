@@ -123,6 +123,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {post.status !== 'published' && (
+        <div className="mb-6 flex items-center gap-3 rounded-xl border-2 border-yellow-500/30 bg-yellow-50 dark:bg-yellow-950/30 px-5 py-3">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-500 text-white text-xs font-bold">!</span>
+          <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+            Bu yazı henüz <strong>taslak</strong> aşamasındadır ve ziyaretçiler tarafından görüntülenemez.
+          </p>
+        </div>
+      )}
+
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 
       <div className="flex items-center gap-4 text-muted-foreground mb-8">

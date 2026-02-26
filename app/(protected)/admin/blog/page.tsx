@@ -67,12 +67,12 @@ export default async function BlogPostsPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center justify-end gap-2">
                       <Button asChild variant="ghost" size="sm">
-                        <Link href={`/blog/${post.slug}`} target="_blank" className="flex items-center gap-1">
+                        <Link href={`/blog/${post.slug}`} target="_blank" prefetch={false} className="flex items-center gap-1">
                           <ExternalLink className="w-4 h-4" />
                         </Link>
                       </Button>
                       <Button asChild variant="ghost" size="sm">
-                        <Link href={`/admin/blog/${post.id}`} className="flex items-center gap-1">
+                        <Link href={`/admin/blog/${post.id}`} prefetch={false} className="flex items-center gap-1">
                           <Edit className="w-4 h-4" />
                           Düzenle</Link>
                       </Button>

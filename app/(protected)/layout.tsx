@@ -1,5 +1,13 @@
 import { createClient } from '@/utils/supabase/server';
 import { AdminLayoutClient } from '@/components/admin-layout-client';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
 export default async function ProtectedLayout({
   children
@@ -10,14 +18,8 @@ export default async function ProtectedLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <>
-      {/* Prevent search engines from indexing admin pages */}
-      <head>
-        <meta name="robots" content="noindex, nofollow" />
-      </head>
-      <AdminLayoutClient userEmail={user?.email ?? null}>
-        {children}
-      </AdminLayoutClient>
-    </>
+    <AdminLayoutClient userEmail={user?.email ?? null}>
+      {children}
+    </AdminLayoutClient>
   );
 }

@@ -1,4 +1,4 @@
-import { getBlogPosts } from '@/actions/blog-actions';
+import { getPublishedBlogPosts } from '@/actions/blog-actions';
 import { getHomepageFAQs } from '@/actions/faq-actions';
 import { getServices } from '@/actions/service-actions';
 import About from '@/components/about';
@@ -12,7 +12,7 @@ import Services from '@/components/services';
 
 export default async function Home() {
   const [blogPosts, services, faqs] = await Promise.all([
-    getBlogPosts(),
+    getPublishedBlogPosts(),
     getServices(),
     getHomepageFAQs()
   ]);

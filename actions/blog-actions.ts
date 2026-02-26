@@ -7,7 +7,7 @@ import { unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
 export async function getPublishedPosts() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
 
   const { data, error } = await supabase
     .from('blog_posts')
@@ -29,7 +29,6 @@ export async function getPostBySlug(slug: string) {
     .from('blog_posts')
     .select('*')
     .eq('slug', slug)
-    .eq('status', 'published')
     .single();
 
 
@@ -231,8 +230,8 @@ export async function deleteBlogPost(id: string): Promise<void> {
   }
 }
 
-// Blog yazılarını listeleme
-export async function getBlogPosts(): Promise<BlogPost[]> {
+// Public: Yayında olan blog yazılarını cache'li getir (anasayfa için)
+export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
   const cachedFn = unstable_cache(
     async () => {
       const supabase = createPublicClient();
@@ -240,6 +239,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       const { data, error } = await supabase
         .from('blog_posts')
         .select('*')
+        .eq('status', 'published')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -262,11 +262,41 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         author_id: post.author_id
       }));
     },
-    ['blog-posts'],
+    ['published-blog-posts'],
     { revalidate: 300, tags: ['blog-posts'] }
   );
 
   return cachedFn();
+}
+
+// Admin: Tüm blog yazılarını getir (auth gerektirir)
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Blog yazıları listeleme hatası:', error);
+    throw new Error('Blog yazıları listelenemedi');
+  }
+
+  return data.map((post) => ({
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    excerpt: post.excerpt,
+    cover_image: post.cover_image,
+    meta_description: post.meta_description,
+    status: post.status,
+    published_at: post.published_at,
+    created_at: post.created_at,
+    updated_at: post.updated_at,
+    author_id: post.author_id
+  }));
 }
 
 
