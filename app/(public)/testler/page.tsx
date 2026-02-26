@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
 import { getAllTests } from '@/data/psychological-tests';
 import { TestCard } from '@/components/tests';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
     title: 'Psikolojik Testler | Uzman Psk. Lokman Yılmaz',

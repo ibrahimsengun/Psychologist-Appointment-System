@@ -1,13 +1,10 @@
 import { getPublishedBlogPosts } from '@/actions/blog-actions';
-import { createClient } from '@/utils/supabase/server';
 import { getHomepageFAQs } from '@/actions/faq-actions';
 import { getServices } from '@/actions/service-actions';
 import About from '@/components/about';
 import Blog from '@/components/blog';
 import Contact from '@/components/contact';
 import { FAQSection } from '@/components/faq-section';
-import Footer from '@/components/footer';
-import Header from '@/components/header';
 import Hero from '@/components/hero';
 import Services from '@/components/services';
 
@@ -17,14 +14,6 @@ export default async function Home() {
     getServices(),
     getHomepageFAQs()
   ]);
-
-  // Check if user is authenticated (admin)
-  let adminEmail: string | null = null;
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    adminEmail = user?.email ?? null;
-  } catch { }
 
   const businessJsonLd = {
     '@context': 'https://schema.org',
@@ -119,7 +108,7 @@ export default async function Home() {
   };
 
   return (
-    <main>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
@@ -128,14 +117,12 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <Header adminEmail={adminEmail} />
       <Hero />
       <About />
       <Services services={services} />
       <Blog blogPosts={blogPosts.slice(0, 3)} />
       <FAQSection faqs={faqs} />
       <Contact />
-      <Footer />
-    </main>
+    </>
   );
 }

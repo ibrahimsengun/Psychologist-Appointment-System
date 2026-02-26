@@ -2,8 +2,6 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTestBySlug, getAllTests } from '@/data/psychological-tests';
 import { TestWizard } from '@/components/tests';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 
 interface TestPageProps {
     params: Promise<{ slug: string }>;
