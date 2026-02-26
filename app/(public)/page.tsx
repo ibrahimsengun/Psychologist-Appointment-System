@@ -1,18 +1,21 @@
 import { getPublishedBlogPosts } from '@/actions/blog-actions';
 import { getHomepageFAQs } from '@/actions/faq-actions';
 import { getServices } from '@/actions/service-actions';
+import { getVideos } from '@/actions/video-actions';
 import About from '@/components/about';
 import Blog from '@/components/blog';
 import Contact from '@/components/contact';
 import { FAQSection } from '@/components/faq-section';
 import Hero from '@/components/hero';
 import Services from '@/components/services';
+import VideoSection from '@/components/video-section';
 
 export default async function Home() {
-  const [blogPosts, services, faqs] = await Promise.all([
+  const [blogPosts, services, faqs, videos] = await Promise.all([
     getPublishedBlogPosts(),
     getServices(),
-    getHomepageFAQs()
+    getHomepageFAQs(),
+    getVideos()
   ]);
 
   const businessJsonLd = {
@@ -121,6 +124,7 @@ export default async function Home() {
       <About />
       <Services services={services} />
       <Blog blogPosts={blogPosts.slice(0, 3)} />
+      <VideoSection videos={videos.slice(0, 6)} />
       <FAQSection faqs={faqs} />
       <Contact />
     </>

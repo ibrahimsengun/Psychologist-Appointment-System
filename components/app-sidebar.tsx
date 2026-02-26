@@ -30,6 +30,8 @@ import {
     LogOut,
     Mail,
     Users,
+    Video,
+    Settings,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -43,6 +45,8 @@ const adminLinks = [
     { name: 'SSS Yönetimi', url: '/admin/faqs', icon: HelpCircle },
     { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail },
     { name: 'Hizmetler', url: '/admin/services', icon: Briefcase },
+    { name: 'Videolar', url: '/admin/videos', icon: Video },
+    { name: 'Ayarlar', url: '/admin/settings', icon: Settings },
 ];
 
 interface AppSidebarProps {
