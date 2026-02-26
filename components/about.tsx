@@ -9,22 +9,22 @@ export default function About() {
         {/* Bölüm 1: Görsel Sol, Metin Sağ */}
         <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-16 mb-16 lg:mb-24">
           {/* Görsel - Mobilde gizli, masaüstünde görünür */}
-          <div className="hidden lg:block lg:w-5/12">
+          <div className="hidden lg:block lg:w-4/12">
             <div className="sticky top-24">
               <Image
-                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-20%20at%2013.06.30%20(1).jpeg"
+                src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/unwatermarked_Gemini_Generated_Image_jbmorwjbmorwjbmo.png"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 alt="Uzman Psikolog Lokman Yılmaz"
-                width={600}
-                height={750}
+                width={736}
+                height={1440}
                 loading="lazy"
-                quality={75}
+                quality={100}
               />
             </div>
           </div>
 
           {/* İçerik */}
-          <div className="lg:w-7/12 w-full">
+          <div className="lg:w-8/12 w-full">
             <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
               Samsun Psikolog Hakkında
             </p>
