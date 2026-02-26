@@ -125,7 +125,7 @@ export function AppSidebar({ userEmail }: AppSidebarProps) {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton>
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground font-medium text-sm">
+                                    <div className="flex my-4 h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground font-medium text-sm">
                                         {userEmail?.charAt(0).toUpperCase() || 'U'}
                                     </div>
                                     <div className="flex flex-col gap-0.5 leading-none text-left">

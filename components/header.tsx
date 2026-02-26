@@ -5,11 +5,26 @@ import { Button } from './ui/button';
 import { CalendarDays, Menu, Phone, X } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Header() {
+export default function Header({ adminEmail }: { adminEmail?: string | null }) {
   const [isOpen, setIsOpen] = useState(false);
+  const isAdmin = !!adminEmail;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      {isAdmin && (
+        <div className="bg-foreground text-background">
+          <div className="container flex items-center justify-between py-1.5 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              <span className="font-medium">Admin Modu</span>
+              <span className="opacity-60 hidden sm:inline">— {adminEmail}</span>
+            </div>
+            <Link href="/admin" className="hover:underline opacity-80 hover:opacity-100 transition-opacity">
+              Panele Git →
+            </Link>
+          </div>
+        </div>
+      )}
       <div className="container">
         {/* Ana Header */}
         <div className="flex h-18 items-center justify-between py-4">

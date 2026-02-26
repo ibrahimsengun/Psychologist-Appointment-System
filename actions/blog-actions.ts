@@ -108,6 +108,9 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
 
   if (error) {
     console.error('Blog yazısı oluşturma hatası:', error);
+    if (error.code === '23505') {
+      throw new Error('Bu başlıkla bir yazı zaten mevcut. Lütfen farklı bir başlık kullanın.');
+    }
     throw new Error('Blog yazısı oluşturulamadı');
   }
 

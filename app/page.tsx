@@ -1,4 +1,5 @@
 import { getPublishedBlogPosts } from '@/actions/blog-actions';
+import { createClient } from '@/utils/supabase/server';
 import { getHomepageFAQs } from '@/actions/faq-actions';
 import { getServices } from '@/actions/service-actions';
 import About from '@/components/about';
@@ -16,6 +17,14 @@ export default async function Home() {
     getServices(),
     getHomepageFAQs()
   ]);
+
+  // Check if user is authenticated (admin)
+  let adminEmail: string | null = null;
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    adminEmail = user?.email ?? null;
+  } catch { }
 
   const businessJsonLd = {
     '@context': 'https://schema.org',
@@ -119,7 +128,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <Header />
+      <Header adminEmail={adminEmail} />
       <Hero />
       <About />
       <Services services={services} />
