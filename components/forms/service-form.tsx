@@ -10,20 +10,29 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { Service, ServiceFormValues, serviceFormSchema } from '@/types/service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { ImageUpload } from '../image-upload';
+import { MinimalTiptapEditor } from '../minimal-tiptap';
+import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
 interface ServiceFormProps {
   initialData?: Service;
   onSubmit:
-    | ((data: ServiceFormValues) => Promise<any>)
-    | ((id: string, data: ServiceFormValues) => Promise<any>);
+  | ((data: ServiceFormValues) => Promise<any>)
+  | ((id: string, data: ServiceFormValues) => Promise<any>);
 }
 
 export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
@@ -34,13 +43,21 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
     resolver: zodResolver(serviceFormSchema),
     defaultValues: initialData
       ? {
-          name: initialData.name,
-          description: initialData.description || undefined
-        }
+        name: initialData.name,
+        content: initialData.content || '',
+        cover_image: initialData.cover_image || '',
+        meta_description: initialData.meta_description || '',
+        status: initialData.status || 'draft',
+        description: initialData.description || ''
+      }
       : {
-          name: '',
-          description: undefined
-        }
+        name: '',
+        content: '',
+        cover_image: '',
+        meta_description: '',
+        status: 'draft',
+        description: ''
+      }
   });
 
   const handleSubmit = async (data: ServiceFormValues) => {
@@ -66,47 +83,195 @@ export function ServiceForm({ initialData, onSubmit }: ServiceFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Hizmet Adı</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sol Taraf - Ana İçerik */}
+          <div className="flex-1 space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-semibold">Hizmet Adı</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="text-lg h-12"
+                      placeholder="Hizmet adı..."
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Açıklama (Opsiyonel)</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-semibold">Kısa Açıklama</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="h-11"
+                      placeholder="Anasayfada görünecek kısa açıklama..."
+                    />
+                  </FormControl>
+                  <p className="text-xs text-muted-foreground">
+                    Anasayfadaki hizmet kartında görünecek açıklama
+                  </p>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <span className="mr-2">{initialData ? 'Güncelleniyor' : 'Oluşturuluyor'}</span>
-              <Loader2 className="h-4 w-4 animate-spin" />
-            </>
-          ) : initialData ? (
-            'Güncelle'
-          ) : (
-            'Oluştur'
-          )}
-        </Button>
+            <FormField
+              control={form.control}
+              name="cover_image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-semibold">Kapak Görseli</FormLabel>
+                  <FormControl>
+                    <ImageUpload
+                      value={field.value}
+                      onChange={field.onChange}
+                      onRemove={() => field.onChange('')}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-semibold">İçerik</FormLabel>
+                  <FormControl>
+                    <MinimalTiptapEditor
+                      {...field}
+                      className={cn('w-full min-h-[700px]', {
+                        'border-destructive focus-within:border-destructive':
+                          form.formState.errors.content
+                      })}
+                      output="html"
+                      autofocus={true}
+                      immediatelyRender={false}
+                      editable={true}
+                      injectCSS={true}
+                      editorClassName="focus:outline-none p-5 min-h-[650px]"
+                      editorContentClassName="min-h-[650px]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Sağ Taraf - Ayarlar Sidebar */}
+          <div className="w-full lg:w-80 space-y-6">
+            <div className="lg:sticky lg:top-4 space-y-6">
+              {/* Kaydet Butonu */}
+              <div className="bg-card border rounded-lg p-4 shadow-sm">
+                <Button
+                  type="submit"
+                  className="w-full h-11 text-base"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {initialData ? 'Güncelleniyor…' : 'Oluşturuluyor…'}
+                    </>
+                  ) : (
+                    <>
+                      <Save className="mr-2 h-4 w-4" />
+                      {initialData ? 'Güncelle' : 'Kaydet'}
+                    </>
+                  )}
+                </Button>
+              </div>
+
+              {/* Durum */}
+              <div className="bg-card border rounded-lg p-4 shadow-sm space-y-4">
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                  Yayın Durumu
+                </h3>
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="h-11">
+                            <SelectValue placeholder="Durum seçin" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="draft">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                              Taslak
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="published">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-green-500" />
+                              Yayında
+                            </div>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* SEO Ayarları */}
+              <div className="bg-card border rounded-lg p-4 shadow-sm space-y-4">
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                  SEO Ayarları
+                </h3>
+                <FormField
+                  control={form.control}
+                  name="meta_description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm">Meta Açıklama</FormLabel>
+                      <FormControl>
+                        <div className="space-y-2">
+                          <textarea
+                            {...field}
+                            value={field.value ?? ''}
+                            className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+                            placeholder="Arama sonuçlarında görünecek açıklama..."
+                            maxLength={160}
+                          />
+                          <div className="flex justify-end">
+                            <span className={cn(
+                              'text-xs',
+                              (field.value?.length || 0) > 160 ? 'text-destructive' : 'text-muted-foreground',
+                              (field.value?.length || 0) >= 140 && (field.value?.length || 0) <= 160 ? 'text-green-600' : ''
+                            )}>
+                              {field.value?.length || 0}/160
+                            </span>
+                          </div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </Form>
   );

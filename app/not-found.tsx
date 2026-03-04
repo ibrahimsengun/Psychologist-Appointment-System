@@ -77,7 +77,7 @@ export default function NotFound() {
                             İletişim
                         </Link>
                         <Link
-                            href="/#hizmetler"
+                            href="/hizmetler"
                             className="text-muted-foreground hover:text-foreground transition-colors"
                         >
                             Hizmetler

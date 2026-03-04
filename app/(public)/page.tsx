@@ -1,21 +1,24 @@
 import { getPublishedBlogPosts } from '@/actions/blog-actions';
 import { getHomepageFAQs } from '@/actions/faq-actions';
-import { getServices } from '@/actions/service-actions';
+import { getReviews } from '@/actions/review-actions';
+import { getPublishedServices } from '@/actions/service-actions';
 import { getVideos } from '@/actions/video-actions';
 import About from '@/components/about';
 import Blog from '@/components/blog';
 import Contact from '@/components/contact';
 import { FAQSection } from '@/components/faq-section';
 import Hero from '@/components/hero';
+import ReviewsSection from '@/components/reviews-section';
 import Services from '@/components/services';
 import VideoSection from '@/components/video-section';
 
 export default async function Home() {
-  const [blogPosts, services, faqs, videos] = await Promise.all([
+  const [blogPosts, services, faqs, videos, reviews] = await Promise.all([
     getPublishedBlogPosts(),
-    getServices(),
+    getPublishedServices(),
     getHomepageFAQs(),
-    getVideos()
+    getVideos(),
+    getReviews()
   ]);
 
   const businessJsonLd = {
@@ -124,7 +127,10 @@ export default async function Home() {
       <About />
       <Services services={services} />
       <Blog blogPosts={blogPosts.slice(0, 3)} />
-      <VideoSection videos={videos.slice(0, 6)} />
+      <div className="max-w-[100vw] overflow-x-hidden">
+        <VideoSection videos={videos.slice(0, 6)} />
+      </div>
+      <ReviewsSection reviews={reviews} />
       <FAQSection faqs={faqs} />
       <Contact />
     </>

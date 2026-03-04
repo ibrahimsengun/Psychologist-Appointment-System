@@ -18,7 +18,7 @@ export default function About() {
                 width={736}
                 height={1440}
                 loading="lazy"
-                quality={100}
+                quality={75}
               />
             </div>
           </div>

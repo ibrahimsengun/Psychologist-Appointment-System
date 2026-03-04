@@ -23,9 +23,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from './ui/alert-dialog';
+import { Badge } from './ui/badge';
 import { deleteService } from '@/actions/service-actions';
 import { toast } from 'sonner';
-import { UpdateServiceDialog } from './services/update-service-dialog';
 
 interface ServicesTableProps {
   services: Service[];
@@ -58,6 +58,7 @@ export function ServicesTable({ services }: ServicesTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Hizmet Adı</TableHead>
+            <TableHead>Durum</TableHead>
             <TableHead>Açıklama</TableHead>
             <TableHead className="w-[100px]">İşlemler</TableHead>
           </TableRow>
@@ -65,11 +66,32 @@ export function ServicesTable({ services }: ServicesTableProps) {
         <TableBody>
           {services.map((service) => (
             <TableRow key={service.id}>
-              <TableCell>{service.name}</TableCell>
-              <TableCell>{service.description || '-'}</TableCell>
+              <TableCell className="font-medium">{service.name}</TableCell>
+              <TableCell>
+                <Badge variant={service.status === 'published' ? 'default' : 'secondary'}>
+                  {service.status === 'published' ? (
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      Yayında
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                      Taslak
+                    </span>
+                  )}
+                </Badge>
+              </TableCell>
+              <TableCell className="max-w-[300px] truncate">
+                {service.description || '-'}
+              </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <UpdateServiceDialog service={service} />
+                  <Button size="icon" variant="outline" asChild>
+                    <Link href={`/admin/services/${service.id}`}>
+                      <Pencil className="h-4 w-4" />
+                    </Link>
+                  </Button>
                   <Button
                     size="icon"
                     variant="outline"

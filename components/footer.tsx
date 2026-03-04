@@ -64,7 +64,7 @@ export default function Footer() {
               <Link href="/#hakkimda" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Hakkımda
               </Link>
-              <Link href="/#hizmetler" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/hizmetler" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Hizmetler
               </Link>
               <Link href="/blog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">

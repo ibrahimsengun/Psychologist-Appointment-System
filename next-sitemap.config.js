@@ -31,10 +31,10 @@ module.exports = {
     } else if (path === '/samsun-psikolog' || path === '/atakum-psikolog') {
       priority = 0.9;
       changefreq = 'weekly';
-    } else if (path === '/blog' || path === '/appointment' || path === '/contact') {
+    } else if (path === '/blog' || path === '/appointment' || path === '/contact' || path === '/hizmetler') {
       priority = 0.8;
       changefreq = 'weekly';
-    } else if (path.startsWith('/blog/')) {
+    } else if (path.startsWith('/blog/') || path.startsWith('/hizmetler/')) {
       priority = 0.7;
       changefreq = 'monthly';
     }

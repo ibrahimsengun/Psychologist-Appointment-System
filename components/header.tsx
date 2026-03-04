@@ -52,7 +52,7 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
               Hakkımda
             </Link>
             <Link
-              href="/#hizmetler"
+              href="/hizmetler"
               className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
             >
               Hizmetler
@@ -114,7 +114,7 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
               Hakkımda
             </Link>
             <Link
-              href="/#hizmetler"
+              href="/hizmetler"
               className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
               onClick={() => setIsOpen(false)}
             >

@@ -30,12 +30,12 @@ export default function VideoSection({ videos }: VideoSectionProps) {
                 {/* Video Carousel */}
                 <Carousel
                     opts={{
-                        align: 'center',
+                        align: 'start',
                         loop: true,
                     }}
                     className="w-full max-w-5xl mx-auto"
                 >
-                    <CarouselContent className="-ml-4">
+                    <CarouselContent>
                         {videos.map((video) => {
                             const videoId = extractYouTubeId(video.youtube_url);
                             if (!videoId) return null;
@@ -43,10 +43,10 @@ export default function VideoSection({ videos }: VideoSectionProps) {
                             return (
                                 <CarouselItem
                                     key={video.id}
-                                    className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
+                                    className="basis-[55%] sm:basis-1/2 lg:basis-1/3"
                                 >
                                     <div className="rounded-xl overflow-hidden bg-card border shadow-sm hover:shadow-lg transition-shadow duration-300 group">
-                                        <div className="relative w-full aspect-[9/16]">
+                                        <div className="relative w-full aspect-[9/16] overflow-hidden">
                                             <iframe
                                                 src={`https://www.youtube.com/embed/${videoId}`}
                                                 title={video.title}
@@ -66,8 +66,8 @@ export default function VideoSection({ videos }: VideoSectionProps) {
                             );
                         })}
                     </CarouselContent>
-                    <CarouselPrevious className="-left-4 md:-left-12" />
-                    <CarouselNext className="-right-4 md:-right-12" />
+                    <CarouselPrevious className="hidden md:flex -left-12" />
+                    <CarouselNext className="hidden md:flex -right-12" />
                 </Carousel>
             </div>
         </section>

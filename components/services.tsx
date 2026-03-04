@@ -1,4 +1,5 @@
 import { Service } from '@/types/service';
+import Link from 'next/link';
 
 export default function Services({ services }: { services: Service[] }) {
   return (
@@ -24,36 +25,68 @@ export default function Services({ services }: { services: Service[] }) {
 
         {/* Hizmet Kartları */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
-            <div
-              key={service.id}
-              className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 
-                         transition-all duration-500 ease-out
-                         hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Hover Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          {services.map((service, index) => {
+            const hasSlug = service.slug && service.slug.length > 0;
+            const CardWrapper = hasSlug ? Link : 'div';
+            const cardProps = hasSlug
+              ? { href: `/hizmetler/${service.slug}` as string }
+              : {};
 
-              {/* İçerik */}
-              <div className="relative">
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                  {service.name}
-                </h3>
-                {service.description && (
-                  <p className="text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                )}
-              </div>
+            return (
+              <CardWrapper
+                key={service.id}
+                {...(cardProps as any)}
+                className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 
+                           transition-all duration-500 ease-out
+                           hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Hover Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              {/* Dekoratif Köşe */}
-              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/20 rounded-tr-lg
-                            group-hover:border-primary/50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-primary/20 rounded-bl-lg
-                            group-hover:border-primary/50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
-            </div>
-          ))}
+                {/* İçerik */}
+                <div className="relative">
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                    {service.name}
+                  </h3>
+                  {service.description && (
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                  )}
+
+                  {/* Detayları Gör */}
+                  {hasSlug && (
+                    <div className="flex items-center gap-2 text-primary font-medium mt-2">
+                      <span className="text-sm">Detayları Gör</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dekoratif Köşe */}
+                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/20 rounded-tr-lg
+                              group-hover:border-primary/50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-primary/20 rounded-bl-lg
+                              group-hover:border-primary/50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
+              </CardWrapper>
+            );
+          })}
+        </div>
+
+        {/* Tüm Hizmetleri Gör */}
+        <div className="text-center mt-12">
+          <Link
+            href="/hizmetler"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4 transition-all"
+          >
+            Tüm Hizmetleri Gör
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
