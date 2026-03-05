@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
+import { CallToAction } from '@/components/call-to-action';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -162,6 +163,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         className="prose prose-lg dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      {/* CTA Banner Section (Before Related Posts) */}
+      <div className="mt-12 mb-16">
+        <CallToAction
+          title="Profesyonel Psikolojik Destek Alın"
+          description="Okuduğunuz konu hakkında kendinizde veya sevdiklerinizde benzer durumlar gözlemliyorsanız, uzman desteği için bizimle iletişime geçebilirsiniz."
+        />
+      </div>
 
       {/* Related Posts */}
       <RelatedPosts posts={relatedPosts} />

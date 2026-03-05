@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { buildServiceSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
+import { CallToAction } from '@/components/call-to-action';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -152,6 +153,14 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             dangerouslySetInnerHTML={{ __html: service.content }}
                         />
                     )}
+
+                    {/* CTA Banner Section */}
+                    <div className="mt-12">
+                        <CallToAction
+                            title={`${service.name} Süreci İçin Profesyonel Destek`}
+                            description="Bu konu hakkında daha fazla bilgi almak veya hemen randevu oluşturmak için bizimle iletişime geçebilirsiniz."
+                        />
+                    </div>
                 </article>
             </div>
         </div>

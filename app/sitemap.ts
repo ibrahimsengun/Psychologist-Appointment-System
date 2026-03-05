@@ -14,28 +14,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 1
         },
         {
-            url: `${baseUrl}/samsun-psikolog`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9
-        },
-        {
             url: `${baseUrl}/atakum-psikolog`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9
-        },
-        {
-            url: `${baseUrl}/samsun-atakum-psikolog`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8
-        },
-        {
-            url: `${baseUrl}/atakum-samsun-psikolog`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8
         },
         {
             url: `${baseUrl}/hizmetler`,

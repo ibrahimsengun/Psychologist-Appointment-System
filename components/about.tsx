@@ -26,7 +26,7 @@ export default function About() {
           {/* İçerik */}
           <div className="lg:w-8/12 w-full">
             <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
-              Samsun Psikolog Hakkında
+              Samsun Atakum Psikolog Hakkında
             </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Uzm. Psk. Lokman Yılmaz | Samsun Atakum Psikolog

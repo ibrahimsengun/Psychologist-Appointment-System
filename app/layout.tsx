@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz | Atakum Aile Danışmanı',
   description:
-    'Samsun\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile psikolojik destek alın. Atakum, İlkadım, Canik bölgelerinde yüz yüze ve online görüşme hizmetleri.',
+    'Samsun Atakum başta olmak üzere İlkadım ve Canik bölgelerinde uzman psikolog Lokman Yılmaz ile psikolojik destek alın. Yüz yüze ve online danışmanlık hizmetleri.',
   keywords:
     'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, atakum aile danışmanı, online danışmanlık, ilkadım psikolog, canik psikolog',
   authors: [{ name: PERSON_NAME }],

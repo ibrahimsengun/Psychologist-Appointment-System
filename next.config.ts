@@ -16,7 +16,26 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     // Cache images for 30 days
     minimumCacheTTL: 60 * 60 * 24 * 30,
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/samsun-psikolog',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/samsun-atakum-psikolog',
+        destination: '/atakum-psikolog',
+        permanent: true,
+      },
+      {
+        source: '/atakum-samsun-psikolog',
+        destination: '/atakum-psikolog',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

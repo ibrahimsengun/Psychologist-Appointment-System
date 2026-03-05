@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
     title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
     description:
-        'Atakum\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel danışmanlık, çift danışmanlığı, aile danışmanlığı ve online görüşme hizmetleri.',
+        'Samsun Atakum\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile profesyonel psikolojik destek alın. Bireysel danışmanlık, çift danışmanlığı, aile danışmanlığı ve online görüşme hizmetleri.',
     keywords:
         'atakum psikolog, atakum psikolojik danışman, atakum aile danışmanı, atakum psikolog randevu, samsun atakum psikolog',
     alternates: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
-            'Atakum\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
+            'Samsun Atakum\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
         url: `${SITE_URL}/atakum-psikolog`,
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
@@ -61,7 +61,7 @@ export default async function AtakumPsikologPage() {
     const localBusinessJsonLd = buildLocalBusinessSchema({
         id: 'atakum-psikolog',
         name: 'Uzman Psk. Lokman Yılmaz - Atakum Psikolog',
-        description: 'Atakum\'da uzman psikolog ve aile danışmanlığı hizmetleri',
+        description: 'Samsun Atakum\'da uzman psikolog ve aile danışmanlığı hizmetleri',
         url: `${SITE_URL}/atakum-psikolog`,
         address: ADDRESS_ATAKUM,
         geo: { latitude: '41.3287', longitude: '36.2921' },
@@ -70,7 +70,7 @@ export default async function AtakumPsikologPage() {
     const faqJsonLd = buildFAQSchema(faqItems);
     const breadcrumbJsonLd = buildBreadcrumbSchema([{ name: 'Atakum Psikolog', path: '/atakum-psikolog' }]);
     const personJsonLd = buildPersonSchema({
-        description: 'Atakum\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
+        description: 'Samsun Atakum\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
         url: `${SITE_URL}/atakum-psikolog`,
         address: ADDRESS_ATAKUM,
     });
@@ -203,7 +203,7 @@ export default async function AtakumPsikologPage() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
                         <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
-                            Atakum Psikolog Hakkında
+                            Samsun Atakum Psikolog Hakkında
                         </p>
                         <h2 className="text-3xl md:text-4xl font-bold mb-6">
                             Uzm. Psikolog Lokman Yılmaz
@@ -214,7 +214,7 @@ export default async function AtakumPsikologPage() {
                             yüksek onur derecesiyle Aile Danışmanı unvanını almıştır.
                         </p>
                         <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                            Atakum&apos;daki Psikodemy ofisinde yüz yüze görüşmeler gerçekleştiren Yılmaz,
+                            Samsun Atakum&apos;daki Psikodemy ofisinde yüz yüze görüşmeler gerçekleştiren Yılmaz,
                             çocuklar, ergenler ve yetişkinlerle çalışmaktadır.
                         </p>
 
@@ -245,11 +245,11 @@ export default async function AtakumPsikologPage() {
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
-                            Atakum&apos;da Psikolojik Hizmetler
+                            Samsun Atakum&apos;da Psikolojik Hizmetler
                         </p>
                         <h2 className="text-3xl md:text-4xl font-bold mb-4">Hizmetlerimiz</h2>
                         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                            Atakum&apos;da bilimsel temelli yaklaşımlarla profesyonel psikolojik destek
+                            Samsun Atakum&apos;da bilimsel temelli yaklaşımlarla profesyonel psikolojik destek
                         </p>
                     </div>
 
