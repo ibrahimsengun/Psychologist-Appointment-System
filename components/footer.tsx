@@ -15,7 +15,7 @@ export default function Footer() {
 
           {/* Logo ve Açıklama */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 mb-6 group">
+            <Link href="/" title="Ana Sayfaya Dön" className="flex items-center gap-3 mb-6 group">
               <div>
                 <p className="font-semibold text-background leading-tight">Uzm. Psk. Lokman Yılmaz</p>
                 <p className="text-xs text-background/60">Psikolog & Aile Danışmanı</p>
@@ -30,6 +30,7 @@ export default function Footer() {
                 href="https://www.instagram.com/psikologlokmanyilmaz/"
                 target="_blank"
                 rel="noopener noreferrer"
+                title="Instagram Hesabımız"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="Instagram"
               >
@@ -37,6 +38,7 @@ export default function Footer() {
               </a>
               <a
                 href="mailto:psk.lokmanylmz@gmail.com"
+                title="Bize E-posta Gönderin"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="E-posta"
               >
@@ -44,6 +46,7 @@ export default function Footer() {
               </a>
               <a
                 href="tel:+905448322091"
+                title="Bizi Arayın"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="Telefon"
               >
@@ -58,22 +61,22 @@ export default function Footer() {
               Hızlı Linkler
             </h3>
             <div className="space-y-3">
-              <Link href="/" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/" title="Ana Sayfa" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Ana Sayfa
               </Link>
-              <Link href="/#hakkimda" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/#hakkimda" title="Hakkımda Detaylı Bilgi" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Hakkımda
               </Link>
-              <Link href="/hizmetler" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/hizmetler" title="Verilen Psikolojik Danışmanlık Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Hizmetler
               </Link>
-              <Link href="/blog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/blog" title="Psikoloji Blog Yazıları" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Blog
               </Link>
-              <Link href="/sss" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/sss" title="Sıkça Sorulan Sorular" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 SSS
               </Link>
-              <Link href="/appointment" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Randevu Al
               </Link>
             </div>
@@ -85,16 +88,16 @@ export default function Footer() {
               Hizmet Bölgeleri
             </h3>
             <div className="space-y-3">
-              <Link href="/samsun-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/samsun-psikolog" title="Samsun Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Samsun Psikolog
               </Link>
-              <Link href="/atakum-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/atakum-psikolog" title="Atakum Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Atakum Psikolog
               </Link>
-              <Link href="/samsun-atakum-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/samsun-atakum-psikolog" title="Samsun Atakum Bölgesi Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Samsun Atakum Psikolog
               </Link>
-              <Link href="/atakum-samsun-psikolog" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/atakum-samsun-psikolog" title="Atakum Samsun Bölgesi Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Atakum Samsun Psikolog
               </Link>
               <div className="pt-2 border-t border-background/10">
@@ -120,7 +123,7 @@ export default function Footer() {
                   <p className="text-white/60 text-sm">Atakum, Samsun</p>
                 </div>
               </div>
-              <a href="tel:+905448322091" className="flex items-center gap-3 group">
+              <a href="tel:+905448322091" title="Bizi Arayın: +90 544 832 20 91" className="flex items-center gap-3 group">
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
                   <Phone className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>
@@ -128,7 +131,7 @@ export default function Footer() {
                   +90 (544) 832 20 91
                 </span>
               </a>
-              <a href="mailto:psk.lokmanylmz@gmail.com" className="flex items-center gap-3 group">
+              <a href="mailto:psk.lokmanylmz@gmail.com" title="Bize E-posta Gönderin: psk.lokmanylmz@gmail.com" className="flex items-center gap-3 group">
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
                   <Mail className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>
@@ -172,10 +175,10 @@ export default function Footer() {
               © {new Date().getFullYear()} Uzm. Psk. Lokman Yılmaz. Tüm hakları saklıdır.
             </p>
             <div className="flex items-center gap-6 text-sm">
-              <Link href="/privacy" className="text-background/50 hover:text-background transition-colors">
+              <Link href="/privacy" title="Gizlilik Politikası Sayfamız" className="text-background/50 hover:text-background transition-colors">
                 Gizlilik Politikası
               </Link>
-              <Link href="/terms" className="text-background/50 hover:text-background transition-colors">
+              <Link href="/terms" title="Kullanım Şartları Sayfamız" className="text-background/50 hover:text-background transition-colors">
                 Kullanım Şartları
               </Link>
             </div>

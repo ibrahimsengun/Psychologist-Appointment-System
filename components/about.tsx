@@ -185,7 +185,7 @@ export default function About() {
             <div className="bg-muted/50 rounded-xl p-6">
               <p className="text-lg text-foreground">
                 <strong>Psikodemy</strong> bünyesinde{' '}
-                <Link href="/samsun-psikolog" className="text-primary hover:underline font-semibold">
+                <Link href="/samsun-psikolog" title="Samsun Psikolog Hizmetleri" className="text-primary hover:underline font-semibold">
                   Samsun'da yüz yüze
                 </Link>, Türkiye genelinde ise <strong>online danışmanlık</strong> hizmeti sunulmaktadır.
               </p>

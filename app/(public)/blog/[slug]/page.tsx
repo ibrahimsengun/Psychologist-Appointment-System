@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -43,7 +44,7 @@ export async function generateMetadata(
   const description = post.meta_description || post.excerpt;
 
   return {
-    title: post.title,
+    title: `${post.title} | Samsun Psikolog ${PERSON_NAME}`,
     description: description,
     openGraph: {
       title: post.title,
@@ -51,7 +52,7 @@ export async function generateMetadata(
       type: 'article',
       publishedTime: post.created_at,
       modifiedTime: post.updated_at,
-      authors: ['Lokman Yılmaz'],
+      authors: [PERSON_NAME],
       images: post.cover_image ? [{ url: post.cover_image }] : undefined
     },
     twitter: {
@@ -61,7 +62,7 @@ export async function generateMetadata(
       images: post.cover_image ? [post.cover_image] : undefined
     },
     alternates: {
-      canonical: `https://lokmanyilmaz.com.tr/blog/${slug}`,
+      canonical: `${SITE_URL}/blog/${slug}`,
       languages: {
         'tr-TR': `/tr-TR/blog/${slug}`
       }
@@ -87,32 +88,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Load related posts
   const relatedPosts = await getRelatedPosts(post.id, 3);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
+  const jsonLd = buildBlogPostSchema({
+    title: post.title,
     description: description,
-    image: post.cover_image ? [post.cover_image] : [],
-    datePublished: post.created_at,
-    dateModified: post.updated_at,
+    slug: slug,
+    coverImage: post.cover_image,
+    createdAt: post.created_at,
+    updatedAt: post.updated_at,
     wordCount: wordCount,
-    author: {
-      '@type': 'Person',
-      name: 'Lokman Yılmaz',
-      url: 'https://lokmanyilmaz.com.tr'
-    },
-    publisher: {
-      '@type': 'Person',
-      name: 'Lokman Yılmaz',
-      url: 'https://lokmanyilmaz.com.tr'
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://lokmanyilmaz.com.tr/blog/${slug}`
-    },
     keywords: categories.map(cat => cat.name).join(', '),
-    articleSection: categories.length > 0 ? categories[0].name : 'Genel'
-  };
+    section: categories.length > 0 ? categories[0].name : 'Genel',
+  });
 
   return (
     <article className="container py-8 max-w-6xl">

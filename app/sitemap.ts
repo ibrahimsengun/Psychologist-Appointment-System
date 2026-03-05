@@ -1,4 +1,5 @@
 import { getPublishedPosts } from '@/actions/blog-actions';
+import { getPublishedServices } from '@/actions/service-actions';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -35,6 +36,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.8
+        },
+        {
+            url: `${baseUrl}/hizmetler`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9
         },
         {
             url: `${baseUrl}/blog`,
@@ -88,5 +95,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching blog posts for sitemap:', error);
     }
 
-    return [...staticPages, ...blogPosts];
+    // Dynamic services
+    let servicesList: MetadataRoute.Sitemap = [];
+    try {
+        const services = await getPublishedServices();
+        servicesList = services.map((service) => ({
+            url: `${baseUrl}/hizmetler/${service.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8
+        }));
+    } catch (error) {
+        console.error('Error fetching services for sitemap:', error);
+    }
+
+    return [...staticPages, ...blogPosts, ...servicesList];
 }

@@ -17,7 +17,7 @@ export default async function PublicLayout({ children }: { children: React.React
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr_auto] overflow-x-clip">
       <Header adminEmail={adminEmail} />
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       <Footer />
       <WhatsAppButton
         phoneNumber={whatsappSettings.number}

@@ -2,6 +2,15 @@ import { getServices } from '@/actions/service-actions';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+    buildLocalBusinessSchema,
+    buildFAQSchema,
+    buildBreadcrumbSchema,
+    buildPersonSchema,
+    JsonLd,
+    SITE_URL,
+    ADDRESS_SAMSUN,
+} from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
@@ -10,13 +19,13 @@ export const metadata: Metadata = {
     keywords:
         'samsun psikolog, samsun psikolojik danışman, samsun aile danışmanı, samsun psikolog randevu, samsun online psikolog',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/samsun-psikolog'
+        canonical: `${SITE_URL}/samsun-psikolog`
     },
     openGraph: {
         title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
             'Samsun\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
-        url: 'https://lokmanyilmaz.com.tr/samsun-psikolog',
+        url: `${SITE_URL}/samsun-psikolog`,
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
         type: 'website'
@@ -49,117 +58,28 @@ const faqItems = [
 export default async function SamsunPsikologPage() {
     const services = await getServices();
 
-    const localBusinessJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        '@id': 'https://lokmanyilmaz.com.tr/#samsun-psikolog',
+    const localBusinessJsonLd = buildLocalBusinessSchema({
+        id: 'samsun-psikolog',
         name: 'Uzman Psk. Lokman Yılmaz - Samsun Psikolog',
         description: 'Samsun\'da uzman psikolog ve aile danışmanlığı hizmetleri',
-        url: 'https://lokmanyilmaz.com.tr/samsun-psikolog',
-        telephone: '+905448322091',
-        email: 'psk.lokmanylmz@gmail.com',
-        address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Samsun',
-            addressRegion: 'Samsun',
-            addressCountry: 'TR'
-        },
-        geo: {
-            '@type': 'GeoCoordinates',
-            latitude: '41.2867',
-            longitude: '36.33'
-        },
-        openingHoursSpecification: [
-            {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                opens: '09:00',
-                closes: '18:00'
-            },
-            {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Saturday'],
-                opens: '09:00',
-                closes: '14:00'
-            }
-        ],
-        priceRange: '$$',
-        image:
-            'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg'
-    };
+        url: `${SITE_URL}/samsun-psikolog`,
+        address: ADDRESS_SAMSUN,
+        geo: { latitude: '41.2867', longitude: '36.33' },
+    });
 
-    const faqJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqItems.map((item) => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer
-            }
-        }))
-    };
-
-    const breadcrumbJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Ana Sayfa',
-                item: 'https://lokmanyilmaz.com.tr'
-            },
-            {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Samsun Psikolog',
-                item: 'https://lokmanyilmaz.com.tr/samsun-psikolog'
-            }
-        ]
-    };
-
-    const personJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: 'Lokman Yılmaz',
-        jobTitle: 'Uzman Psikolog ve Aile Danışmanı',
+    const faqJsonLd = buildFAQSchema(faqItems);
+    const breadcrumbJsonLd = buildBreadcrumbSchema([{ name: 'Samsun Psikolog', path: '/samsun-psikolog' }]);
+    const personJsonLd = buildPersonSchema({
         description: 'Samsun\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
-        image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
-        url: 'https://lokmanyilmaz.com.tr/samsun-psikolog',
-        address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Samsun',
-            addressRegion: 'Samsun',
-            addressCountry: 'TR'
-        },
-        telephone: '+905448322091',
-        email: 'psk.lokmanylmz@gmail.com',
-        worksFor: {
-            '@type': 'Organization',
-            name: 'Psikodemy'
-        }
-    };
+        url: `${SITE_URL}/samsun-psikolog`,
+    });
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-            />
+            <JsonLd data={localBusinessJsonLd} />
+            <JsonLd data={faqJsonLd} />
+            <JsonLd data={breadcrumbJsonLd} />
+            <JsonLd data={personJsonLd} />
 
             {/* Hero Section */}
             <section className="relative min-h-[70vh] flex items-center overflow-hidden">
@@ -174,7 +94,7 @@ export default async function SamsunPsikologPage() {
                             <nav className="mb-6" aria-label="Breadcrumb">
                                 <ol className="flex items-center justify-center lg:justify-start gap-2 text-sm text-muted-foreground">
                                     <li>
-                                        <Link href="/" className="hover:text-primary transition-colors">
+                                        <Link href="/" title="Ana Sayfaya Dön" className="hover:text-primary transition-colors">
                                             Ana Sayfa
                                         </Link>
                                     </li>
@@ -203,6 +123,7 @@ export default async function SamsunPsikologPage() {
                             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-8">
                                 <Link
                                     href="/appointment"
+                                    title="Hemen Randevu Al"
                                     className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                            hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
                                 >
@@ -223,6 +144,7 @@ export default async function SamsunPsikologPage() {
                                 </Link>
                                 <a
                                     href="tel:+905448322091"
+                                    title="Bizi Arayın: +90 544 832 20 91"
                                     className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                            hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
                                 >

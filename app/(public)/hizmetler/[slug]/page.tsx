@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { buildServiceSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -28,22 +29,22 @@ export async function generateMetadata(
     const description = service.meta_description || service.excerpt || service.description || '';
 
     return {
-        title: `${service.name} | Uzman Psk. Lokman Yılmaz`,
+        title: `${service.name} | Uzman Psk. ${PERSON_NAME}`,
         description: description,
         openGraph: {
-            title: `${service.name} | Uzman Psk. Lokman Yılmaz`,
+            title: `${service.name} | Uzman Psk. ${PERSON_NAME}`,
             description: description,
             type: 'website',
             images: service.cover_image ? [{ url: service.cover_image }] : undefined
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${service.name} | Uzman Psk. Lokman Yılmaz`,
+            title: `${service.name} | Uzman Psk. ${PERSON_NAME}`,
             description: description,
             images: service.cover_image ? [service.cover_image] : undefined
         },
         alternates: {
-            canonical: `https://lokmanyilmaz.com.tr/hizmetler/${slug}`
+            canonical: `${SITE_URL}/hizmetler/${slug}`
         }
     };
 }
@@ -69,33 +70,19 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     const readingTime = calculateReadingTime(service.content);
     const description = service.meta_description || service.excerpt || service.description || '';
 
-    const jsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Service',
+    const jsonLd = buildServiceSchema({
         name: service.name,
         description: description,
-        image: service.cover_image ? [service.cover_image] : [],
-        provider: {
-            '@type': 'Person',
-            name: 'Lokman Yılmaz',
-            url: 'https://lokmanyilmaz.com.tr'
-        },
-        areaServed: {
-            '@type': 'City',
-            name: 'Samsun'
-        },
-        url: `https://lokmanyilmaz.com.tr/hizmetler/${slug}`
-    };
+        slug: slug,
+        coverImage: service.cover_image,
+    });
 
     return (
         <div className="container py-8 max-w-7xl">
             <Breadcrumb
                 items={[{ label: 'Hizmetler', href: '/hizmetler' }, { label: service.name }]}
             />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <JsonLd data={jsonLd} />
 
             <div className="flex gap-8">
                 {/* Sticky Sidebar - Tüm Hizmetler */}

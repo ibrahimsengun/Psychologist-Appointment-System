@@ -47,6 +47,7 @@ export default async function HizmetlerPage() {
                     <Link
                         key={service.id}
                         href={`/hizmetler/${service.slug}`}
+                        title={service.name}
                         className="group"
                     >
                         <article className="relative bg-background rounded-2xl border border-border/50 overflow-hidden 

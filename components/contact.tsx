@@ -25,6 +25,7 @@ export default function Contact() {
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
             <Link
               href="/appointment"
+              title="Hemen Randevu Al"
               className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                        hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
             >
@@ -35,6 +36,7 @@ export default function Contact() {
             </Link>
             <Link
               href="/contact"
+              title="İletişim Formuna Git"
               className="group inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                        hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
             >
@@ -49,6 +51,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a
               href="tel:+905448322091"
+              title="Bizi Arayın: +90 544 832 20 91"
               className="group flex flex-col items-center p-6 bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl
                        hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >
@@ -63,6 +66,7 @@ export default function Contact() {
 
             <a
               href="mailto:psk.lokmanylmz@gmail.com"
+              title="Bize E-posta Gönderin: psk.lokmanylmz@gmail.com"
               className="group flex flex-col items-center p-6 bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl
                        hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >

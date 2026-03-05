@@ -29,7 +29,7 @@ export default function Services({ services }: { services: Service[] }) {
             const hasSlug = service.slug && service.slug.length > 0;
             const CardWrapper = hasSlug ? Link : 'div';
             const cardProps = hasSlug
-              ? { href: `/hizmetler/${service.slug}` as string }
+              ? { href: `/hizmetler/${service.slug}` as string, title: `${service.name} Hizmet Detayları` }
               : {};
 
             return (
@@ -80,6 +80,7 @@ export default function Services({ services }: { services: Service[] }) {
         <div className="text-center mt-12">
           <Link
             href="/hizmetler"
+            title="Tüm Psikolojik Danışmanlık Hizmetlerini Gör"
             className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4 transition-all"
           >
             Tüm Hizmetleri Gör

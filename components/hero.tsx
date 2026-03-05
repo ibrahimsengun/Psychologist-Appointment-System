@@ -39,6 +39,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-10">
               <Link
                 href="/appointment"
+                title="Hemen Randevu Al"
                 className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                          hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
               >
@@ -49,6 +50,7 @@ export default function Hero() {
               </Link>
               <Link
                 href="#hakkimda"
+                title="Hakkımda Daha Fazla Bilgi"
                 className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                          hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
               >

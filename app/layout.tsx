@@ -5,6 +5,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { GoogleAnalytics } from '@/components/google-analytics';
 import type { Metadata } from 'next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { buildPersonSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -17,33 +18,33 @@ export const metadata: Metadata = {
     'Samsun\'da uzman psikolog ve aile danışmanı Lokman Yılmaz ile psikolojik destek alın. Atakum, İlkadım, Canik bölgelerinde yüz yüze ve online görüşme hizmetleri.',
   keywords:
     'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, atakum aile danışmanı, online danışmanlık, ilkadım psikolog, canik psikolog',
-  authors: [{ name: 'Lokman Yılmaz' }],
-  creator: 'Lokman Yılmaz',
-  publisher: 'Lokman Yılmaz',
+  authors: [{ name: PERSON_NAME }],
+  creator: PERSON_NAME,
+  publisher: PERSON_NAME,
   alternates: {
-    canonical: 'https://lokmanyilmaz.com.tr'
+    canonical: SITE_URL
   },
   openGraph: {
-    title: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
+    title: `Uzman Psk. ${PERSON_NAME} - Aile Danışmanı`,
     description: 'Psikolojik sağlığınız için profesyonel destek',
-    url: 'https://lokmanyilmaz.com.tr',
-    siteName: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
+    url: SITE_URL,
+    siteName: `Uzman Psk. ${PERSON_NAME} - Aile Danışmanı`,
     locale: 'tr_TR',
     type: 'website',
     images: [
       {
-        url: 'https://lokmanyilmaz.com.tr/og-image.png',
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'Uzman Psikolog Lokman Yılmaz - Samsun Aile Danışmanı'
+        alt: `Uzman Psikolog ${PERSON_NAME} - Samsun Aile Danışmanı`
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
+    title: `Uzman Psk. ${PERSON_NAME} - Aile Danışmanı`,
     description: 'Psikolojik sağlığınız için profesyonel destek',
-    images: ['https://lokmanyilmaz.com.tr/og-image.png']
+    images: [`${SITE_URL}/og-image.png`]
   },
   robots: {
     index: true,
@@ -71,25 +72,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Lokman Yılmaz',
-    jobTitle: 'Aile Danışmanı',
-    description:
-      'Uzman Psk. Lokman Yılmaz - Aile Danışmanı. Psikolojik sağlığınız için profesyonel destek.',
-    url: 'https://lokmanyilmaz.com.tr',
-    sameAs: []
-  };
+  const personSchema = buildPersonSchema({
+    description: `Uzman Psk. ${PERSON_NAME} - Aile Danışmanı. Psikolojik sağlığınız için profesyonel destek.`,
+  });
 
   return (
     <html lang="tr" className={geistSans.className} suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        <JsonLd data={personSchema} />
         <meta name="apple-mobile-web-app-title" content="Psk. Lokman Yılmaz" />
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>

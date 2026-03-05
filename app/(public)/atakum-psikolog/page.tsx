@@ -2,6 +2,15 @@ import { getServices } from '@/actions/service-actions';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+    buildLocalBusinessSchema,
+    buildFAQSchema,
+    buildBreadcrumbSchema,
+    buildPersonSchema,
+    JsonLd,
+    SITE_URL,
+    ADDRESS_ATAKUM,
+} from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz - Aile Danışmanı',
@@ -10,13 +19,13 @@ export const metadata: Metadata = {
     keywords:
         'atakum psikolog, atakum psikolojik danışman, atakum aile danışmanı, atakum psikolog randevu, samsun atakum psikolog',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/atakum-psikolog'
+        canonical: `${SITE_URL}/atakum-psikolog`
     },
     openGraph: {
         title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
             'Atakum\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',
-        url: 'https://lokmanyilmaz.com.tr/atakum-psikolog',
+        url: `${SITE_URL}/atakum-psikolog`,
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
         type: 'website'
@@ -49,119 +58,29 @@ const faqItems = [
 export default async function AtakumPsikologPage() {
     const services = await getServices();
 
-    const localBusinessJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        '@id': 'https://lokmanyilmaz.com.tr/#atakum-psikolog',
+    const localBusinessJsonLd = buildLocalBusinessSchema({
+        id: 'atakum-psikolog',
         name: 'Uzman Psk. Lokman Yılmaz - Atakum Psikolog',
         description: 'Atakum\'da uzman psikolog ve aile danışmanlığı hizmetleri',
-        url: 'https://lokmanyilmaz.com.tr/atakum-psikolog',
-        telephone: '+905448322091',
-        email: 'psk.lokmanylmz@gmail.com',
-        address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'Psikodemy',
-            addressLocality: 'Atakum',
-            addressRegion: 'Samsun',
-            addressCountry: 'TR'
-        },
-        geo: {
-            '@type': 'GeoCoordinates',
-            latitude: '41.3287',
-            longitude: '36.2921'
-        },
-        openingHoursSpecification: [
-            {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                opens: '09:00',
-                closes: '18:00'
-            },
-            {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Saturday'],
-                opens: '09:00',
-                closes: '14:00'
-            }
-        ],
-        priceRange: '$$',
-        image:
-            'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg'
-    };
+        url: `${SITE_URL}/atakum-psikolog`,
+        address: ADDRESS_ATAKUM,
+        geo: { latitude: '41.3287', longitude: '36.2921' },
+    });
 
-    const faqJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqItems.map((item) => ({
-            '@type': 'Question',
-            name: item.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: item.answer
-            }
-        }))
-    };
-
-    const breadcrumbJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Ana Sayfa',
-                item: 'https://lokmanyilmaz.com.tr'
-            },
-            {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Atakum Psikolog',
-                item: 'https://lokmanyilmaz.com.tr/atakum-psikolog'
-            }
-        ]
-    };
-
-    const personJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: 'Lokman Yılmaz',
-        jobTitle: 'Uzman Psikolog ve Aile Danışmanı',
+    const faqJsonLd = buildFAQSchema(faqItems);
+    const breadcrumbJsonLd = buildBreadcrumbSchema([{ name: 'Atakum Psikolog', path: '/atakum-psikolog' }]);
+    const personJsonLd = buildPersonSchema({
         description: 'Atakum\'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog',
-        image: 'https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg',
-        url: 'https://lokmanyilmaz.com.tr/atakum-psikolog',
-        address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'Psikodemy',
-            addressLocality: 'Atakum',
-            addressRegion: 'Samsun',
-            addressCountry: 'TR'
-        },
-        telephone: '+905448322091',
-        email: 'psk.lokmanylmz@gmail.com',
-        worksFor: {
-            '@type': 'Organization',
-            name: 'Psikodemy'
-        }
-    };
+        url: `${SITE_URL}/atakum-psikolog`,
+        address: ADDRESS_ATAKUM,
+    });
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-            />
+            <JsonLd data={localBusinessJsonLd} />
+            <JsonLd data={faqJsonLd} />
+            <JsonLd data={breadcrumbJsonLd} />
+            <JsonLd data={personJsonLd} />
 
             {/* Hero Section */}
             <section className="relative min-h-[70vh] flex items-center overflow-hidden">

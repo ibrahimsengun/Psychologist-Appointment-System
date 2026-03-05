@@ -11,7 +11,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post }: BlogCardProps) {
   return (
-    <Link href={`/blog/${post.slug}`} className="group">
+    <Link href={`/blog/${post.slug}`} title={post.title} className="group">
       <article className="relative bg-background rounded-2xl border border-border/50 overflow-hidden 
                          transition-all duration-500 ease-out
                          hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2">

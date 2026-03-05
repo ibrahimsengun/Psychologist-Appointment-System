@@ -8,6 +8,7 @@ import {
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { MessageCircleQuestion, ArrowRight } from 'lucide-react';
+import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL } from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Sıkça Sorulan Sorular | Uzman Psk. Lokman Yılmaz',
@@ -16,12 +17,12 @@ export const metadata: Metadata = {
     keywords:
         'samsun psikolog sss, atakum psikolog sorular, psikolojik danışmanlık sorular, online terapi sss',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/sss'
+        canonical: `${SITE_URL}/sss`
     },
     openGraph: {
         title: 'Sıkça Sorulan Sorular | Uzman Psk. Lokman Yılmaz',
         description: 'Psikolojik danışmanlık hizmeti hakkında sıkça sorulan sorular ve cevapları.',
-        url: 'https://lokmanyilmaz.com.tr/sss',
+        url: `${SITE_URL}/sss`,
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
         type: 'website'
@@ -31,50 +32,15 @@ export const metadata: Metadata = {
 export default async function SSSPage() {
     const faqs = await getActiveFAQs();
 
-    const faqJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: faq.answer
-            }
-        }))
-    };
-
-    const breadcrumbJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Ana Sayfa',
-                item: 'https://lokmanyilmaz.com.tr'
-            },
-            {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Sıkça Sorulan Sorular',
-                item: 'https://lokmanyilmaz.com.tr/sss'
-            }
-        ]
-    };
+    const faqJsonLd = buildFAQSchema(faqs);
+    const breadcrumbJsonLd = buildBreadcrumbSchema([{ name: 'Sıkça Sorulan Sorular', path: '/sss' }]);
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-            />
+            <JsonLd data={faqJsonLd} />
+            <JsonLd data={breadcrumbJsonLd} />
 
-            <main>
+            <main className="min-h-[70vh]">
                 {/* Hero Section */}
                 <section className="py-8 md:py-12 bg-gradient-to-b from-primary/5 to-background">
                     <div className="container mx-auto px-4">

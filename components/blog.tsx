@@ -33,6 +33,7 @@ export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
         <div className="flex justify-center mt-12">
           <Link
             href="/blog"
+            title="Tüm Psikoloji Blog Yazılarını Gör"
             className="group inline-flex items-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                      hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
           >
