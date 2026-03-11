@@ -1,11 +1,16 @@
 import { ContactForm } from '@/components/forms/contact-form';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import { SITE_URL } from '@/lib/schema';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'İletişim | Samsun Atakum Psikolog Lokman Yılmaz',
   description:
-    'Samsun Atakum psikolog randevu ve iletişim bilgileri. Uzman Psikolog Lokman Yılmaz ile iletişime geçin.'
+    'Samsun Atakum psikolog randevu ve iletişim bilgileri. Uzman Psikolog Lokman Yılmaz ile iletişime geçin.',
+  alternates: {
+    canonical: `${SITE_URL}/contact`
+  }
 };
 
 export default function ContactPage() {

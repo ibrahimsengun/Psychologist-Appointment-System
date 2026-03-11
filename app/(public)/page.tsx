@@ -11,7 +11,14 @@ import Hero from '@/components/hero';
 import ReviewsSection from '@/components/reviews-section';
 import Services from '@/components/services';
 import VideoSection from '@/components/video-section';
-import { buildProfessionalServiceSchema, buildPersonSchema, JsonLd } from '@/lib/schema';
+import { buildProfessionalServiceSchema, buildPersonSchema, JsonLd, SITE_URL } from '@/lib/schema';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: SITE_URL
+  }
+};
 
 export default async function Home() {
   const [blogPosts, services, faqs, videos, reviews] = await Promise.all([

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getAllTests } from '@/data/psychological-tests';
 import { TestCard } from '@/components/tests';
+import { SITE_URL } from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Psikolojik Testler | Uzman Psk. Lokman Yılmaz',
@@ -8,6 +9,9 @@ export const metadata: Metadata = {
     robots: {
         index: false, // Şimdilik gizli
         follow: false
+    },
+    alternates: {
+        canonical: `${SITE_URL}/testler`
     }
 };
 

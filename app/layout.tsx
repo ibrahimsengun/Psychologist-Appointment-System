@@ -21,9 +21,6 @@ export const metadata: Metadata = {
   authors: [{ name: PERSON_NAME }],
   creator: PERSON_NAME,
   publisher: PERSON_NAME,
-  alternates: {
-    canonical: SITE_URL
-  },
   openGraph: {
     title: `Uzman Psk. ${PERSON_NAME} - Aile Danışmanı`,
     description: 'Psikolojik sağlığınız için profesyonel destek',
