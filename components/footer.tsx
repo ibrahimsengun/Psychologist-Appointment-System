@@ -181,9 +181,6 @@ export default function Footer() {
               <Link href="/privacy" title="Gizlilik Politikası Sayfamız" className="text-background/50 hover:text-background transition-colors">
                 Gizlilik Politikası
               </Link>
-              <Link href="/terms" title="Kullanım Şartları Sayfamız" className="text-background/50 hover:text-background transition-colors">
-                Kullanım Şartları
-              </Link>
             </div>
           </div>
         </div>
