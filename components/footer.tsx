@@ -118,9 +118,12 @@ export default function Footer() {
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
                   <MapPin className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-white/90 font-medium">Psikodemy</p>
-                  <p className="text-white/60 text-sm">Atakum, Samsun</p>
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    Cumhuriyet Mah. 93. Sokak No:21 Daire 12<br />
+                    Atakum, Samsun
+                  </p>
                 </div>
               </div>
               <a href="tel:+905448322091" title="Bizi Arayın: +90 544 832 20 91" className="flex items-center gap-3 group">

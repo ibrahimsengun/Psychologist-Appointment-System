@@ -17,16 +17,20 @@ export const ORG_NAME = 'Psikodemy';
 
 export const ADDRESS_SAMSUN = {
     '@type': 'PostalAddress' as const,
-    addressLocality: 'Samsun',
-    addressRegion: 'Atakum',
+    streetAddress: 'Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12',
+    addressLocality: 'Atakum',
+    addressRegion: 'Samsun',
+    postalCode: '55200',
     addressCountry: 'TR',
 };
 
 export const ADDRESS_ATAKUM = {
     '@type': 'PostalAddress' as const,
-    streetAddress: 'Psikodemy',
+    name: 'Psikodemy',
+    streetAddress: 'Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12',
     addressLocality: 'Atakum',
     addressRegion: 'Samsun',
+    postalCode: '55200',
     addressCountry: 'TR',
 };
 

@@ -88,8 +88,24 @@ export default function Contact() {
                 </svg>
               </div>
               <p className="font-semibold text-foreground mb-1">Adres</p>
-              <p className="text-muted-foreground text-sm">Psikodemy, Atakum, Samsun</p>
+              <p className="text-muted-foreground text-sm text-center px-4">
+                Psikodemy<br />
+                Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12<br />
+                Atakum, Samsun
+              </p>
             </div>
+          </div>
+
+          {/* Google Haritalar */}
+          <div className="mt-12 rounded-2xl overflow-hidden border border-border/50 shadow-lg bg-background/50">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.991582958689!2d36.26423416745912!3d41.33079638945286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x408879deef97da1f%3A0x30fa7f912eeeea6c!2sSamsun%20Atakum%20Psikolog%20-%20Lokman%20Y%C4%B1lmaz!5e0!3m2!1sen!2str!4v1773603194118!5m2!1sen!2str"
+              className="w-full h-[400px]"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </div>

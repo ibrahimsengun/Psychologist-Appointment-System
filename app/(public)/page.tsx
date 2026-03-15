@@ -42,8 +42,8 @@ export default async function Home() {
       <Blog blogPosts={blogPosts.slice(0, 3)} />
       <div className="max-w-[100vw] overflow-x-hidden">
         <VideoSection videos={videos.slice(0, 6)} />
+        <ReviewsSection reviews={reviews} />
       </div>
-      <ReviewsSection reviews={reviews} />
       <FAQSection faqs={faqs} />
       <Contact />
     </>

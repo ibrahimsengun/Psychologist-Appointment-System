@@ -144,8 +144,8 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
                 </Link>
               </Button>
               <Button asChild className="w-full justify-center rounded-xl shadow-lg shadow-primary/25">
-                <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => setIsOpen(false)}>
-                  <CalendarDays className="ml-auto h-4 w-4 opacity-50" aria-hidden="true" />
+                <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => setIsOpen(false)} className="flex items-center justify-center w-full">
+                  <CalendarDays className="mr-2 h-4 w-4 opacity-70" aria-hidden="true" />
                   Randevu Al
                 </Link>
               </Button>

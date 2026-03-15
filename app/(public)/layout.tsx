@@ -15,7 +15,7 @@ export default async function PublicLayout({ children }: { children: React.React
   const whatsappSettings = await getWhatsAppSettings();
 
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] overflow-x-clip">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
       <Header adminEmail={adminEmail} />
       <main id="main-content">{children}</main>
       <Footer />

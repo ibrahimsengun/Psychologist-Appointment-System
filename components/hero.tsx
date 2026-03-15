@@ -22,9 +22,8 @@ export default function Hero() {
 
             {/* Ana Başlık */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">Samsun'da</span>
+              <span className="text-foreground">Samsun Psikolog</span>
               <br />
-              <span className="text-foreground">Uzman Psikolog </span>
               <span className="text-primary">&</span>
               <span className="text-foreground"> Aile Danışmanı</span>
             </h1>
@@ -91,7 +90,7 @@ export default function Hero() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border/50">
                 <Image
                   src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg"
-                  alt="Uzman Psikolog Lokman Yılmaz"
+                  alt="Samsun Psikolog Uzman Psk. Lokman Yılmaz"
                   width={550}
                   height={700}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"

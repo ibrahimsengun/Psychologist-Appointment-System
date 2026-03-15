@@ -14,7 +14,7 @@ export default function About() {
               <Image
                 src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/unwatermarked_Gemini_Generated_Image_jbmorwjbmorwjbmo.png"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
-                alt="Uzman Psikolog Lokman Yılmaz"
+                alt="Samsun Psikolog Lokman Yılmaz"
                 width={736}
                 height={1440}
                 loading="lazy"
@@ -185,7 +185,7 @@ export default function About() {
             <div className="bg-muted/50 rounded-xl p-6">
               <p className="text-lg text-foreground">
                 <strong>Psikodemy</strong> bünyesinde{' '}
-                <Link href="/samsun-psikolog" title="Samsun Psikolog Hizmetleri" className="text-primary hover:underline font-semibold">
+                <Link href="/" title="Samsun Psikolog Hizmetleri" className="text-primary hover:underline font-semibold">
                   Samsun'da yüz yüze
                 </Link>, Türkiye genelinde ise <strong>online danışmanlık</strong> hizmeti sunulmaktadır.
               </p>
@@ -198,7 +198,7 @@ export default function About() {
               <Image
                 src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35%20(1)%20(2).jpeg"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
-                alt="Lokman Yılmaz Danışmanlık"
+                alt="Samsun Atakum Aile Danışmanı Lokman Yılmaz"
                 width={600}
                 height={750}
                 loading="lazy"
