@@ -26,6 +26,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.9
         },
         {
+            url: `${baseUrl}/samsun-cocuk-psikologu`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9
+        },
+        {
+            url: `${baseUrl}/atakum-aile-danismani`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9
+        },
+        {
             url: `${baseUrl}/blog`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
@@ -39,6 +51,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
         {
             url: `${baseUrl}/sss`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.7
+        },
+        {
+            url: `${baseUrl}/galeri`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.7

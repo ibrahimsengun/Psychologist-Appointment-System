@@ -65,13 +65,13 @@ export default function About() {
                 <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <span className="text-foreground">Çocuk Danışmanlığı</span>
+                <Link href="/samsun-cocuk-psikologu" title="Samsun Çocuk Psikoloğu" className="text-foreground hover:text-primary transition-colors">Çocuk Danışmanlığı</Link>
               </div>
               <div className="flex items-start gap-3">
                 <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <span className="text-foreground">Aile ve Çift Danışmanlığı</span>
+                <Link href="/atakum-aile-danismani" title="Atakum Aile Danışmanı" className="text-foreground hover:text-primary transition-colors">Aile ve Çift Danışmanlığı</Link>
               </div>
               <div className="flex items-start gap-3">
                 <svg className="w-5 h-5 text-primary mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">

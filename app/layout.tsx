@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     'Samsun Psikolog tavsiyesi arayanlar için uzman klinik destek. Uzman Psk. Lokman Yılmaz ile Atakum, İlkadım ve Canik bölgelerinde yüz yüze ve online danışmanlık hizmetleri.',
   keywords:
-    'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, atakum aile danışmanı, online danışmanlık, ilkadım psikolog, canik psikolog',
+    'samsun psikolog, atakum psikolog, samsun aile danışmanı, psikolog lokman yılmaz, atakum aile danışmanı, online danışmanlık, ilkadım psikolog, canik psikolog, samsun çocuk psikoloğu, atakum çocuk psikoloğu, çocuk psikolojik danışmanlık, samsun evlilik danışmanı',
   authors: [{ name: PERSON_NAME }],
   creator: PERSON_NAME,
   publisher: PERSON_NAME,

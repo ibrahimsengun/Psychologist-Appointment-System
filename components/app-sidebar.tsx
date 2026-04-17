@@ -27,6 +27,7 @@ import {
     ChevronUp,
     HelpCircle,
     Home,
+    ImageIcon,
     LogOut,
     Mail,
     MessageSquareText,
@@ -47,6 +48,7 @@ const adminLinks = [
     { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail },
     { name: 'Hizmetler', url: '/admin/services', icon: Briefcase },
     { name: 'Videolar', url: '/admin/videos', icon: Video },
+    { name: 'Galeri', url: '/admin/gallery', icon: ImageIcon },
     { name: 'Yorumlar', url: '/admin/reviews', icon: MessageSquareText },
     { name: 'Ayarlar', url: '/admin/settings', icon: Settings },
 ];

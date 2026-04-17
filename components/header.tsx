@@ -67,6 +67,13 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
             >
               Blog
             </Link>
+            <Link
+              href="/galeri"
+              title="Fotoğraf Galerisi"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Galeri
+            </Link>
           </nav>
 
           {/* Desktop CTA Buttons */}
@@ -134,6 +141,14 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
               onClick={() => setIsOpen(false)}
             >
               Blog
+            </Link>
+            <Link
+              href="/galeri"
+              title="Fotoğraf Galerisi"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Galeri
             </Link>
 
             <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">

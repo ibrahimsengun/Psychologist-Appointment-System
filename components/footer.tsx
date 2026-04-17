@@ -73,6 +73,9 @@ export default function Footer() {
               <Link href="/blog" title="Psikoloji Blog Yazıları" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Blog
               </Link>
+              <Link href="/galeri" title="Fotoğraf Galerisi" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Galeri
+              </Link>
               <Link href="/sss" title="Sıkça Sorulan Sorular" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 SSS
               </Link>
@@ -93,6 +96,12 @@ export default function Footer() {
               </Link>
               <Link href="/atakum-psikolog" title="Atakum Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Atakum Psikolog
+              </Link>
+              <Link href="/samsun-cocuk-psikologu" title="Samsun Çocuk Psikoloğu Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Samsun Çocuk Psikoloğu
+              </Link>
+              <Link href="/atakum-aile-danismani" title="Atakum Aile Danışmanı Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+                Atakum Aile Danışmanı
               </Link>
               <Link href="/samsun-atakum-psikolog" title="Samsun Atakum Bölgesi Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Samsun Atakum Psikolog

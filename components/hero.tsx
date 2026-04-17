@@ -30,7 +30,7 @@ export default function Hero() {
 
             {/* Alt Başlık */}
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Samsun'un Atakum, İlkadım, Canik ve tüm ilçelerinde bilimsel temelli yaklaşımlarla güvenli, empatik ve gizliliğe dayalı profesyonel psikolojik destek.
+              Samsun'un Atakum, İlkadım, Canik ve tüm ilçelerinde yetişkin, çocuk ve aile danışmanlığı alanlarında bilimsel temelli, güvenli ve empatik profesyonel psikolojik destek.
               <span className="text-foreground font-medium"> Yüz yüze ve online</span> danışmanlık hizmeti.
             </p>
 
@@ -89,7 +89,7 @@ export default function Hero() {
               {/* Ana Görsel */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border/50">
                 <Image
-                  src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.02.36.jpeg"
+                  src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202026-04-05%20at%2013.58.05.jpeg"
                   alt="Samsun Psikolog Uzman Psk. Lokman Yılmaz"
                   width={550}
                   height={700}
