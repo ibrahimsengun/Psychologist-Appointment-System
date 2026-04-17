@@ -4,7 +4,7 @@
 
 // ---- Sabit Değerler ----
 
-export const SITE_URL = 'https://lokmanyilmaz.com.tr';
+export const SITE_URL = 'https://www.lokmanyilmaz.com.tr';
 
 export const PERSON_NAME = 'Lokman Yılmaz';
 export const PERSON_TITLE = 'Uzman Psikolog ve Aile Danışmanı';

@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin', '/admin/*', '/sign-in', '/reset-password', '/auth', '/auth/*']
             }
         ],
-        sitemap: 'https://lokmanyilmaz.com.tr/sitemap.xml',
-        host: 'https://lokmanyilmaz.com.tr'
+        sitemap: 'https://www.lokmanyilmaz.com.tr/sitemap.xml',
+        host: 'https://www.lokmanyilmaz.com.tr'
     };
 }

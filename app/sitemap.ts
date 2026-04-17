@@ -3,7 +3,7 @@ import { getPublishedServices } from '@/actions/service-actions';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://lokmanyilmaz.com.tr';
+    const baseUrl = 'https://www.lokmanyilmaz.com.tr';
 
     // Static pages
     const staticPages: MetadataRoute.Sitemap = [
@@ -12,6 +12,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 1
+        },
+        {
+            url: `${baseUrl}/samsun-psikolog`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9
         },
         {
             url: `${baseUrl}/atakum-psikolog`,

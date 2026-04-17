@@ -20,11 +20,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/samsun-psikolog',
-        destination: '/',
-        permanent: true,
-      },
-      {
         source: '/samsun-atakum-psikolog',
         destination: '/atakum-psikolog',
         permanent: true,
