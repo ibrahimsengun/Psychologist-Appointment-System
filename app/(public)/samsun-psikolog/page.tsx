@@ -2,6 +2,8 @@ import { getServices } from '@/actions/service-actions';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { TrackedLink } from '@/components/tracked-link';
+import { TrackedAnchor } from '@/components/tracked-anchor';
 import {
     buildLocalBusinessSchema,
     buildFAQSchema,
@@ -143,9 +145,11 @@ export default async function SamsunPsikologPage() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-8">
-                                <Link
+                                <TrackedLink
                                     href="/appointment"
                                     title="Samsun Psikolog Randevu Al"
+                                    event="click_appointment"
+                                    eventSource="landing_hero"
                                     className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                            hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
                                 >
@@ -163,10 +167,12 @@ export default async function SamsunPsikologPage() {
                                             d="M13 7l5 5m0 0l-5 5m5-5H6"
                                         />
                                     </svg>
-                                </Link>
-                                <a
+                                </TrackedLink>
+                                <TrackedAnchor
                                     href="tel:+905448322091"
                                     title="Samsun Psikolog Telefon"
+                                    event="click_phone"
+                                    eventSource="landing_hero"
                                     className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                            hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
                                 >
@@ -179,7 +185,7 @@ export default async function SamsunPsikologPage() {
                                         />
                                     </svg>
                                     <span>Hemen Ara</span>
-                                </a>
+                                </TrackedAnchor>
                             </div>
 
                             {/* Location Badge */}
@@ -468,22 +474,26 @@ export default async function SamsunPsikologPage() {
                             veya online görüşme için randevu alın.
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <Link
+                            <TrackedLink
                                 href="/appointment"
                                 title="Samsun Psikolog Randevu"
+                                event="click_appointment"
+                                eventSource="landing_cta"
                                 className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                          hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
                             >
                                 Randevu Al
-                            </Link>
-                            <Link
+                            </TrackedLink>
+                            <TrackedLink
                                 href="/contact"
                                 title="İletişime Geç"
+                                event="click_contact"
+                                eventSource="landing_cta"
                                 className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                          hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
                             >
                                 İletişime Geç
-                            </Link>
+                            </TrackedLink>
                         </div>
                         <p className="text-sm text-muted-foreground mt-6">
                             <Link href="/atakum-psikolog" className="text-primary hover:underline">

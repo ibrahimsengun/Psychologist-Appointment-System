@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertTriangle, Calendar, RefreshCw, Share2 } from 'lucide-react';
 import { getLevelColorClasses, calculatePercentage } from '@/utils/test-evaluation';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 interface ResultDisplayProps {
     testTitle: string;
@@ -26,6 +27,7 @@ export function ResultDisplay({
 }: ResultDisplayProps) {
     const percentage = calculatePercentage(score, maxScore);
     const colors = getLevelColorClasses(result.color);
+    const { trackAppointmentClick } = useAnalytics();
 
     // Gauge için açı hesaplama (180 derece yay)
     const gaugeAngle = (percentage / 100) * 180;
@@ -96,7 +98,7 @@ export function ResultDisplay({
 
                     {/* Actions */}
                     <div className="space-y-3 pt-2">
-                        <Link href="/appointment" className="block">
+                        <Link href="/appointment" className="block" onClick={() => trackAppointmentClick('test_result')}>
                             <Button className="w-full" size="lg">
                                 <Calendar className="w-5 h-5 mr-2" />
                                 Uzmanla Görüşme Randevusu Al

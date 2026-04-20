@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { TrackedLink } from '@/components/tracked-link';
+import { TrackedAnchor } from '@/components/tracked-anchor';
 import {
     buildLocalBusinessSchema,
     buildFAQSchema,
@@ -134,8 +136,10 @@ export default function AtakumAileDanismaniPage() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-8">
-                                <Link
+                                <TrackedLink
                                     href="/appointment"
+                                    event="click_appointment"
+                                    eventSource="landing_hero"
                                     className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                            hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
                                 >
@@ -153,9 +157,11 @@ export default function AtakumAileDanismaniPage() {
                                             d="M13 7l5 5m0 0l-5 5m5-5H6"
                                         />
                                     </svg>
-                                </Link>
-                                <a
+                                </TrackedLink>
+                                <TrackedAnchor
                                     href="tel:+905448322091"
+                                    event="click_phone"
+                                    eventSource="landing_hero"
                                     className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                            hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
                                 >
@@ -168,7 +174,7 @@ export default function AtakumAileDanismaniPage() {
                                         />
                                     </svg>
                                     <span>Hemen Ara</span>
-                                </a>
+                                </TrackedAnchor>
                             </div>
 
                             <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
@@ -392,20 +398,24 @@ export default function AtakumAileDanismaniPage() {
                             görüşme için randevu alın.
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <Link
+                            <TrackedLink
                                 href="/appointment"
+                                event="click_appointment"
+                                eventSource="landing_cta"
                                 className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                          hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
                             >
                                 Randevu Al
-                            </Link>
-                            <Link
+                            </TrackedLink>
+                            <TrackedLink
                                 href="/contact"
+                                event="click_contact"
+                                eventSource="landing_cta"
                                 className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                          hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
                             >
                                 İletişime Geç
-                            </Link>
+                            </TrackedLink>
                         </div>
                         <p className="text-sm text-muted-foreground mt-6">
                             <Link href="/samsun-cocuk-psikologu" className="text-primary hover:underline">

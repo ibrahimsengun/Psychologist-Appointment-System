@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { CalendarDays, Menu, Phone, X } from 'lucide-react';
 import { useState } from 'react';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 export default function Header({ adminEmail }: { adminEmail?: string | null }) {
   const [isOpen, setIsOpen] = useState(false);
   const isAdmin = !!adminEmail;
+  const { trackAppointmentClick, trackContactClick } = useAnalytics();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
@@ -79,13 +81,13 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <Link href="/contact" title="İletişim Bilgileri ve Formu">
+              <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => trackContactClick('header')}>
                 <Phone className="mr-2 h-4 w-4" />
                 İletişim
               </Link>
             </Button>
             <Button asChild size="sm" className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
-              <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al">
+              <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => trackAppointmentClick('header')}>
                 <CalendarDays className="mr-2 h-4 w-4" />
                 Randevu Al
               </Link>
@@ -153,13 +155,13 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
 
             <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
               <Button asChild variant="outline" className="w-full justify-center rounded-xl">
-                <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => setIsOpen(false)}>
+                <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => { trackContactClick('header_mobile'); setIsOpen(false); }}>
                   <Phone className="mr-2 h-4 w-4" />
                   İletişim
                 </Link>
               </Button>
               <Button asChild className="w-full justify-center rounded-xl shadow-lg shadow-primary/25">
-                <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => setIsOpen(false)} className="flex items-center justify-center w-full">
+                <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => { trackAppointmentClick('header_mobile'); setIsOpen(false); }} className="flex items-center justify-center w-full">
                   <CalendarDays className="mr-2 h-4 w-4 opacity-70" aria-hidden="true" />
                   Randevu Al
                 </Link>

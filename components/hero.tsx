@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { TrackedLink } from '@/components/tracked-link';
 
 export default function Hero() {
   return (
@@ -36,9 +37,11 @@ export default function Hero() {
 
             {/* CTA Butonları */}
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-10">
-              <Link
+              <TrackedLink
                 href="/appointment"
                 title="Hemen Randevu Al"
+                event="click_appointment"
+                eventSource="hero"
                 className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                          hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
               >
@@ -46,7 +49,7 @@ export default function Hero() {
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </TrackedLink>
               <Link
                 href="#hakkimda"
                 title="Hakkımda Daha Fazla Bilgi"

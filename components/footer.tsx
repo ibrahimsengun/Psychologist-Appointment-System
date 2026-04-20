@@ -2,8 +2,11 @@
 
 import { Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 export default function Footer() {
+  const { trackInstagramClick, trackEmailClick, trackPhoneClick } = useAnalytics();
+
   return (
     <footer className="relative bg-foreground text-background overflow-hidden">
       {/* Dekoratif Arka Plan */}
@@ -33,6 +36,7 @@ export default function Footer() {
                 title="Instagram Hesabımız"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="Instagram"
+                onClick={() => trackInstagramClick('footer')}
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -41,6 +45,7 @@ export default function Footer() {
                 title="Bize E-posta Gönderin"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="E-posta"
+                onClick={() => trackEmailClick('footer')}
               >
                 <Mail className="h-5 w-5" />
               </a>
@@ -49,6 +54,7 @@ export default function Footer() {
                 title="Bizi Arayın"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white hover:text-gray-900 transition-all duration-300"
                 aria-label="Telefon"
+                onClick={() => trackPhoneClick('footer')}
               >
                 <Phone className="h-5 w-5" />
               </a>
@@ -135,7 +141,7 @@ export default function Footer() {
                   </p>
                 </div>
               </div>
-              <a href="tel:+905448322091" title="Bizi Arayın: +90 544 832 20 91" className="flex items-center gap-3 group">
+              <a href="tel:+905448322091" title="Bizi Arayın: +90 544 832 20 91" className="flex items-center gap-3 group" onClick={() => trackPhoneClick('footer')}>
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
                   <Phone className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>
@@ -143,7 +149,7 @@ export default function Footer() {
                   +90 (544) 832 20 91
                 </span>
               </a>
-              <a href="mailto:psk.lokmanylmz@gmail.com" title="Bize E-posta Gönderin: psk.lokmanylmz@gmail.com" className="flex items-center gap-3 group">
+              <a href="mailto:psk.lokmanylmz@gmail.com" title="Bize E-posta Gönderin: psk.lokmanylmz@gmail.com" className="flex items-center gap-3 group" onClick={() => trackEmailClick('footer')}>
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
                   <Mail className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>

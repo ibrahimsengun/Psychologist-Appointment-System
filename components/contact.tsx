@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { TrackedLink } from '@/components/tracked-link';
+import { TrackedAnchor } from '@/components/tracked-anchor';
 
 export default function Contact() {
   return (
@@ -23,9 +25,11 @@ export default function Contact() {
 
           {/* Butonlar */}
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-            <Link
+            <TrackedLink
               href="/appointment"
               title="Hemen Randevu Al"
+              event="click_appointment"
+              eventSource="contact_section"
               className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold
                        hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
             >
@@ -33,10 +37,12 @@ export default function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               <span>Randevu Al</span>
-            </Link>
-            <Link
+            </TrackedLink>
+            <TrackedLink
               href="/contact"
               title="İletişim Formuna Git"
+              event="click_contact"
+              eventSource="contact_section"
               className="group inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                        hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
             >
@@ -44,14 +50,16 @@ export default function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               <span>Bana Ulaşın</span>
-            </Link>
+            </TrackedLink>
           </div>
 
           {/* İletişim Bilgileri */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a
+            <TrackedAnchor
               href="tel:+905448322091"
               title="Bizi Arayın: +90 544 832 20 91"
+              event="click_phone"
+              eventSource="contact_section"
               className="group flex flex-col items-center p-6 bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl
                        hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >
@@ -62,11 +70,13 @@ export default function Contact() {
               </div>
               <p className="font-semibold text-foreground mb-1">Telefon</p>
               <p className="text-muted-foreground text-sm">+90 (544) 832 20 91</p>
-            </a>
+            </TrackedAnchor>
 
-            <a
+            <TrackedAnchor
               href="mailto:psk.lokmanylmz@gmail.com"
               title="Bize E-posta Gönderin: psk.lokmanylmz@gmail.com"
+              event="click_email"
+              eventSource="contact_section"
               className="group flex flex-col items-center p-6 bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl
                        hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >
@@ -77,7 +87,7 @@ export default function Contact() {
               </div>
               <p className="font-semibold text-foreground mb-1">E-posta</p>
               <p className="text-muted-foreground text-sm">psk.lokmanylmz@gmail.com</p>
-            </a>
+            </TrackedAnchor>
 
             <div className="group flex flex-col items-center p-6 bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl
                           hover:border-primary/30 hover:shadow-lg transition-all duration-300">
