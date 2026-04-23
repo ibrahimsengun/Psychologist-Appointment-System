@@ -6,6 +6,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel';
+import Link from 'next/link';
 
 interface VideoSectionProps {
     videos: Video[];
@@ -69,6 +70,30 @@ export default function VideoSection({ videos }: VideoSectionProps) {
                     <CarouselPrevious className="hidden md:flex -left-12" />
                     <CarouselNext className="hidden md:flex -right-12" />
                 </Carousel>
+
+                {/* Tüm Videoları Gör Button */}
+                <div className="mt-12 text-center">
+                    <Link
+                        href="/videolar"
+                        className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground text-base font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 group"
+                    >
+                        Tüm Videoları Gör
+                        <svg
+                            className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                        </svg>
+                    </Link>
+                </div>
             </div>
         </section>
     );
