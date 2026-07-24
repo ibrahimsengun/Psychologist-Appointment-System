@@ -76,6 +76,13 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
             >
               Galeri
             </Link>
+            <Link
+              href="/soru-sor"
+              title="Psikoloğa Anonim Soru Sorun"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+            >
+              Soru Sor
+            </Link>
           </nav>
 
           {/* Desktop CTA Buttons */}
@@ -151,6 +158,14 @@ export default function Header({ adminEmail }: { adminEmail?: string | null }) {
               onClick={() => setIsOpen(false)}
             >
               Galeri
+            </Link>
+            <Link
+              href="/soru-sor"
+              title="Psikoloğa Anonim Soru Sorun"
+              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Soru Sor
             </Link>
 
             <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
