@@ -99,7 +99,6 @@ export default function Contact() {
               </div>
               <p className="font-semibold text-foreground mb-1">Adres</p>
               <p className="text-muted-foreground text-sm text-center px-4">
-                Psikodemy<br />
                 Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12<br />
                 Atakum, Samsun
               </p>

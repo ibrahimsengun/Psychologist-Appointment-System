@@ -26,7 +26,6 @@ export const ADDRESS_SAMSUN = {
 
 export const ADDRESS_ATAKUM = {
     '@type': 'PostalAddress' as const,
-    name: 'Psikodemy',
     streetAddress: 'Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12',
     addressLocality: 'Atakum',
     addressRegion: 'Samsun',

@@ -131,7 +131,7 @@ export default function Hero() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Psikodemy</p>
+                    <p className="font-semibold text-foreground">Samsun Atakum</p>
                     <p className="text-sm text-muted-foreground">Samsun</p>
                   </div>
                 </div>

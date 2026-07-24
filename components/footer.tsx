@@ -134,7 +134,7 @@ export default function Footer() {
                   <MapPin className="h-5 w-5 text-white group-hover:text-gray-900 transition-colors" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-white/90 font-medium">Psikodemy</p>
+                  <p className="text-white/90 font-medium">Samsun Atakum&apos;da Yüz Yüze</p>
                   <p className="text-white/60 text-sm leading-relaxed">
                     Cumhuriyet Mah. 93. Sokak No:21 Daire 12<br />
                     Atakum, Samsun
