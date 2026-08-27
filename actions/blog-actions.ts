@@ -3,23 +3,31 @@
 import { BlogPost, BlogPostFormValues } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { unstable_cache } from 'next/cache';
+import { revalidateTag, unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
 export async function getPublishedPosts() {
-  const supabase = createPublicClient();
+  const cachedFn = unstable_cache(
+    async () => {
+      const supabase = createPublicClient();
 
-  const { data, error } = await supabase
-    .from('blog_posts')
-    .select('*')
-    .eq('status', 'published')
-    .order('created_at', { ascending: false });
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
 
-  if (error) {
-    throw new Error(error.message);
-  }
+      if (error) {
+        throw new Error(error.message);
+      }
 
-  return data as BlogPost[];
+      return data as BlogPost[];
+    },
+    ['all-published-posts'],
+    { revalidate: 300, tags: ['blog-posts'] }
+  );
+
+  return cachedFn();
 }
 
 export async function getPostBySlug(slug: string) {
@@ -114,6 +122,8 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     throw new Error('Blog yazısı oluşturulamadı');
   }
 
+  revalidateTag('blog-posts', 'default');
+
   return {
     id: data.id,
     title: data.title,
@@ -192,6 +202,8 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     throw new Error('Blog yazısı güncellendi ancak veri getirilemedi');
   }
 
+  revalidateTag('blog-posts', 'default');
+
   return {
     id: updatedPost.id,
     title: updatedPost.title,
@@ -231,6 +243,8 @@ export async function deleteBlogPost(id: string): Promise<void> {
     console.error('Blog yazısı silme hatası:', error);
     throw new Error('Blog yazısı silinemedi');
   }
+
+  revalidateTag('blog-posts', 'default');
 }
 
 // Public: Yayında olan blog yazılarını cache'li getir (anasayfa için)

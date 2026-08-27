@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { VideoFormValues } from '@/types/video';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { unstable_cache } from 'next/cache';
 
 // Public: Aktif videoları cache'li getir
@@ -79,6 +79,7 @@ export async function createVideo(data: VideoFormValues) {
         throw new Error('Video eklenirken bir hata oluştu');
     }
 
+    revalidateTag('videos', 'default');
     revalidatePath('/admin/videos');
     revalidatePath('/');
 }
@@ -95,6 +96,7 @@ export async function updateVideo(id: string, data: Partial<VideoFormValues & { 
         throw new Error('Video güncellenirken bir hata oluştu');
     }
 
+    revalidateTag('videos', 'default');
     revalidatePath('/admin/videos');
     revalidatePath('/');
 }
@@ -111,6 +113,7 @@ export async function deleteVideo(id: string) {
         throw new Error('Video silinirken bir hata oluştu');
     }
 
+    revalidateTag('videos', 'default');
     revalidatePath('/admin/videos');
     revalidatePath('/');
 }
@@ -127,6 +130,7 @@ export async function toggleVideoActive(id: string, isActive: boolean) {
         throw new Error('Video durumu güncellenirken bir hata oluştu');
     }
 
+    revalidateTag('videos', 'default');
     revalidatePath('/admin/videos');
     revalidatePath('/');
 }
