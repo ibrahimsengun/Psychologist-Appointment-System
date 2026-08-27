@@ -2,7 +2,6 @@
 
 import { BlogPost } from '@/types/blog';
 import { getPublishedPosts } from './blog-actions';
-import { getBlogPostCategories } from './category-actions';
 
 /**
  * Get related posts based on:
@@ -29,47 +28,57 @@ export async function getRelatedPosts(
         return otherPosts.slice(0, limit);
     }
 
-    // Get categories for all posts
-    const currentCategories = await getBlogPostCategories(currentPostId);
-    const currentCategoryIds = currentCategories.map(cat => cat.id);
+    // Fetch ALL category relationships in a single query (fixes N+1 problem)
+    const allPostIds = [currentPostId, ...otherPosts.map(p => p.id)];
+    const { createPublicClient } = await import('@/utils/supabase/public');
+    const supabase = createPublicClient();
+
+    const { data: allRelations } = await supabase
+        .from('blog_post_categories')
+        .select('blog_post_id, category_id, categories (*)')
+        .in('blog_post_id', allPostIds);
+
+    // Group by post id in memory
+    const categoriesByPostId = new Map<string, any[]>();
+    for (const rel of allRelations ?? []) {
+        const list = categoriesByPostId.get(rel.blog_post_id) ?? [];
+        list.push(rel.categories);
+        categoriesByPostId.set(rel.blog_post_id, list);
+    }
+
+    const currentCategoryIds = (categoriesByPostId.get(currentPostId) ?? []).map((c: any) => c?.id).filter(Boolean);
 
     // Score each post
-    const scoredPosts = await Promise.all(
-        otherPosts.map(async (post) => {
-            let score = 0;
+    const scoredPosts = otherPosts.map((post) => {
+        let score = 0;
 
-            // Get post categories
-            const postCategories = await getBlogPostCategories(post.id);
-            const postCategoryIds = postCategories.map(cat => cat.id);
+        const postCategories = categoriesByPostId.get(post.id) ?? [];
+        const postCategoryIds = postCategories.map((c: any) => c?.id).filter(Boolean);
 
-            // Score: Same category = 10 points per category
-            const commonCategories = currentCategoryIds.filter(id =>
-                postCategoryIds.includes(id)
-            );
-            score += commonCategories.length * 10;
+        // Score: Same category = 10 points per category
+        const commonCategories = currentCategoryIds.filter(id => postCategoryIds.includes(id));
+        score += commonCategories.length * 10;
 
-            // Score: Title similarity (common words)
-            const currentWords = extractKeywords(currentPost.title);
-            const postWords = extractKeywords(post.title);
-            const commonWords = currentWords.filter(word => postWords.includes(word));
-            score += commonWords.length * 5;
+        // Score: Title similarity (common words)
+        const currentWords = extractKeywords(currentPost.title);
+        const postWords = extractKeywords(post.title);
+        const commonWords = currentWords.filter(word => postWords.includes(word));
+        score += commonWords.length * 5;
 
-            // Score: Excerpt similarity
-            const currentExcerptWords = extractKeywords(currentPost.excerpt);
-            const postExcerptWords = extractKeywords(post.excerpt);
-            const commonExcerptWords = currentExcerptWords.filter(word =>
-                postExcerptWords.includes(word)
-            );
-            score += commonExcerptWords.length * 2;
+        // Score: Excerpt similarity
+        const currentExcerptWords = extractKeywords(currentPost.excerpt);
+        const postExcerptWords = extractKeywords(post.excerpt);
+        const commonExcerptWords = currentExcerptWords.filter(word =>
+            postExcerptWords.includes(word)
+        );
+        score += commonExcerptWords.length * 2;
 
-            // Add categories to post for display
-            return {
-                ...post,
-                categories: postCategories,
-                _score: score
-            };
-        })
-    );
+        return {
+            ...post,
+            categories: postCategories,
+            _score: score
+        };
+    });
 
     // Sort by score (highest first) and return top N
     return scoredPosts

@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { ReviewFormValues } from '@/types/review';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { unstable_cache } from 'next/cache';
 
 // Public: Aktif yorumları cache'li getir
@@ -67,6 +67,7 @@ export async function createReview(data: ReviewFormValues) {
         throw new Error('Yorum eklenirken bir hata oluştu');
     }
 
+    revalidateTag('reviews', 'default');
     revalidatePath('/admin/reviews');
     revalidatePath('/');
 }
@@ -83,6 +84,7 @@ export async function updateReview(id: string, data: Partial<ReviewFormValues & 
         throw new Error('Yorum güncellenirken bir hata oluştu');
     }
 
+    revalidateTag('reviews', 'default');
     revalidatePath('/admin/reviews');
     revalidatePath('/');
 }
@@ -99,6 +101,7 @@ export async function deleteReview(id: string) {
         throw new Error('Yorum silinirken bir hata oluştu');
     }
 
+    revalidateTag('reviews', 'default');
     revalidatePath('/admin/reviews');
     revalidatePath('/');
 }
@@ -115,6 +118,7 @@ export async function toggleReviewActive(id: string, isActive: boolean) {
         throw new Error('Yorum durumu güncellenirken bir hata oluştu');
     }
 
+    revalidateTag('reviews', 'default');
     revalidatePath('/admin/reviews');
     revalidatePath('/');
 }
