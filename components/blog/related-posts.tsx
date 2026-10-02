@@ -1,8 +1,8 @@
-import { BlogPost } from '@/types/blog';
+import { BlogPostListItem } from '@/types/blog';
 import { BlogCard } from './blog-card';
 
 interface RelatedPostsProps {
-    posts: BlogPost[];
+    posts: BlogPostListItem[];
 }
 
 export function RelatedPosts({ posts }: RelatedPostsProps) {

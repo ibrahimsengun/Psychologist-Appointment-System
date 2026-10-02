@@ -1,6 +1,6 @@
 'use server';
 
-import { BlogPost } from '@/types/blog';
+import { BlogPostListItem } from '@/types/blog';
 import { getPublishedPosts } from './blog-actions';
 
 /**
@@ -12,7 +12,7 @@ import { getPublishedPosts } from './blog-actions';
 export async function getRelatedPosts(
     currentPostId: string,
     limit: number = 3
-): Promise<BlogPost[]> {
+): Promise<BlogPostListItem[]> {
     const allPosts = await getPublishedPosts();
 
     // Exclude current post
@@ -28,32 +28,15 @@ export async function getRelatedPosts(
         return otherPosts.slice(0, limit);
     }
 
-    // Fetch ALL category relationships in a single query (fixes N+1 problem)
-    const allPostIds = [currentPostId, ...otherPosts.map(p => p.id)];
-    const { createPublicClient } = await import('@/utils/supabase/public');
-    const supabase = createPublicClient();
-
-    const { data: allRelations } = await supabase
-        .from('blog_post_categories')
-        .select('blog_post_id, category_id, categories (*)')
-        .in('blog_post_id', allPostIds);
-
-    // Group by post id in memory
-    const categoriesByPostId = new Map<string, any[]>();
-    for (const rel of allRelations ?? []) {
-        const list = categoriesByPostId.get(rel.blog_post_id) ?? [];
-        list.push(rel.categories);
-        categoriesByPostId.set(rel.blog_post_id, list);
-    }
-
-    const currentCategoryIds = (categoriesByPostId.get(currentPostId) ?? []).map((c: any) => c?.id).filter(Boolean);
+    // Categories already come with each post from getPublishedPosts (single cached query)
+    const currentCategoryIds = (currentPost.categories ?? []).map(c => c.id);
 
     // Score each post
     const scoredPosts = otherPosts.map((post) => {
         let score = 0;
 
-        const postCategories = categoriesByPostId.get(post.id) ?? [];
-        const postCategoryIds = postCategories.map((c: any) => c?.id).filter(Boolean);
+        const postCategories = post.categories ?? [];
+        const postCategoryIds = postCategories.map(c => c.id);
 
         // Score: Same category = 10 points per category
         const commonCategories = currentCategoryIds.filter(id => postCategoryIds.includes(id));

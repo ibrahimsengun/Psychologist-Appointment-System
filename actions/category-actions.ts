@@ -2,6 +2,8 @@
 
 import { Category, CategoryFormValues } from '@/types/category';
 import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import slugify from 'slugify';
 
 // Tüm kategorileri getir
@@ -40,7 +42,7 @@ export async function getCategoryById(id: string): Promise<Category | null> {
 
 // Slug ile kategori getir
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from('categories')
@@ -95,6 +97,8 @@ export async function createCategory(formData: CategoryFormValues): Promise<Cate
         throw new Error('Kategori oluşturulamadı');
     }
 
+    revalidateTag('blog-posts', 'default');
+    revalidatePath('/', 'layout');
     return data as Category;
 }
 
@@ -140,6 +144,8 @@ export async function updateCategory(id: string, formData: CategoryFormValues): 
         throw new Error('Kategori güncellenemedi');
     }
 
+    revalidateTag('blog-posts', 'default');
+    revalidatePath('/', 'layout');
     return data as Category;
 }
 
@@ -174,11 +180,14 @@ export async function deleteCategory(id: string): Promise<void> {
         console.error('Kategori silme hatası:', error);
         throw new Error('Kategori silinemedi');
     }
+
+    revalidateTag('blog-posts', 'default');
+    revalidatePath('/', 'layout');
 }
 
 // Blog yazısının kategorilerini getir
 export async function getBlogPostCategories(blogPostId: string): Promise<Category[]> {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from('blog_post_categories')
@@ -255,4 +264,7 @@ export async function updateBlogPostCategories(blogPostId: string, categoryIds: 
             throw new Error('Blog yazısı kategorileri güncellenemedi');
         }
     }
+
+    revalidateTag('blog-posts', 'default');
+    revalidatePath('/', 'layout');
 }

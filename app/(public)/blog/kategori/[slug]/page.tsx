@@ -1,6 +1,5 @@
 import { getCategoryBySlug } from '@/actions/category-actions';
 import { getPublishedPosts } from '@/actions/blog-actions';
-import { getBlogPostCategories } from '@/actions/category-actions';
 import { BlogCard } from '@/components/blog/blog-card';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { notFound } from 'next/navigation';
@@ -38,6 +37,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 3600;
 
+// Kategori sayfaları ilk ziyarette oluşturulup önbelleğe alınır (ISR)
+export async function generateStaticParams() {
+    return [];
+}
+
 export default async function CategoryPage({ params }: Props) {
     const { slug } = await params;
     const category = await getCategoryBySlug(slug);
@@ -47,16 +51,10 @@ export default async function CategoryPage({ params }: Props) {
     }
 
     // Get all published posts
-    const allPosts = await getPublishedPosts();
+    // Yazılar kategorileriyle birlikte tek sorguda gelir
+    const postsWithCategories = await getPublishedPosts();
 
     // Filter posts by category
-    const postsWithCategories = await Promise.all(
-        allPosts.map(async (post) => {
-            const categories = await getBlogPostCategories(post.id);
-            return { ...post, categories };
-        })
-    );
-
     const categoryPosts = postsWithCategories.filter((post) =>
         post.categories?.some((cat) => cat.id === category.id)
     );

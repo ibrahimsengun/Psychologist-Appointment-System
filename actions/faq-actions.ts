@@ -3,11 +3,17 @@
 import { FAQ, FAQFormValues } from '@/types/faq';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { unstable_cache } from 'next/cache';
+import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
+
+// Public sayfalar statik/ISR olduğu için admin değişikliklerinden sonra önbelleği temizle
+function revalidateFAQPages() {
+    revalidateTag('faqs', 'default');
+    revalidatePath('/', 'layout');
+}
 
 // Public: Aktif FAQ'ları sıralı getir
 export async function getActiveFAQs(): Promise<FAQ[]> {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from('faqs')
@@ -100,6 +106,8 @@ export async function createFAQ(formData: FAQFormValues): Promise<FAQ> {
         throw new Error('FAQ oluşturulamadı');
     }
 
+    revalidateFAQPages();
+
     return data as FAQ;
 }
 
@@ -136,6 +144,8 @@ export async function updateFAQ(id: string, formData: FAQFormValues): Promise<FA
         throw new Error('FAQ güncellenemedi');
     }
 
+    revalidateFAQPages();
+
     return data as FAQ;
 }
 
@@ -160,6 +170,8 @@ export async function deleteFAQ(id: string): Promise<void> {
         console.error('FAQ silme hatası:', error);
         throw new Error('FAQ silinemedi');
     }
+
+    revalidateFAQPages();
 }
 
 // Admin: FAQ aktif/pasif toggle
@@ -190,6 +202,8 @@ export async function toggleFAQActive(id: string, isActive: boolean): Promise<FA
         console.error('FAQ durum güncelleme hatası:', error);
         throw new Error('FAQ durumu güncellenemedi');
     }
+
+    revalidateFAQPages();
 
     return data as FAQ;
 }
@@ -222,6 +236,8 @@ export async function toggleHomepageFAQ(id: string, showOnHomepage: boolean): Pr
         console.error('FAQ anasayfa durumu güncelleme hatası:', error);
         throw new Error('FAQ anasayfa durumu güncellenemedi');
     }
+
+    revalidateFAQPages();
 
     return data as FAQ;
 }

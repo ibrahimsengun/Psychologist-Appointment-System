@@ -4,6 +4,7 @@ import { QuestionFormData, Question, PublicQuestion } from '@/types/questions';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { Resend } from 'resend';
+import { revalidatePath } from 'next/cache';
 import QuestionAnsweredEmail from '@/emails/question-answered';
 
 const QUESTIONS_TABLE = 'questions';
@@ -127,6 +128,7 @@ export async function answerQuestion(
     .eq('id', id);
 
   if (error) throw new Error(error.message);
+  revalidatePath('/soru-cevap');
 
   // E-posta varsa bildirim gönder
   if (question.email) {
@@ -159,6 +161,7 @@ export async function rejectQuestion(id: string): Promise<void> {
     .eq('id', id);
 
   if (error) throw new Error(error.message);
+  revalidatePath('/soru-cevap');
 }
 
 // Admin: Soruyu sil
@@ -166,6 +169,7 @@ export async function deleteQuestion(id: string): Promise<void> {
   const supabase = await createClient();
   const { error } = await supabase.from(QUESTIONS_TABLE).delete().eq('id', id);
   if (error) throw new Error(error.message);
+  revalidatePath('/soru-cevap');
 }
 
 // Admin: Bekleyen soru sayısı (sidebar badge için)
@@ -189,4 +193,5 @@ export async function toggleQuestionPublic(id: string, isPublic: boolean): Promi
     .eq('id', id);
 
   if (error) throw new Error(error.message);
+  revalidatePath('/soru-cevap');
 }

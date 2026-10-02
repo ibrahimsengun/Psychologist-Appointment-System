@@ -1,4 +1,4 @@
-import { getPostBySlug } from '@/actions/blog-actions';
+import { getPublishedPostBySlug, getPublishedPosts } from '@/actions/blog-actions';
 import { getBlogPostCategories } from '@/actions/category-actions';
 import { getRelatedPosts } from '@/actions/related-posts-actions';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
@@ -13,10 +13,15 @@ import { CallToAction } from '@/components/call-to-action';
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export const revalidate = 3600;
+
+// Yayınlanmış yazılar build sırasında hazırlanır; yeni yazılar ilk ziyarette oluşturulup önbelleğe alınır
+export async function generateStaticParams() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 // Okuma süresi hesaplama fonksiyonu
 function calculateReadingTime(content: string): number {
@@ -33,13 +38,17 @@ function getWordCount(content: string): number {
 }
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
+  { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const slug = (await params).slug;
 
   // fetch post information
-  const post = await getPostBySlug(slug);
+  const post = await getPublishedPostBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
 
   // Meta description: öncelikle meta_description, yoksa excerpt kullan
   const description = post.meta_description || post.excerpt;
@@ -73,7 +82,7 @@ export async function generateMetadata(
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPublishedPostBySlug(slug);
 
   if (!post) {
     notFound();

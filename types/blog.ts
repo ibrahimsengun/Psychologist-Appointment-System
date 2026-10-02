@@ -18,6 +18,9 @@ export interface BlogPost {
   categories?: { id: string; name: string; slug: string; description?: string }[];
 }
 
+// Listelerde kullanılan hafif yazı tipi (içerik alanı olmadan)
+export type BlogPostListItem = Omit<BlogPost, 'content'>;
+
 export const blogPostFormSchema = z.object({
   title: z.string().min(1, 'Başlık zorunludur'),
   content: z.string().min(1, 'İçerik zorunludur'),

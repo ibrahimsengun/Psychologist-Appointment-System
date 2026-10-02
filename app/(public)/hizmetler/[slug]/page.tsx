@@ -13,6 +13,12 @@ type Props = {
 
 export const revalidate = 3600;
 
+// Yayınlanmış hizmetler build sırasında hazırlanır; yenileri ilk ziyarette önbelleğe alınır
+export async function generateStaticParams() {
+    const services = await getPublishedServices();
+    return services.map((service) => ({ slug: service.slug }));
+}
+
 function calculateReadingTime(content: string): number {
     const plainText = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     const wordCount = plainText.split(/\s+/).length;

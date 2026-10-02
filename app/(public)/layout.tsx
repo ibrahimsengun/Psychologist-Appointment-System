@@ -1,22 +1,20 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import WhatsAppButton from '@/components/whatsapp-button';
-import { createClient } from '@/utils/supabase/server';
 import { getWhatsAppSettings } from '@/actions/settings-actions';
 
-export default async function PublicLayout({ children }: { children: React.ReactNode }) {
-  let adminEmail: string | null = null;
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    adminEmail = user?.email ?? null;
-  } catch { }
+// Not: Burada cookies()/auth.getUser() çağrılmamalı. Aksi halde tüm public
+// sayfalar her istekte sunucuda yeniden render edilir ve link tıklamalarında
+// gecikme hissedilir. Admin şeridi Header içinde istemci tarafında yüklenir.
+// Güvenlik ağı: önbelleğe alınmış sayfalar en geç 1 saatte bir arka planda yenilenir.
+export const revalidate = 3600;
 
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const whatsappSettings = await getWhatsAppSettings();
 
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
-      <Header adminEmail={adminEmail} />
+      <Header />
       <main id="main-content">{children}</main>
       <Footer />
       <WhatsAppButton

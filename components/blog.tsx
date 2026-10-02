@@ -1,8 +1,8 @@
-import { BlogPost } from '@/types/blog';
+import { BlogPostListItem } from '@/types/blog';
 import Link from 'next/link';
 import { BlogCard } from './blog/blog-card';
 
-export default function Blog({ blogPosts }: { blogPosts: BlogPost[] }) {
+export default function Blog({ blogPosts }: { blogPosts: BlogPostListItem[] }) {
   return (
     <section id="blog" className="relative py-16 md:py-24 overflow-hidden">
       {/* Arka Plan */}

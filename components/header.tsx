@@ -3,12 +3,21 @@
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { CalendarDays, Menu, Phone, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAnalytics } from '@/hooks/use-analytics';
+import { getAdminEmail } from '@/actions/auth-actions';
 
-export default function Header({ adminEmail }: { adminEmail?: string | null }) {
+export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [adminEmail, setAdminEmail] = useState<string | null>(null);
   const isAdmin = !!adminEmail;
+
+  // Admin şeridi istemcide yüklenir; böylece public sayfalar statik kalır.
+  // Supabase oturum çerezi yoksa (normal ziyaretçi) sunucuya hiç istek atılmaz.
+  useEffect(() => {
+    if (!/(?:^|;\s*)sb-[^=]+-auth-token/.test(document.cookie)) return;
+    getAdminEmail().then(setAdminEmail).catch(() => {});
+  }, []);
   const { trackAppointmentClick, trackContactClick } = useAnalytics();
 
   return (

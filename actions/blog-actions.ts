@@ -1,19 +1,24 @@
 'use server';
 
-import { BlogPost, BlogPostFormValues } from '@/types/blog';
+import { BlogPost, BlogPostFormValues, BlogPostListItem } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { revalidateTag, unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
-export async function getPublishedPosts() {
+// Liste ekranları için gereken kolonlar (yazı içeriği hariç; içerik çok büyük)
+const LIST_COLUMNS =
+  'id, title, slug, excerpt, cover_image, meta_description, status, published_at, author_id, created_at, updated_at';
+
+// Public: Yayındaki tüm yazılar, kategorileriyle birlikte tek sorguda (içerik hariç)
+export async function getPublishedPosts(): Promise<BlogPostListItem[]> {
   const cachedFn = unstable_cache(
     async () => {
       const supabase = createPublicClient();
 
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('*')
+        .select(`${LIST_COLUMNS}, blog_post_categories (categories (id, name, slug))`)
         .eq('status', 'published')
         .order('created_at', { ascending: false });
 
@@ -21,10 +26,41 @@ export async function getPublishedPosts() {
         throw new Error(error.message);
       }
 
-      return data as BlogPost[];
+      return data.map(({ blog_post_categories, ...post }: any) => ({
+        ...post,
+        categories: (blog_post_categories ?? [])
+          .map((rel: any) => rel.categories)
+          .filter(Boolean)
+      })) as BlogPostListItem[];
     },
-    ['all-published-posts'],
+    ['all-published-posts-with-categories'],
     { revalidate: 300, tags: ['blog-posts'] }
+  );
+
+  return cachedFn();
+}
+
+// Public: yayınlanmış yazıyı cookie'siz ve önbellekli getirir (blog sayfası statik kalabilsin diye)
+export async function getPublishedPostBySlug(slug: string) {
+  const cachedFn = unstable_cache(
+    async () => {
+      const supabase = createPublicClient();
+
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('slug', slug)
+        .eq('status', 'published')
+        .maybeSingle();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return data as BlogPost | null;
+    },
+    ['published-post-by-slug', slug],
+    { revalidate: 3600, tags: ['blog-posts'] }
   );
 
   return cachedFn();
@@ -248,38 +284,26 @@ export async function deleteBlogPost(id: string): Promise<void> {
 }
 
 // Public: Yayında olan blog yazılarını cache'li getir (anasayfa için)
-export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
+export async function getPublishedBlogPosts(limit = 3): Promise<BlogPostListItem[]> {
   const cachedFn = unstable_cache(
     async () => {
       const supabase = createPublicClient();
 
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('*')
+        .select(LIST_COLUMNS)
         .eq('status', 'published')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(limit);
 
       if (error) {
         console.error('Blog yazıları listeleme hatası:', error);
         throw new Error('Blog yazıları listelenemedi');
       }
 
-      return data.map((post) => ({
-        id: post.id,
-        title: post.title,
-        slug: post.slug,
-        content: post.content,
-        excerpt: post.excerpt,
-        cover_image: post.cover_image,
-        meta_description: post.meta_description,
-        status: post.status,
-        published_at: post.published_at,
-        created_at: post.created_at,
-        updated_at: post.updated_at,
-        author_id: post.author_id
-      }));
+      return data as BlogPostListItem[];
     },
-    ['published-blog-posts'],
+    ['published-blog-posts', String(limit)],
     { revalidate: 300, tags: ['blog-posts'] }
   );
 

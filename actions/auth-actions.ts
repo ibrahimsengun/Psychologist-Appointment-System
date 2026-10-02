@@ -25,3 +25,14 @@ export async function signOut() {
   await supabase.auth.signOut();
   redirect('/sign-in');
 }
+
+// Public header'daki admin şeridi için: oturum açık admin'in e-postası (yoksa null)
+export async function getAdminEmail(): Promise<string | null> {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    return user?.email ?? null;
+  } catch {
+    return null;
+  }
+}

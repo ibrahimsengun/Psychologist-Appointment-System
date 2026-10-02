@@ -1,12 +1,10 @@
-import { BlogPost } from '@/types/blog';
+import { BlogPostListItem } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getBlogPostCategories } from '@/actions/category-actions';
 import { Badge } from '@/components/ui/badge';
 
 interface BlogCardProps {
-  post: BlogPost;
-  categories?: { id: string; name: string; slug: string }[];
+  post: BlogPostListItem;
 }
 
 export function BlogCard({ post }: BlogCardProps) {
@@ -22,6 +20,7 @@ export function BlogCard({ post }: BlogCardProps) {
               src={post.cover_image}
               alt={post.title}
               fill
+              sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           )}

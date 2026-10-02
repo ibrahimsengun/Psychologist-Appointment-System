@@ -1,4 +1,5 @@
 import { getPublishedPosts } from '@/actions/blog-actions';
+import { POSTS_PER_PAGE, blogPageHref } from '@/components/blog/blog-pagination';
 import { getPublishedServices } from '@/actions/service-actions';
 import { MetadataRoute } from 'next';
 
@@ -91,6 +92,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly' as const,
             priority: 0.7
         }));
+
+        // Blog sayfalama: /blog/sayfa/2, /blog/sayfa/3, ...
+        const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+        for (let page = 2; page <= totalPages; page++) {
+            blogPosts.push({
+                url: `${baseUrl}${blogPageHref(page)}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.4
+            });
+        }
     } catch (error) {
         console.error('Error fetching blog posts for sitemap:', error);
     }
