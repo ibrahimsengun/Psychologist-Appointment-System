@@ -2,6 +2,7 @@ import { getPublishedServices } from '@/actions/service-actions';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Info } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -33,9 +34,19 @@ export default async function HizmetlerPage() {
         <div className="container py-8">
             <Breadcrumb items={[{ label: 'Hizmetler' }]} />
             <h1 className="text-4xl font-bold mb-4">Hizmetlerimiz</h1>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
+            <p className="text-lg text-muted-foreground mb-6 max-w-2xl">
                 Bilimsel temelli yaklaşımlarla, size özel danışmanlık hizmetleri sunuyoruz
             </p>
+
+            <div className="flex gap-3 rounded-xl border border-border/60 bg-muted/40 p-4 mb-8 text-sm text-muted-foreground">
+                <Info className="w-5 h-5 shrink-0 mt-0.5" aria-hidden="true" />
+                <p>
+                    Web sitemizdeki içerikler, kişilerin psikososyal baş etme becerilerini artırmaya yönelik genel
+                    bilgilendirme sunar. Aile danışma merkezimizde doğrudan tıbbi muayene, ilaç tedavisi veya
+                    psikiyatrik klinik müdahale uygulanmamaktadır. Tıbbi ve psikiyatrik değerlendirme gerektiren
+                    durumlarda uzman hekimlere yönlendirme sağlanır.
+                </p>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {services.length === 0 && (

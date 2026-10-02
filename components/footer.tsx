@@ -25,7 +25,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-background/70 text-sm leading-relaxed mb-6">
-              Bilimsel temelli yaklaşımlarla güvenli, empatik ve gizliliğe dayalı profesyonel psikolojik destek.
+              Bilimsel temelli yaklaşımlarla güvenli, empatik ve gizliliğe dayalı profesyonel destek.
             </p>
             {/* Sosyal Medya */}
             <div className="flex gap-3">
