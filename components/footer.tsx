@@ -188,6 +188,11 @@ export default function Footer() {
 
         {/* Alt Kısım */}
         <div className="border-t border-background/10 mt-12 pt-8">
+          <div className="mb-8 text-center text-background/40 text-xs max-w-5xl mx-auto leading-relaxed">
+            <p>
+              Sitemizde yer alan bilgiler bilgilendirme amaçlı olup tıbbi teşhis, tanı veya tedavi niteliği taşımaz. Merkezimizde Aile ve Sosyal Hizmetler Bakanlığı mevzuatı çerçevesinde aile ve bireysel danışmanlık hizmeti sunulmakta; klinik/tıbbi müdahale gerektiren durumlarda ilgili hekimlere ve hastanelere yönlendirme yapılmaktadır.
+            </p>
+          </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-background/50 text-sm text-center md:text-left">
               © {new Date().getFullYear()} Uzm. Psk. Lokman Yılmaz. Tüm hakları saklıdır.
