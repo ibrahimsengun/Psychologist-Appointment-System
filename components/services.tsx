@@ -1,7 +1,7 @@
 import { Service } from '@/types/service';
 import Link from 'next/link';
 
-export default function Services({ services }: { services: Service[] }) {
+export default function Services({ services, totalCount }: { services: Service[]; totalCount?: number }) {
   return (
     <section id="hizmetler" className="relative py-16 md:py-24 overflow-hidden">
       {/* Gradient Background */}
@@ -81,9 +81,9 @@ export default function Services({ services }: { services: Service[] }) {
           <Link
             href="/hizmetler"
             title="Tüm Psikolojik Danışmanlık Hizmetlerini Gör"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4 transition-all"
+            className="inline-flex items-center gap-2 border-2 border-primary/30 text-primary font-semibold px-6 py-3 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all"
           >
-            Tüm Hizmetleri Gör
+            {totalCount && totalCount > services.length ? `Tüm Hizmetleri Gör (${totalCount})` : 'Tüm Hizmetleri Gör'}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

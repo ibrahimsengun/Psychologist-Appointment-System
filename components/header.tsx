@@ -49,16 +49,9 @@ export default function Header() {
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             <Link
-              href="/"
-              title="Ana Sayfa"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Ana Sayfa
-            </Link>
-            <Link
-              href="/#hakkimda"
+              href="/hakkimda"
               title="Hakkımda Detaylı Bilgi"
               className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
             >
@@ -95,7 +88,7 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
               <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => trackContactClick('header')}>
                 <Phone className="mr-2 h-4 w-4" />
@@ -114,7 +107,7 @@ export default function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -124,7 +117,7 @@ export default function Header() {
 
         {/* Collapsible Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4' : 'max-h-0'
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4' : 'max-h-0'
             }`}
         >
           <nav className="flex flex-col gap-1 pt-2 border-t border-border/50">
@@ -137,7 +130,7 @@ export default function Header() {
               Ana Sayfa
             </Link>
             <Link
-              href="/#hakkimda"
+              href="/hakkimda"
               title="Hakkımda Detaylı Bilgi"
               className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
               onClick={() => setIsOpen(false)}

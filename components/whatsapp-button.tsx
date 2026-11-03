@@ -28,7 +28,7 @@ export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonP
             onClick={() => trackWhatsAppClick('floating_button')}
             className={`
         fixed bottom-6 right-6 z-50
-        flex items-center
+        hidden lg:flex items-center
         bg-[#25D366] hover:bg-[#1ebe5b]
         text-white font-medium
         rounded-full shadow-lg hover:shadow-xl

@@ -70,7 +70,7 @@ export default function Footer() {
               <Link href="/" title="Ana Sayfa" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Ana Sayfa
               </Link>
-              <Link href="/#hakkimda" title="Hakkımda Detaylı Bilgi" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
+              <Link href="/hakkimda" title="Hakkımda Detaylı Bilgi" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Hakkımda
               </Link>
               <Link href="/hizmetler" title="Verilen Psikolojik Danışmanlık Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">

@@ -17,7 +17,7 @@ function StarRating({ rating }: { rating: number }) {
             {[1, 2, 3, 4, 5].map((star) => (
                 <svg
                     key={star}
-                    className={`w-4 h-4 ${star <= rating ? 'text-yellow-400' : 'text-zinc-600'}`}
+                    className={`w-4 h-4 ${star <= rating ? 'text-amber-400' : 'text-muted'}`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     aria-hidden="true"
@@ -98,14 +98,14 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
     if (reviews.length === 0) return null;
 
     return (
-        <section className="py-16 md:py-24 bg-zinc-900 overflow-hidden">
+        <section id="yorumlar" className="py-16 md:py-20 bg-primary overflow-hidden scroll-mt-20">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-amber-100 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
                         Danışan Yorumları
                     </h2>
-                    <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-primary-foreground/75 max-w-2xl mx-auto leading-relaxed">
                         Danışanlarımızın danışmanlık sürecindeki olumlu dönüşleri, bize en
                         büyük motivasyonu sağlıyor. Her yorum, güvene dayalı ilişkimizin
                         bir yansımasıdır.
@@ -126,7 +126,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                                 key={review.id}
                                 className="basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                             >
-                                <div className="h-full rounded-2xl bg-zinc-800/80 border border-zinc-700/50 p-5 flex flex-col hover:border-zinc-600/70 transition-all duration-300 hover:shadow-lg hover:shadow-black/20">
+                                <div className="h-full rounded-2xl bg-background p-5 flex flex-col shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-black/20">
                                     {/* Author Info */}
                                     <div className="flex items-center gap-3 mb-3">
                                         <ProfileAvatar
@@ -134,11 +134,11 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                                             photoUrl={review.profile_photo_url}
                                         />
                                         <div className="min-w-0">
-                                            <h3 className="font-semibold text-white text-sm truncate">
+                                            <h3 className="font-semibold text-foreground text-sm truncate">
                                                 {review.author_name}
                                             </h3>
                                             {review.relative_time && (
-                                                <p className="text-zinc-500 text-xs">
+                                                <p className="text-muted-foreground text-xs">
                                                     {review.relative_time}
                                                 </p>
                                             )}
@@ -151,15 +151,15 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                                     </div>
 
                                     {/* Review Text */}
-                                    <p className="text-zinc-300 text-sm leading-relaxed flex-1 line-clamp-5">
+                                    <p className="text-muted-foreground text-sm leading-relaxed flex-1 line-clamp-5">
                                         {review.text}
                                     </p>
                                 </div>
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="hidden md:flex -left-12 bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700 hover:text-white" />
-                    <CarouselNext className="hidden md:flex -right-12 bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700 hover:text-white" />
+                    <CarouselPrevious className="hidden md:flex -left-12 bg-background border-background text-primary hover:bg-background/90 hover:text-primary" />
+                    <CarouselNext className="hidden md:flex -right-12 bg-background border-background text-primary hover:bg-background/90 hover:text-primary" />
                 </Carousel>
             </div>
         </section>

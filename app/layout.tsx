@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Fraunces, Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -54,10 +54,17 @@ export const metadata: Metadata = {
 
 const geistSans = Inter({
   weight: ['400', '700'],
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   display: 'swap',
   style: ['normal', 'italic'],
   preload: true
+});
+
+const headingFont = Fraunces({
+  weight: ['600'],
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  variable: '--font-heading'
 });
 
 export default function RootLayout({
@@ -70,7 +77,7 @@ export default function RootLayout({
   });
 
   return (
-    <html lang="tr" className={geistSans.className} suppressHydrationWarning>
+    <html lang="tr" className={`${geistSans.className} ${headingFont.variable}`} suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
         <JsonLd data={personSchema} />

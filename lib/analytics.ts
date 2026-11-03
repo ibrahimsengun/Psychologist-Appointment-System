@@ -28,7 +28,9 @@ export type EventSource =
   | 'landing_cta'
   | 'test_result'
   | 'sss'
-  | 'floating_button';
+  | 'floating_button'
+  | 'mobile_bar'
+  | 'process_section';
 
 interface EventParams {
   source?: EventSource;

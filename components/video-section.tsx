@@ -7,6 +7,7 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel';
 import Link from 'next/link';
+import { LiteYouTube } from '@/components/lite-youtube';
 
 interface VideoSectionProps {
     videos: Video[];
@@ -20,8 +21,11 @@ export default function VideoSection({ videos }: VideoSectionProps) {
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                    <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
                         Videolar
+                    </p>
+                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                        Kısa Psikoloji Videoları
                     </h2>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                         Psikoloji ve kişisel gelişim hakkında bilgilendirici videolar
@@ -48,14 +52,7 @@ export default function VideoSection({ videos }: VideoSectionProps) {
                                 >
                                     <div className="rounded-xl overflow-hidden bg-card border shadow-sm hover:shadow-lg transition-shadow duration-300 group">
                                         <div className="relative w-full aspect-[9/16] overflow-hidden">
-                                            <iframe
-                                                src={`https://www.youtube.com/embed/${videoId}`}
-                                                title={video.title}
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                                loading="lazy"
-                                                className="absolute inset-0 w-full h-full"
-                                            />
+                                            <LiteYouTube videoId={videoId} title={video.title} />
                                         </div>
                                         <div className="p-3">
                                             <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">

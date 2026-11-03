@@ -2,30 +2,49 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { TrackedLink } from '@/components/tracked-link';
 
-export default function Hero() {
+interface HeroProps {
+  rating?: { average: number; count: number };
+}
+
+export default function Hero({ rating }: HeroProps) {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative lg:min-h-[85vh] flex items-center overflow-hidden">
       {/* Arka Plan Gradientleri */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5"></div>
-      <div className="absolute top-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-96 h-96 bg-accent rounded-full blur-3xl opacity-70"></div>
       <div className="absolute bottom-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
 
-      <div className="container mx-auto px-4 relative z-10 my-4">
-        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-2">
+      <div className="container mx-auto px-4 relative z-10 py-8 lg:py-4">
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
 
           {/* Sol Taraf - İçerik */}
           <div className="lg:w-1/2 text-center lg:text-left">
-            {/* Üst Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium text-primary">Samsun | Atakum | Online</span>
+            {/* Üst Badge + Yorum Puanı */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-6">
+              <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2">
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                <span className="text-sm font-medium text-primary">Samsun | Atakum | Online</span>
+              </div>
+              {rating && rating.count > 0 && (
+                <Link
+                  href="#yorumlar"
+                  title="Danışan Yorumları"
+                  className="inline-flex items-center gap-1.5 bg-background border border-border rounded-full px-4 py-2 text-sm hover:border-primary/40 transition-colors"
+                >
+                  <svg className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span className="font-semibold text-foreground">{rating.average.toFixed(1)}</span>
+                  <span className="text-muted-foreground">· {rating.count} danışan yorumu</span>
+                </Link>
+              )}
             </div>
 
             {/* Ana Başlık */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               <span className="text-foreground">Samsun Psikolog</span>
               <br />
-              <span className="text-primary">&</span>
+              <span className="text-primary italic">&</span>
               <span className="text-foreground"> Aile Danışmanı</span>
             </h1>
 
@@ -51,7 +70,7 @@ export default function Hero() {
                 </svg>
               </TrackedLink>
               <Link
-                href="#hakkimda"
+                href="/hakkimda"
                 title="Hakkımda Daha Fazla Bilgi"
                 className="inline-flex items-center justify-center gap-2 bg-background border-2 border-border px-8 py-4 rounded-xl font-semibold
                          hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
@@ -84,20 +103,20 @@ export default function Hero() {
           </div>
 
           {/* Sağ Taraf - Görsel */}
-          <div className="lg:w-1/2 relative">
-            <div className="relative max-w-lg mx-auto">
+          <div className="lg:w-1/2 relative order-first lg:order-none">
+            <div className="relative w-36 sm:w-44 lg:w-auto lg:max-w-lg mx-auto">
               {/* Dekoratif Çerçeve */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl blur-2xl"></div>
+              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent to-transparent rounded-full lg:rounded-3xl blur-2xl"></div>
 
               {/* Ana Görsel */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border/50">
+              <div className="relative aspect-square lg:aspect-auto rounded-full lg:rounded-3xl overflow-hidden shadow-2xl border-4 border-background lg:border lg:border-border/50">
                 <Image
                   src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202026-04-05%20at%2013.58.05.jpeg"
                   alt="Samsun Psikolog Uzman Psk. Lokman Yılmaz"
                   width={550}
                   height={700}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
-                  className="w-full h-auto object-cover max-h-[700px]"
+                  sizes="(max-width: 1024px) 176px, 550px"
+                  className="w-full h-full lg:h-auto object-cover object-top max-h-[700px]"
                   priority
                   fetchPriority="high"
                   quality={75}
@@ -107,7 +126,7 @@ export default function Hero() {
               </div>
 
               {/* Floating Card - Sol Alt */}
-              <div className="absolute -left-4 bottom-8 bg-background/95 backdrop-blur-sm border border-border/50 rounded-2xl p-4 shadow-xl hidden md:block">
+              <div className="absolute -left-4 bottom-8 bg-background/95 backdrop-blur-sm border border-border/50 rounded-2xl p-4 shadow-xl hidden lg:block">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -122,7 +141,7 @@ export default function Hero() {
               </div>
 
               {/* Floating Card - Sağ Üst */}
-              <div className="absolute -right-4 top-8 bg-background/95 backdrop-blur-sm border border-border/50 rounded-2xl p-4 shadow-xl hidden md:block">
+              <div className="absolute -right-4 top-8 bg-background/95 backdrop-blur-sm border border-border/50 rounded-2xl p-4 shadow-xl hidden lg:block">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

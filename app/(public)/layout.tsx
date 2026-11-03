@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import WhatsAppButton from '@/components/whatsapp-button';
+import MobileCtaBar from '@/components/mobile-cta-bar';
 import { getWhatsAppSettings } from '@/actions/settings-actions';
 
 // Not: Burada cookies()/auth.getUser() çağrılmamalı. Aksi halde tüm public
@@ -13,13 +14,17 @@ export default async function PublicLayout({ children }: { children: React.React
   const whatsappSettings = await getWhatsAppSettings();
 
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+    <div className="public-site grid min-h-screen grid-rows-[auto_1fr_auto] pb-16 lg:pb-0">
       <Header />
       <main id="main-content">{children}</main>
       <Footer />
       <WhatsAppButton
         phoneNumber={whatsappSettings.number}
         message={whatsappSettings.message}
+      />
+      <MobileCtaBar
+        phoneNumber={whatsappSettings.number}
+        whatsappMessage={whatsappSettings.message}
       />
     </div>
   );
