@@ -181,7 +181,7 @@ export default function About() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-foreground">Duygu Düzenleme Terapileri</span>
+                <span className="text-foreground">Duygu Düzenleme Odaklı Danışmanlık</span>
               </div>
               <div className="flex items-start gap-3">
                 <svg

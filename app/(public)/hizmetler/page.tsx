@@ -9,7 +9,7 @@ import { OG_IMAGE } from '@/lib/schema';
 export const metadata: Metadata = {
     title: 'Hizmetlerimiz | Uzman Psk. Lokman Yılmaz',
     description:
-        'Bireysel terapi, aile danışmanlığı, çift terapisi ve psikolojik destek hizmetleri. Samsun psikolog Lokman Yılmaz tarafından sunulan profesyonel hizmetler.',
+        'Bireysel danışmanlık, aile danışmanlığı, çift danışmanlığı ve psikolojik destek hizmetleri. Samsun psikolog Lokman Yılmaz tarafından sunulan profesyonel hizmetler.',
     keywords:
         'psikoloji hizmetleri, aile danışmanlığı, bireysel terapi, çift terapisi, samsun psikolog',
     alternates: {

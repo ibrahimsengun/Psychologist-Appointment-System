@@ -69,7 +69,7 @@ const aileDanismanligiAlanlari = [
     { baslik: 'Ebeveyn-Çocuk İlişkileri', aciklama: 'Çocuklarla iletişim güçlükleri, sınır koyma, ergen ebeveynliği' },
     { baslik: 'Boşanma Süreci', aciklama: 'Boşanma öncesi danışmanlık, çocuklara boşanmayı anlatma, uyum süreci' },
     { baslik: 'Aile İçi İletişim', aciklama: 'Sağlıklı iletişim becerileri, çatışma çözümü ve empati geliştirme' },
-    { baslik: 'Çift Terapisi', aciklama: 'İlişki doyumu, bağlanma örüntüleri ve duygusal yakınlık sorunları' },
+    { baslik: 'Çift Danışmanlığı', aciklama: 'İlişki doyumu, bağlanma örüntüleri ve duygusal yakınlık sorunları' },
     { baslik: 'Yeni Evlilik Uyumu', aciklama: 'Evliliğe hazırlık, rol dağılımı, beklenti yönetimi ve uyum süreci' },
 ];
 
@@ -122,7 +122,7 @@ export default function AtakumAileDanismaniPage() {
 
                             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
                                 <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                                <span className="text-sm font-medium text-primary">Aile Danışmanlığı &amp; Çift Terapisi</span>
+                                <span className="text-sm font-medium text-primary">Aile Danışmanlığı &amp; Çift Danışmanlığı</span>
                             </div>
 
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -234,7 +234,7 @@ export default function AtakumAileDanismaniPage() {
                         </p>
                         <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                             Aile danışmanlığı sürecinde <strong className="text-foreground">psikodinamik yaklaşım</strong>,{' '}
-                            <strong className="text-foreground">bilişsel davranışçı terapi</strong> ve{' '}
+                            <strong className="text-foreground">bilişsel davranışçı yaklaşım</strong> ve{' '}
                             <strong className="text-foreground">çözüm odaklı yaklaşım</strong> çerçevesinde çalışılmaktadır.
                             Ailelerin iletişim becerilerini güçlendirmek, çatışmaları çözmek ve sağlıklı ilişki dinamikleri
                             kurmak temel hedeflerimizdir.

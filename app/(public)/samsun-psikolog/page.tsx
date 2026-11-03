@@ -73,7 +73,7 @@ const faqItems = [
 const uzmanlikAlanlari = [
     { baslik: 'Bireysel Danışmanlık', aciklama: 'Kişisel sorunlar, kaygı, depresyon, özsaygı ve yaşam krizleriyle başa çıkma' },
     { baslik: 'Aile Danışmanlığı', aciklama: 'Aile içi iletişim sorunları, çatışma çözümü ve sağlıklı aile dinamikleri' },
-    { baslik: 'Çift Terapisi', aciklama: 'İlişki sorunları, güven problemleri, bağlanma ve duygusal yakınlık' },
+    { baslik: 'Çift Danışmanlığı', aciklama: 'İlişki sorunları, güven problemleri, bağlanma ve duygusal yakınlık' },
     { baslik: 'Çocuk ve Ergen', aciklama: 'Davranış sorunları, okul uyumu, dikkat eksikliği ve gelişimsel destek' },
     { baslik: 'Kaygı ve Stres', aciklama: 'Anksiyete bozuklukları, panik atak, fobiler ve stres yönetimi' },
     { baslik: 'Online Danışmanlık', aciklama: 'Türkiye ve dünya genelinden güvenli görüntülü psikolojik destek' },
@@ -250,7 +250,7 @@ export default async function SamsunPsikologPage() {
                             aynı zamanda online psikolojik danışmanlık hizmetiyle Türkiye&apos;nin her yerinden danışanlarla
                             çalışmaktadır. Danışmanlık sürecinde{' '}
                             <strong className="text-foreground">psikodinamik yaklaşım</strong>,{' '}
-                            <strong className="text-foreground">bilişsel davranışçı terapi (BDT)</strong> ve{' '}
+                            <strong className="text-foreground">bilişsel davranışçı yaklaşım (BDT)</strong> ve{' '}
                             <strong className="text-foreground">çözüm odaklı yaklaşım</strong> çerçevesinde çalışmaktadır.
                         </p>
                         <p className="text-lg text-muted-foreground mb-6 leading-relaxed">

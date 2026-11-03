@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Soru Sorun | Uzman Psk. Lokman Yılmaz',
   description:
-    'Psikoloji, terapi ve danışmanlık süreçleri hakkında merak ettiklerinizi anonim olarak sorun. Uzman Psikolog Lokman Yılmaz sorularınızı yanıtlıyor.',
+    'Psikoloji ve danışmanlık süreçleri hakkında merak ettiklerinizi anonim olarak sorun. Uzman Psikolog Lokman Yılmaz sorularınızı yanıtlıyor.',
   keywords: 'soru sor, online psikolog soru cevap, psikoloji soruları, samsun psikolog',
   alternates: {
     canonical: `${SITE_URL}/soru-sor`

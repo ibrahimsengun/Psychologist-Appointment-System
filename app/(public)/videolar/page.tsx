@@ -22,7 +22,7 @@ export default async function VideosPage() {
                         Tüm Videolar
                     </h1>
                     <p className="text-lg text-muted-foreground w-full max-w-2xl mx-auto">
-                        Psikoloji, terapi süreçleri ve kişisel gelişim üzerine hazırladığımız tüm videolarımızı buradan izleyebilirsiniz.
+                        Psikoloji, danışmanlık süreçleri ve kişisel gelişim üzerine hazırladığımız tüm videolarımızı buradan izleyebilirsiniz.
                     </p>
                 </div>
 

@@ -9,7 +9,7 @@ import { tr } from 'date-fns/locale';
 export const metadata: Metadata = {
     title: 'Soru & Cevap | Uzman Psk. Lokman Yılmaz',
     description:
-        'Psikoloji, terapi ve danışmanlık süreçleri hakkında sıkça sorulan sorular ve uzman psikolog cevapları. Online psikolog soru cevap.',
+        'Psikoloji ve danışmanlık süreçleri hakkında sıkça sorulan sorular ve uzman psikolog cevapları. Online psikolog soru cevap.',
     keywords:
         'psikolog soru cevap, psikoloji soruları ve cevapları, online psikolog soru cevap, samsun psikolog soru cevap',
     alternates: {

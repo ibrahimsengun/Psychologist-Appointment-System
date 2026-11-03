@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
     title: 'Samsun Çocuk Psikoloğu | Uzman Psk. Lokman Yılmaz - Atakum',
     description:
-        'Samsun ve Atakum\'da çocuk psikoloğu arıyorsanız doğru adrestesiniz. Uzman Psk. Lokman Yılmaz ile oyun terapisi, BDT ve çözüm odaklı yaklaşımlarla çocuğunuza profesyonel psikolojik destek.',
+        'Samsun ve Atakum\'da çocuk psikoloğu arıyorsanız doğru adrestesiniz. Uzman Psk. Lokman Yılmaz ile oyun danışmanlığı, BDT ve çözüm odaklı yaklaşımlarla çocuğunuza profesyonel psikolojik destek.',
     keywords:
         'samsun çocuk psikoloğu, atakum çocuk psikoloğu, samsun çocuk psikolog, çocuk psikolojik danışman samsun, çocuk terapisi samsun, çocuk psikoloğu atakum, samsun çocuk danışmanlığı',
     alternates: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         images: [OG_IMAGE],
         title: 'Samsun Çocuk Psikoloğu | Uzman Psk. Lokman Yılmaz',
         description:
-            'Samsun Atakum\'da çocuklara yönelik profesyonel psikolojik danışmanlık. Oyun terapisi, BDT ve çözüm odaklı yaklaşımlar.',
+            'Samsun Atakum\'da çocuklara yönelik profesyonel psikolojik danışmanlık. Oyun danışmanlığı, BDT ve çözüm odaklı yaklaşımlar.',
         url: `${SITE_URL}/samsun-cocuk-psikologu`,
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
@@ -45,7 +45,7 @@ const faqItems = [
     {
         question: 'Çocuk psikoloğu görüşmeleri nasıl gerçekleşir?',
         answer:
-            'Çocuklarla yapılan görüşmelerde yaşa uygun yöntemler kullanılır. Oyun terapisi, resim çalışmaları ve hikâye temelli tekniklerle çocuğun kendini güvenli bir şekilde ifade etmesi sağlanır. İlk görüşmede genellikle ebeveynlerle birlikte değerlendirme yapılır.'
+            'Çocuklarla yapılan görüşmelerde yaşa uygun yöntemler kullanılır. Oyun danışmanlığı, resim çalışmaları ve hikâye temelli tekniklerle çocuğun kendini güvenli bir şekilde ifade etmesi sağlanır. İlk görüşmede genellikle ebeveynlerle birlikte değerlendirme yapılır.'
     },
     {
         question: 'Samsun\'da çocuk psikoloğu hizmeti nerede verilmektedir?',
@@ -133,7 +133,7 @@ export default function SamsunCocukPsikologuPage() {
 
                             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                                 Atakum&apos;da Psikodemy ofisimizde çocuğunuza özel, bilimsel temelli psikolojik destek.
-                                <span className="text-foreground font-medium"> Oyun terapisi, BDT ve çözüm odaklı yaklaşımlarla</span> çocuğunuzun
+                                <span className="text-foreground font-medium"> Oyun danışmanlığı, BDT ve çözüm odaklı yaklaşımlarla</span> çocuğunuzun
                                 duygusal gelişimini destekliyoruz.
                             </p>
 
@@ -231,11 +231,11 @@ export default function SamsunCocukPsikologuPage() {
                             <strong className="text-foreground">Uzman Psk. Lokman Yılmaz</strong>, Samsun Atakum&apos;da çocuklara yönelik
                             profesyonel psikolojik danışmanlık hizmeti sunmaktadır. Ondokuz Mayıs Üniversitesi Psikoloji Bölümü mezunu
                             ve <strong className="text-foreground">Oyun Terapisi Uygulayıcı Sertifikası</strong> sahibi olan Yılmaz,
-                            çocukların gelişimsel ihtiyaçlarına uygun terapi yöntemleri kullanmaktadır.
+                            çocukların gelişimsel ihtiyaçlarına uygun danışmanlık yöntemleri kullanmaktadır.
                         </p>
                         <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                            Çocuk danışmanlığında <strong className="text-foreground">oyun terapisi</strong>,{' '}
-                            <strong className="text-foreground">bilişsel davranışçı terapi (BDT)</strong> ve{' '}
+                            Çocuk danışmanlığında <strong className="text-foreground">oyun danışmanlığı</strong>,{' '}
+                            <strong className="text-foreground">bilişsel davranışçı yaklaşım (BDT)</strong> ve{' '}
                             <strong className="text-foreground">çözüm odaklı yaklaşım</strong> çerçevesinde çalışılmaktadır.
                             Her çocuğun bireysel ihtiyaçları doğrultusunda kişiye özel bir danışmanlık planı oluşturulmaktadır.
                         </p>

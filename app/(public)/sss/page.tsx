@@ -13,7 +13,7 @@ import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } fro
 export const metadata: Metadata = {
     title: 'Sıkça Sorulan Sorular | Uzman Psk. Lokman Yılmaz',
     description:
-        'Psikolojik danışmanlık hizmeti hakkında sıkça sorulan sorular ve cevapları. Samsun Atakum psikolog randevusu, seans süreleri, online terapi ve daha fazlası.',
+        'Psikolojik danışmanlık hizmeti hakkında sıkça sorulan sorular ve cevapları. Samsun Atakum psikolog randevusu, seans süreleri, online danışmanlık ve daha fazlası.',
     keywords:
         'samsun psikolog sss, atakum psikolog sorular, psikolojik danışmanlık sorular, online terapi sss',
     alternates: {
