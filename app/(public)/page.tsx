@@ -58,11 +58,9 @@ export default async function Home() {
     <>
       <JsonLd data={businessJsonLd} />
       <Hero rating={rating} />
-      <div className="max-w-[100vw] overflow-x-hidden">
-        <ReviewsSection reviews={reviews} />
-      </div>
-      <About />
       <Services services={pickFeaturedServices(services)} totalCount={services.length} />
+      <About />
+      <ReviewsSection reviews={reviews} />
       <ProcessSteps />
       <Blog blogPosts={blogPosts.slice(0, 3)} />
       <div className="max-w-[100vw] overflow-x-hidden">

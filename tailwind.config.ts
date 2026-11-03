@@ -17,7 +17,11 @@ const config = {
 			}
 		},
 		extend: {
+			fontFamily: {
+				heading: ['var(--font-heading)', 'Georgia', 'serif']
+			},
 			colors: {
+				clay: 'hsl(var(--clay))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

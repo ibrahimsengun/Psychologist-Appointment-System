@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { SectionHeading } from '@/components/section-heading';
 
 const EXPERTISE: Array<{ label: string; href?: string; title?: string }> = [
   { label: 'Yetişkin Danışmanlığı' },
@@ -64,55 +65,53 @@ function ExpertiseList() {
 /** Ana sayfadaki kısa tanıtım; tüm detaylar /hakkimda sayfasında */
 export default function About() {
   return (
-    <section id="hakkimda" className="py-16 md:py-24 scroll-mt-20">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-          <div className="hidden lg:block lg:w-5/12">
+    <section id="hakkimda" className="container py-16 md:py-24 scroll-mt-20">
+      <SectionHeading index="02" label="Hakkımda" title={<>Merhaba, ben <em className="text-primary">Lokman.</em></>} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+        <figure className="lg:col-span-5">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-muted">
             <Image
               src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35%20(1)%20(2).jpeg"
-              className="rounded-3xl shadow-2xl w-full h-auto max-h-[560px] object-cover object-top"
+              className="object-cover object-top"
               alt="Samsun Atakum Aile Danışmanı Lokman Yılmaz"
-              width={600}
-              height={750}
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
               loading="lazy"
               quality={75}
             />
           </div>
+        </figure>
 
-          <div className="lg:w-7/12 w-full">
-            <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
-              Samsun Atakum Psikolog Hakkında
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Merhaba, ben Lokman Yılmaz</h2>
-            <p className="text-lg text-muted-foreground mb-5 leading-relaxed">
-              Ondokuz Mayıs Üniversitesi Psikoloji lisans eğitimimi onur derecesiyle, Evlilik ve Aile
-              Danışmanlığı yüksek lisans eğitimimi ise yüksek onur derecesiyle tamamladım. Samsun
-              Atakum&apos;da yüz yüze, Türkiye genelinde ve yurt dışında ise online psikolojik
-              danışmanlık hizmeti veriyorum.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Bireysel, çift ve aile danışmanlığında psikodinamik, bilişsel davranışçı (BDT) ve çözüm
-              odaklı yaklaşımlardan yararlanarak her danışan için kişiye özel bir süreç planlıyorum.
-            </p>
+        <div className="lg:col-span-7 flex flex-col">
+          <p className="text-xl md:text-2xl leading-relaxed text-foreground">
+            Ondokuz Mayıs Üniversitesi Psikoloji lisans eğitimimi onur derecesiyle, Evlilik ve Aile
+            Danışmanlığı yüksek lisansımı yüksek onur derecesiyle tamamladım.
+          </p>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            Samsun Atakum&apos;da yüz yüze, Türkiye genelinde ve yurt dışında online psikolojik danışmanlık
+            veriyorum. Bireysel, çift ve aile danışmanlığında psikodinamik, bilişsel davranışçı (BDT) ve
+            çözüm odaklı yaklaşımlardan yararlanarak her danışan için kişiye özel bir süreç planlıyorum.
+          </p>
 
-            <div className="grid grid-cols-3 gap-3 mb-8">
-              {HIGHLIGHTS.map((item) => (
-                <div key={item.value} className="bg-muted/60 rounded-2xl p-4 text-center lg:text-left">
-                  <div className="text-xl md:text-2xl font-bold text-primary mb-1">{item.value}</div>
-                  <div className="text-xs md:text-sm text-muted-foreground leading-snug">{item.label}</div>
-                </div>
-              ))}
-            </div>
+          <blockquote className="my-10 lg:my-12 border-l-2 border-clay pl-6">
+            <p className="font-heading italic text-2xl md:text-3xl leading-snug text-foreground">
+              &ldquo;Kendine faydası olmayanın başkasına nasıl faydası olabilir ki?&rdquo;
+            </p>
+          </blockquote>
 
-            <Link
-              href="/hakkimda"
-              title="Uzm. Psk. Lokman Yılmaz Hakkında"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4"
-            >
-              Eğitimler, yaklaşım ve uzmanlık alanları
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+          <dl className="grid grid-cols-3 gap-4 border-t border-foreground/15 pt-6">
+            {HIGHLIGHTS.map((item) => (
+              <div key={item.value}>
+                <dt className="font-heading text-2xl md:text-3xl text-primary">{item.value}</dt>
+                <dd className="mt-1 text-sm text-muted-foreground leading-snug">{item.label}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-10">
+            <Link href="/hakkimda" title="Uzm. Psk. Lokman Yılmaz Hakkında" className="link-underline">
+              Eğitimler, yaklaşım ve uzmanlık alanları <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
@@ -131,7 +130,7 @@ export function AboutFull() {
           <div className="sticky top-24">
             <Image
               src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/unwatermarked_Gemini_Generated_Image_jbmorwjbmorwjbmo.png"
-              className="rounded-3xl shadow-2xl w-full h-auto object-cover"
+              className="rounded-sm w-full h-auto object-cover"
               alt="Samsun Psikolog Lokman Yılmaz"
               width={736}
               height={1440}
@@ -229,7 +228,7 @@ export function AboutFull() {
           <div className="sticky top-24">
             <Image
               src="https://amajmmkliepackibyxqe.supabase.co/storage/v1/object/public/blog-images/WhatsApp%20Image%202025-12-19%20at%2017.33.35%20(1)%20(2).jpeg"
-              className="rounded-3xl shadow-2xl w-full h-auto object-cover"
+              className="rounded-sm w-full h-auto object-cover"
               alt="Samsun Atakum Aile Danışmanı Lokman Yılmaz"
               width={600}
               height={750}

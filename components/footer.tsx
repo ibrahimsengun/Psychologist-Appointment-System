@@ -20,8 +20,8 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" title="Ana Sayfaya Dön" className="flex items-center gap-3 mb-6 group">
               <div>
-                <p className="font-semibold text-background leading-tight">Uzm. Psk. Lokman Yılmaz</p>
-                <p className="text-xs text-background/60">Psikolog & Aile Danışmanı</p>
+                <p className="font-heading text-2xl text-background leading-tight">Lokman Yılmaz</p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-background/60">Uzm. Psikolog &amp; Aile Danışmanı</p>
               </div>
             </Link>
             <p className="text-background/70 text-sm leading-relaxed mb-6">

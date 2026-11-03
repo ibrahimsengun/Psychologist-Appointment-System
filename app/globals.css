@@ -4,26 +4,27 @@
 
 @layer base {
   :root {
-    --background: 40 33% 98%;
-    --foreground: 165 18% 12%;
+    --background: 38 33% 96%;
+    --foreground: 160 22% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 165 18% 12%;
+    --card-foreground: 160 22% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 165 18% 12%;
-    --primary: 168 32% 28%;
-    --primary-foreground: 40 33% 98%;
+    --popover-foreground: 160 22% 12%;
+    --primary: 162 30% 23%;
+    --primary-foreground: 38 33% 96%;
     --secondary: 38 30% 93%;
     --secondary-foreground: 165 18% 12%;
-    --muted: 38 25% 94%;
-    --muted-foreground: 165 8% 36%;
+    --muted: 36 26% 91%;
+    --muted-foreground: 160 8% 34%;
     --accent: 22 55% 92%;
     --accent-foreground: 18 45% 30%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 38 18% 86%;
-    --input: 38 18% 86%;
-    --ring: 168 32% 28%;
+    --border: 36 16% 84%;
+    --input: 36 16% 84%;
+    --ring: 162 30% 23%;
     --radius: 0.75rem;
+    --clay: 18 52% 46%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -82,10 +83,28 @@
   body {
     @apply bg-background text-foreground;
   }
-  /* Public sitede başlıklar yumuşak bir serif ile; admin paneli Inter'de kalır */
+  /* Public sitede başlıklar editoryal bir serif ile; admin paneli Inter'de kalır */
   .public-site :is(h1, h2, h3) {
     font-family: var(--font-heading), Georgia, serif;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs uppercase tracking-[0.18em] font-medium text-muted-foreground;
+  }
+  .link-underline {
+    @apply relative inline-flex items-center gap-2 font-medium text-foreground;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+  }
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
   }
 }

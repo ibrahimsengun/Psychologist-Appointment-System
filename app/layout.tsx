@@ -61,8 +61,9 @@ const geistSans = Inter({
 });
 
 const headingFont = Fraunces({
-  weight: ['600'],
   subsets: ['latin', 'latin-ext'],
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
   display: 'swap',
   variable: '--font-heading'
 });

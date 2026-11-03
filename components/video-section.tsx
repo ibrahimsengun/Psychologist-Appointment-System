@@ -1,96 +1,42 @@
 import { Video, extractYouTubeId } from '@/types/video';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from '@/components/ui/carousel';
 import Link from 'next/link';
 import { LiteYouTube } from '@/components/lite-youtube';
+import { SectionHeading } from '@/components/section-heading';
 
 interface VideoSectionProps {
     videos: Video[];
 }
 
 export default function VideoSection({ videos }: VideoSectionProps) {
-    if (videos.length === 0) return null;
+    const playable = videos
+        .map((video) => ({ video, videoId: extractYouTubeId(video.youtube_url) }))
+        .filter((item): item is { video: Video; videoId: string } => !!item.videoId);
+
+    if (playable.length === 0) return null;
 
     return (
-        <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 to-background">
-            <div className="container mx-auto px-4">
-                {/* Section Header */}
-                <div className="text-center mb-12">
-                    <p className="text-sm uppercase tracking-widest text-primary font-medium mb-3">
-                        Videolar
-                    </p>
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                        Kısa Psikoloji Videoları
-                    </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        Psikoloji ve kişisel gelişim hakkında bilgilendirici videolar
-                    </p>
-                </div>
-
-                {/* Video Carousel */}
-                <Carousel
-                    opts={{
-                        align: 'start',
-                        loop: true,
-                    }}
-                    className="w-full max-w-5xl mx-auto"
-                >
-                    <CarouselContent>
-                        {videos.map((video) => {
-                            const videoId = extractYouTubeId(video.youtube_url);
-                            if (!videoId) return null;
-
-                            return (
-                                <CarouselItem
-                                    key={video.id}
-                                    className="basis-[55%] sm:basis-1/2 lg:basis-1/3"
-                                >
-                                    <div className="rounded-xl overflow-hidden bg-card border shadow-sm hover:shadow-lg transition-shadow duration-300 group">
-                                        <div className="relative w-full aspect-[9/16] overflow-hidden">
-                                            <LiteYouTube videoId={videoId} title={video.title} />
-                                        </div>
-                                        <div className="p-3">
-                                            <h3 className="font-semibold text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                                                {video.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </CarouselItem>
-                            );
-                        })}
-                    </CarouselContent>
-                    <CarouselPrevious className="hidden md:flex -left-12" />
-                    <CarouselNext className="hidden md:flex -right-12" />
-                </Carousel>
-
-                {/* Tüm Videoları Gör Button */}
-                <div className="mt-12 text-center">
-                    <Link
-                        href="/videolar"
-                        className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground text-base font-medium rounded-full hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 group"
-                    >
-                        Tüm Videoları Gör
-                        <svg
-                            className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                        </svg>
+        <section className="container py-16 md:py-24">
+            <SectionHeading
+                index="06"
+                label="Videolar"
+                title="Kısa psikoloji videoları"
+                action={
+                    <Link href="/videolar" className="link-underline">
+                        Tüm videolar <span aria-hidden="true">→</span>
                     </Link>
-                </div>
+                }
+            />
+
+            {/* Mobilde yatay kaydırma, masaüstünde 3 sütun */}
+            <div className="flex lg:grid lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 lg:mx-0 lg:px-0 pb-2">
+                {playable.map(({ video, videoId }) => (
+                    <figure key={video.id} className="snap-start shrink-0 w-[70%] sm:w-[45%] lg:w-auto">
+                        <div className="relative w-full aspect-[9/16] overflow-hidden rounded-sm bg-muted">
+                            <LiteYouTube videoId={videoId} title={video.title} />
+                        </div>
+                        <figcaption className="mt-4 font-heading text-xl leading-snug line-clamp-2">{video.title}</figcaption>
+                    </figure>
+                ))}
             </div>
         </section>
     );

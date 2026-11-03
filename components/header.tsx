@@ -1,11 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from './ui/button';
-import { CalendarDays, Menu, Phone, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { getAdminEmail } from '@/actions/auth-actions';
+
+const NAV_LINKS = [
+  { href: '/hakkimda', label: 'Hakkımda', title: 'Hakkımda Detaylı Bilgi' },
+  { href: '/hizmetler', label: 'Hizmetler', title: 'Verilen Psikolojik Danışmanlık Hizmetleri' },
+  { href: '/blog', label: 'Blog', title: 'Psikoloji Blog Yazıları ve Makaleler' },
+  { href: '/galeri', label: 'Galeri', title: 'Fotoğraf Galerisi' },
+  { href: '/soru-sor', label: 'Soru Sor', title: 'Psikoloğa Anonim Soru Sorun' },
+  { href: '/contact', label: 'İletişim', title: 'İletişim Bilgileri ve Formu' }
+];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +26,10 @@ export default function Header() {
     if (!/(?:^|;\s*)sb-[^=]+-auth-token/.test(document.cookie)) return;
     getAdminEmail().then(setAdminEmail).catch(() => {});
   }, []);
-  const { trackAppointmentClick, trackContactClick } = useAnalytics();
+  const { trackAppointmentClick, trackContactClick, trackPhoneClick } = useAnalytics();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-md border-b border-foreground/10">
       {isAdmin && (
         <div className="bg-foreground text-background">
           <div className="container flex items-center justify-between py-1.5 text-xs">
@@ -37,153 +45,92 @@ export default function Header() {
         </div>
       )}
       <div className="container">
-        {/* Ana Header */}
-        <div className="flex h-18 items-center justify-between py-4">
+        <div className="flex h-16 lg:h-20 items-center justify-between gap-6">
           {/* Logo */}
-          <Link href="/" title="Ana Sayfaya Dön" className="flex items-center gap-3 group">
-            <div className="hidden sm:block">
-              <p className="font-semibold text-foreground leading-tight">Uzm. Psk. Lokman Yılmaz</p>
-              <p className="text-xs text-muted-foreground">Psikolog & Aile Danışmanı</p>
-            </div>
-            <p className="sm:hidden font-semibold text-foreground">Uzm. Psk. Lokman Yılmaz</p>
+          <Link href="/" title="Ana Sayfaya Dön" className="flex flex-col leading-none">
+            <span className="font-heading text-xl lg:text-2xl text-foreground">Lokman Yılmaz</span>
+            <span className="mt-1 text-[10px] lg:text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              Uzm. Psikolog &amp; Aile Danışmanı
+            </span>
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden lg:flex items-center gap-1">
-            <Link
-              href="/hakkimda"
-              title="Hakkımda Detaylı Bilgi"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Hakkımda
-            </Link>
-            <Link
-              href="/hizmetler"
-              title="Verilen Psikolojik Danışmanlık Hizmetleri"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Hizmetler
-            </Link>
-            <Link
-              href="/blog"
-              title="Psikoloji Blog Yazıları ve Makaleler"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/galeri"
-              title="Fotoğraf Galerisi"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Galeri
-            </Link>
-            <Link
-              href="/soru-sor"
-              title="Psikoloğa Anonim Soru Sorun"
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
-            >
-              Soru Sor
-            </Link>
+          <nav className="hidden lg:flex items-center gap-7">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                title={link.title}
+                onClick={link.href === '/contact' ? () => trackContactClick('header') : undefined}
+                className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Desktop CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => trackContactClick('header')}>
-                <Phone className="mr-2 h-4 w-4" />
-                İletişim
-              </Link>
-            </Button>
-            <Button asChild size="sm" className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
-              <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => trackAppointmentClick('header')}>
-                <CalendarDays className="mr-2 h-4 w-4" />
-                Randevu Al
-              </Link>
-            </Button>
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center gap-5">
+            <a
+              href="tel:+905448322091"
+              title="Bizi Arayın"
+              onClick={() => trackPhoneClick('header')}
+              className="text-sm text-foreground/70 hover:text-foreground transition-colors tabular-nums"
+            >
+              0544 832 20 91
+            </a>
+            <Link
+              href="/appointment"
+              title="Online veya Yüz Yüze Randevu Al"
+              onClick={() => trackAppointmentClick('header')}
+              className="inline-flex items-center rounded-full bg-foreground text-background px-5 py-2.5 text-sm font-medium hover:bg-primary transition-colors"
+            >
+              Randevu Al
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
+          <button
+            type="button"
+            className="lg:hidden -mr-2 p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Menü</span>
-          </Button>
+          </button>
         </div>
 
         {/* Collapsible Mobile Menu */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4' : 'max-h-0'
-            }`}
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[32rem] pb-6' : 'max-h-0'}`}
         >
-          <nav className="flex flex-col gap-1 pt-2 border-t border-border/50">
+          <nav className="flex flex-col border-t border-foreground/10">
+            {[{ href: '/', label: 'Ana Sayfa', title: 'Ana Sayfa' }, ...NAV_LINKS].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                title={link.title}
+                className="font-heading text-2xl py-3 border-b border-foreground/10 text-foreground"
+                onClick={() => {
+                  if (link.href === '/contact') trackContactClick('header_mobile');
+                  setIsOpen(false);
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
-              href="/"
-              title="Ana Sayfa"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
+              href="/appointment"
+              title="Online veya Yüz Yüze Randevu Al"
+              onClick={() => {
+                trackAppointmentClick('header_mobile');
+                setIsOpen(false);
+              }}
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-foreground text-background px-6 py-3.5 font-medium"
             >
-              Ana Sayfa
+              Randevu Al
             </Link>
-            <Link
-              href="/hakkimda"
-              title="Hakkımda Detaylı Bilgi"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Hakkımda
-            </Link>
-            <Link
-              href="/hizmetler"
-              title="Verilen Psikolojik Danışmanlık Hizmetleri"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Hizmetler
-            </Link>
-            <Link
-              href="/blog"
-              title="Psikoloji Blog Yazıları ve Makaleler"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Blog
-            </Link>
-            <Link
-              href="/galeri"
-              title="Fotoğraf Galerisi"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Galeri
-            </Link>
-            <Link
-              href="/soru-sor"
-              title="Psikoloğa Anonim Soru Sorun"
-              className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Soru Sor
-            </Link>
-
-            <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
-              <Button asChild variant="outline" className="w-full justify-center rounded-xl">
-                <Link href="/contact" title="İletişim Bilgileri ve Formu" onClick={() => { trackContactClick('header_mobile'); setIsOpen(false); }}>
-                  <Phone className="mr-2 h-4 w-4" />
-                  İletişim
-                </Link>
-              </Button>
-              <Button asChild className="w-full justify-center rounded-xl shadow-lg shadow-primary/25">
-                <Link href="/appointment" title="Online veya Yüz Yüze Randevu Al" onClick={() => { trackAppointmentClick('header_mobile'); setIsOpen(false); }} className="flex items-center justify-center w-full">
-                  <CalendarDays className="mr-2 h-4 w-4 opacity-70" aria-hidden="true" />
-                  Randevu Al
-                </Link>
-              </Button>
-            </div>
           </nav>
         </div>
       </div>
