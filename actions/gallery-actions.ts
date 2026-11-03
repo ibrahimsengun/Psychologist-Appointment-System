@@ -25,7 +25,7 @@ export async function getGalleryImages() {
             return data;
         },
         ['gallery'],
-        { revalidate: 300, tags: ['gallery'] }
+        { revalidate: 86400, tags: ['gallery'] }
     );
 
     return cachedFn();

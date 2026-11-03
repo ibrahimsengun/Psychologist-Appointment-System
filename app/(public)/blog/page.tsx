@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   }
 };
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export default async function BlogPage() {
   // Yazılar kategorileriyle birlikte tek sorguda (önbellekli) gelir

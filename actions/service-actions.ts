@@ -47,7 +47,7 @@ export async function getPublishedServices(): Promise<Service[]> {
       return data as Service[];
     },
     ['published-services'],
-    { revalidate: 300, tags: ['services'] }
+    { revalidate: 86400, tags: ['services'] }
   );
 
   return cachedFn();
@@ -71,7 +71,7 @@ export async function getServices(): Promise<Service[]> {
       return data as Service[];
     },
     ['services'],
-    { revalidate: 300, tags: ['services'] }
+    { revalidate: 86400, tags: ['services'] }
   );
 
   return cachedFn();

@@ -27,7 +27,7 @@ export async function getReviews() {
             return data;
         },
         ['reviews'],
-        { revalidate: 300, tags: ['reviews'] }
+        { revalidate: 86400, tags: ['reviews'] }
     );
 
     return cachedFn();

@@ -50,7 +50,7 @@ export async function getHomepageFAQs(): Promise<FAQ[]> {
             return data as FAQ[];
         },
         ['homepage-faqs'],
-        { revalidate: 300, tags: ['faqs'] }
+        { revalidate: 86400, tags: ['faqs'] }
     );
 
     return cachedFn();

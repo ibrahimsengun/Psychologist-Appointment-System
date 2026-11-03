@@ -9,7 +9,7 @@ type Props = {
   params: Promise<{ page: string }>;
 };
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 // 2. sayfadan itibaren tüm sayfalar build sırasında hazırlanır; yeni sayfalar ilk ziyarette önbelleğe alınır
 export async function generateStaticParams() {

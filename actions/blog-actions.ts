@@ -34,7 +34,7 @@ export async function getPublishedPosts(): Promise<BlogPostListItem[]> {
       })) as BlogPostListItem[];
     },
     ['all-published-posts-with-categories'],
-    { revalidate: 300, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-posts'] }
   );
 
   return cachedFn();
@@ -60,7 +60,7 @@ export async function getPublishedPostBySlug(slug: string) {
       return data as BlogPost | null;
     },
     ['published-post-by-slug', slug],
-    { revalidate: 3600, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-posts'] }
   );
 
   return cachedFn();
@@ -304,7 +304,7 @@ export async function getPublishedBlogPosts(limit = 3): Promise<BlogPostListItem
       return data as BlogPostListItem[];
     },
     ['published-blog-posts', String(limit)],
-    { revalidate: 300, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-posts'] }
   );
 
   return cachedFn();
