@@ -26,7 +26,7 @@ export async function getVideos() {
             return data;
         },
         ['videos'],
-        { revalidate: 300, tags: ['videos'] }
+        { revalidate: 86400, tags: ['videos'] }
     );
 
     return cachedFn();

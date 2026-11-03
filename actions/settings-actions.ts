@@ -42,7 +42,7 @@ export async function getWhatsAppSettings(): Promise<WhatsAppSettings> {
             return settings;
         },
         ['whatsapp-settings'],
-        { revalidate: 300, tags: ['site-settings'] }
+        { revalidate: 86400, tags: ['site-settings'] }
     );
 
     return cachedFn();

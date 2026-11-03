@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 // Kategori sayfaları ilk ziyarette oluşturulup önbelleğe alınır (ISR)
 export async function generateStaticParams() {

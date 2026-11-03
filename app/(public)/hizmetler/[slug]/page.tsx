@@ -11,7 +11,7 @@ type Props = {
     params: Promise<{ slug: string }>;
 };
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 // Yayınlanmış hizmetler build sırasında hazırlanır; yenileri ilk ziyarette önbelleğe alınır
 export async function generateStaticParams() {
