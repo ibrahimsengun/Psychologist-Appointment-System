@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { buildServiceSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
+import { buildServiceSchema, JsonLd, SITE_URL, PERSON_NAME, OG_IMAGE } from '@/lib/schema';
 import { CallToAction } from '@/components/call-to-action';
 
 type Props = {
@@ -42,13 +42,13 @@ export async function generateMetadata(
             title: `${service.name} | Uzman Psk. ${PERSON_NAME}`,
             description: description,
             type: 'website',
-            images: service.cover_image ? [{ url: service.cover_image }] : undefined
+            images: service.cover_image ? [{ url: service.cover_image }] : [OG_IMAGE]
         },
         twitter: {
             card: 'summary_large_image',
             title: `${service.name} | Uzman Psk. ${PERSON_NAME}`,
             description: description,
-            images: service.cover_image ? [service.cover_image] : undefined
+            images: service.cover_image ? [service.cover_image] : [OG_IMAGE.url]
         },
         alternates: {
             canonical: `${SITE_URL}/hizmetler/${slug}`

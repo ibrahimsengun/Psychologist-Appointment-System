@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { questionSchema, type QuestionFormData } from '@/types/questions';
 import { submitQuestion } from '@/actions/question-actions';
+import { useAnalytics } from '@/hooks/use-analytics';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -36,12 +37,14 @@ export function QuestionForm() {
   const [trackingCode, setTrackingCode] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const [showOptional, setShowOptional] = useState(false);
+  const { trackLead } = useAnalytics();
 
   const questionText = watch('question_text') || '';
 
   const onSubmit = async (data: QuestionFormData) => {
     try {
       const result = await submitQuestion(data);
+      trackLead('question');
       setTrackingCode(result.trackingCode);
       setSubmittedEmail(data.email || null);
     } catch (error) {

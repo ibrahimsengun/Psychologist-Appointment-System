@@ -12,6 +12,7 @@ import {
     SITE_URL,
     ADDRESS_ATAKUM,
     PERSON_IMAGE,
+    OG_IMAGE,
 } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/atakum-aile-danismani`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Atakum Aile Danışmanı | Uzman Psk. Lokman Yılmaz',
         description:
             'Samsun Atakum\'da profesyonel aile danışmanlığı. Evlilik ve Aile Danışmanlığı Y.L. derecesiyle uzman destek.',

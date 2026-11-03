@@ -13,6 +13,7 @@ import {
     SITE_URL,
     ADDRESS_SAMSUN,
     PERSON_IMAGE,
+    OG_IMAGE,
 } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/samsun-psikolog`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
             'Samsun\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı, çocuk psikoloğu ve online görüşme.',

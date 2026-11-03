@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { useAnalytics } from '@/hooks/use-analytics';
 import { AppointmentFormValues, appointmentFormSchema } from '@/types/appointments';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -47,6 +48,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { trackLead } = useAnalytics();
   const selectedDate = form.watch('date');
   const availableTimes = availableTimeSlots.find((slot) => slot.date === selectedDate)?.times || [];
 
@@ -64,6 +66,7 @@ export function AppointmentForm({ availableTimeSlots, action }: AppointmentFormP
       console.log('Form verileri:', data); // Debug için
 
       await action(data);
+      trackLead('appointment');
       const formattedDate = format(new Date(data.date), 'EEEE, d MMMM yyyy', { locale: tr });
       window.location.href = `/appointment/success?date=${formattedDate}&time=${data.time}`;
     } catch (error) {

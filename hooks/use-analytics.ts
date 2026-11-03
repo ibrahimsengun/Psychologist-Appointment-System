@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { trackEvent, type AnalyticsEvent, type EventSource } from '@/lib/analytics';
+import { trackEvent, type AnalyticsEvent, type EventSource, type LeadForm } from '@/lib/analytics';
 
 /**
  * GA4 event tracking hook'u.
@@ -65,6 +65,17 @@ export function useAnalytics() {
     [pathname]
   );
 
+  // Form başarıyla gönderildiğinde çağrılır (GA4 önerilen event'i, Key Event olarak işaretlenebilir)
+  const trackLead = useCallback(
+    (form: LeadForm) => {
+      trackEvent('generate_lead', {
+        page: pathname,
+        form,
+      });
+    },
+    [pathname]
+  );
+
   return {
     track,
     trackAppointmentClick,
@@ -74,5 +85,6 @@ export function useAnalytics() {
     trackContactClick,
     trackInstagramClick,
     trackTestCompleted,
+    trackLead,
   };
 }

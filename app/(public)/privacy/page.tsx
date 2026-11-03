@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     description:
         'Uzm. Psk. Lokman Yılmaz web sitesi gizlilik politikası. Kişisel verilerinizin nasıl toplandığı, işlendiği ve korunduğu hakkında bilgi.',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/privacy'
+        canonical: 'https://www.lokmanyilmaz.com.tr/privacy'
     }
 };
 

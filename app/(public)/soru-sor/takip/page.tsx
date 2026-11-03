@@ -3,7 +3,7 @@ import { QuestionTracking } from '@/components/question-tracking';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Search, ArrowRight } from 'lucide-react';
-import { buildBreadcrumbSchema, JsonLd, SITE_URL } from '@/lib/schema';
+import { buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Soru Takip | Uzman Psk. Lokman Yılmaz',
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/soru-sor/takip`
   },
   openGraph: {
+    images: [OG_IMAGE],
     title: 'Soru Takip | Uzman Psk. Lokman Yılmaz',
     description: 'Takip kodunuzu girerek sorunuzun cevabını kontrol edin.',
     url: `${SITE_URL}/soru-sor/takip`,

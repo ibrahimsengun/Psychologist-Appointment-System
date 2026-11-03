@@ -2,7 +2,7 @@ import { QuestionForm } from '@/components/question-form';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { MessageCircleQuestion, ArrowRight, Shield, Bell } from 'lucide-react';
-import { buildBreadcrumbSchema, JsonLd, SITE_URL } from '@/lib/schema';
+import { buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Soru Sorun | Uzman Psk. Lokman Yılmaz',
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/soru-sor`
   },
   openGraph: {
+    images: [OG_IMAGE],
     title: 'Soru Sorun | Uzman Psk. Lokman Yılmaz',
     description: 'Psikoloji hakkında merak ettiklerinizi anonim olarak sorun.',
     url: `${SITE_URL}/soru-sor`,

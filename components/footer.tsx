@@ -109,12 +109,6 @@ export default function Footer() {
               <Link href="/atakum-aile-danismani" title="Atakum Aile Danışmanı Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
                 Atakum Aile Danışmanı
               </Link>
-              <Link href="/samsun-atakum-psikolog" title="Samsun Atakum Bölgesi Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
-                Samsun Atakum Psikolog
-              </Link>
-              <Link href="/atakum-samsun-psikolog" title="Atakum Samsun Bölgesi Psikolog Hizmetleri" className="block text-background/70 hover:text-background hover:translate-x-1 transition-all duration-300">
-                Atakum Samsun Psikolog
-              </Link>
               <div className="pt-2 border-t border-background/10">
                 <p className="text-background/50 text-sm">
                   İlkadım, Canik, Bafra ve tüm Samsun ilçeleri

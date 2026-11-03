@@ -1,7 +1,7 @@
 import { getGalleryImages } from '@/actions/gallery-actions';
 import { GalleryImage } from '@/types/gallery';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { SITE_URL } from '@/lib/schema';
+import { SITE_URL, OG_IMAGE } from '@/lib/schema';
 import type { Metadata } from 'next';
 import { GalleryGrid } from '@/components/gallery/gallery-grid';
 
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/galeri`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Galeri | Uzman Psk. Lokman Yılmaz',
         description: 'Psikodemy ofisi ve psikolojik danışmanlık hizmetlerinden kareler.',
         url: `${SITE_URL}/galeri`,

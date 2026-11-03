@@ -8,7 +8,7 @@ import {
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { MessageCircleQuestion, ArrowRight } from 'lucide-react';
-import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL } from '@/lib/schema';
+import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Sıkça Sorulan Sorular | Uzman Psk. Lokman Yılmaz',
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/sss`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Sıkça Sorulan Sorular | Uzman Psk. Lokman Yılmaz',
         description: 'Psikolojik danışmanlık hizmeti hakkında sıkça sorulan sorular ve cevapları.',
         url: `${SITE_URL}/sss`,

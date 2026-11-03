@@ -22,13 +22,13 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Ana Sayfa',
-                item: 'https://lokmanyilmaz.com.tr'
+                item: 'https://www.lokmanyilmaz.com.tr'
             },
             ...items.map((item, index) => ({
                 '@type': 'ListItem',
                 position: index + 2,
                 name: item.label,
-                ...(item.href && { item: `https://lokmanyilmaz.com.tr${item.href}` })
+                ...(item.href && { item: `https://www.lokmanyilmaz.com.tr${item.href}` })
             }))
         ]
     };

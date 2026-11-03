@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ContactFormData, contactSchema } from '@/types/contact-messages';
+import { useAnalytics } from '@/hooks/use-analytics';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -24,10 +25,12 @@ export function ContactForm() {
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const { trackLead } = useAnalytics();
 
   const onSubmit = async (data: ContactFormData) => {
     try {
       await postContactForm(data);
+      trackLead('contact');
       setIsSuccess(true);
       toast.success('Mesajınız başarıyla gönderildi.');
       reset();

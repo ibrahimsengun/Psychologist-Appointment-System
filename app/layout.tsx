@@ -7,12 +7,8 @@ import type { Metadata } from 'next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { buildPersonSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(defaultUrl),
+  metadataBase: new URL(SITE_URL),
   title: 'Samsun Psikolog | Uzman Psk. Lokman Yılmaz | Atakum Aile Danışmanı',
   description:
     'Samsun Psikolog tavsiyesi arayanlar için uzman psikolojik destek. Uzman Psk. Lokman Yılmaz ile Atakum, İlkadım ve Canik bölgelerinde yüz yüze ve online danışmanlık hizmetleri.',

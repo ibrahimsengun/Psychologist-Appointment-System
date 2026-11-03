@@ -12,6 +12,7 @@ import {
     JsonLd,
     SITE_URL,
     ADDRESS_ATAKUM,
+    OG_IMAGE,
 } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/atakum-psikolog`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Atakum Psikolog | Uzman Psk. Lokman Yılmaz',
         description:
             'Samsun Atakum\'da uzman psikolog hizmeti. Bireysel danışmanlık, aile danışmanlığı ve online görüşme.',

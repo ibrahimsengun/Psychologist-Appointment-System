@@ -63,6 +63,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.7
         },
         {
+            url: `${baseUrl}/soru-cevap`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.7
+        },
+        {
+            url: `${baseUrl}/soru-sor`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.6
+        },
+        {
+            url: `${baseUrl}/videolar`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.6
+        },
+        {
             url: `${baseUrl}/galeri`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
@@ -76,6 +94,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
         {
             url: `${baseUrl}/privacy`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.3
+        },
+        {
+            url: `${baseUrl}/terms`,
             lastModified: new Date(),
             changeFrequency: 'yearly',
             priority: 0.3
@@ -103,6 +127,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 priority: 0.4
             });
         }
+
+        // Blog kategorileri: sadece yayınlanmış yazısı olan kategoriler
+        const categorySlugs = new Set(posts.flatMap((post) => post.categories?.map((c) => c.slug) ?? []));
+        categorySlugs.forEach((slug) => {
+            blogPosts.push({
+                url: `${baseUrl}/blog/kategori/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.5
+            });
+        });
     } catch (error) {
         console.error('Error fetching blog posts for sitemap:', error);
     }

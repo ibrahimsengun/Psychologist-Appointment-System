@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     description:
         'Uzm. Psk. Lokman Yılmaz web sitesi kullanım şartları ve koşulları. Siteyi kullanmadan önce lütfen okuyunuz.',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/terms'
+        canonical: 'https://www.lokmanyilmaz.com.tr/terms'
     }
 };
 

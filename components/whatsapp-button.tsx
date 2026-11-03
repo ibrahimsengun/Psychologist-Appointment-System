@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 interface WhatsAppButtonProps {
     phoneNumber: string;
@@ -9,6 +10,7 @@ interface WhatsAppButtonProps {
 
 export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonProps) {
     const [isVisible, setIsVisible] = useState(false);
+    const { trackWhatsAppClick } = useAnalytics();
 
     useEffect(() => {
         const showTimer = setTimeout(() => setIsVisible(true), 1500);
@@ -23,6 +25,7 @@ export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonP
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp ile iletişime geçin"
+            onClick={() => trackWhatsAppClick('floating_button')}
             className={`
         fixed bottom-6 right-6 z-50
         flex items-center

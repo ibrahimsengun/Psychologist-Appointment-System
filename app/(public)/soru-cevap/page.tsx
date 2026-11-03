@@ -2,7 +2,7 @@ import { getPublicQuestions } from '@/actions/question-actions';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { MessagesSquare, ArrowRight, User } from 'lucide-react';
-import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL } from '@/lib/schema';
+import { buildFAQSchema, buildBreadcrumbSchema, JsonLd, SITE_URL, OG_IMAGE } from '@/lib/schema';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
         canonical: `${SITE_URL}/soru-cevap`
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Soru & Cevap | Uzman Psk. Lokman Yılmaz',
         description: 'Psikoloji hakkında sık sorulan sorular ve uzman psikolog cevapları.',
         url: `${SITE_URL}/soru-cevap`,

@@ -12,7 +12,10 @@ export type AnalyticsEvent =
   | 'click_email'
   | 'click_contact'
   | 'click_instagram'
-  | 'test_completed';
+  | 'test_completed'
+  | 'generate_lead';
+
+export type LeadForm = 'appointment' | 'contact' | 'question';
 
 export type EventSource =
   | 'hero'
@@ -24,7 +27,8 @@ export type EventSource =
   | 'landing_hero'
   | 'landing_cta'
   | 'test_result'
-  | 'sss';
+  | 'sss'
+  | 'floating_button';
 
 interface EventParams {
   source?: EventSource;

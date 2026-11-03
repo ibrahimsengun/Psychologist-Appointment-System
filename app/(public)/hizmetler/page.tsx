@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Info } from 'lucide-react';
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/schema';
 
 export const metadata: Metadata = {
     title: 'Hizmetlerimiz | Uzman Psk. Lokman Yılmaz',
@@ -12,13 +13,14 @@ export const metadata: Metadata = {
     keywords:
         'psikoloji hizmetleri, aile danışmanlığı, bireysel terapi, çift terapisi, samsun psikolog',
     alternates: {
-        canonical: 'https://lokmanyilmaz.com.tr/hizmetler'
+        canonical: 'https://www.lokmanyilmaz.com.tr/hizmetler'
     },
     openGraph: {
+        images: [OG_IMAGE],
         title: 'Hizmetlerimiz | Uzman Psk. Lokman Yılmaz',
         description:
-            'Profesyonel psikolojik danışmanlık ve terapi hizmetleri.',
-        url: 'https://lokmanyilmaz.com.tr/hizmetler',
+            'Profesyonel psikolojik danışmanlık hizmetleri.',
+        url: 'https://www.lokmanyilmaz.com.tr/hizmetler',
         siteName: 'Uzman Psk. Lokman Yılmaz',
         locale: 'tr_TR',
         type: 'website'

@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME } from '@/lib/schema';
+import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME, OG_IMAGE } from '@/lib/schema';
 import { CallToAction } from '@/components/call-to-action';
 
 type Props = {
@@ -63,13 +63,13 @@ export async function generateMetadata(
       publishedTime: post.created_at,
       modifiedTime: post.updated_at,
       authors: [PERSON_NAME],
-      images: post.cover_image ? [{ url: post.cover_image }] : undefined
+      images: post.cover_image ? [{ url: post.cover_image }] : [OG_IMAGE]
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: description,
-      images: post.cover_image ? [post.cover_image] : undefined
+      images: post.cover_image ? [post.cover_image] : [OG_IMAGE.url]
     },
     alternates: {
       canonical: `${SITE_URL}/blog/${slug}`,

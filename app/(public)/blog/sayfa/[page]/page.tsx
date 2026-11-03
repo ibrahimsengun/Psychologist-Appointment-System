@@ -3,6 +3,7 @@ import { BlogList, getBlogTotalPages } from '@/components/blog/blog-list';
 import { blogPageHref } from '@/components/blog/blog-pagination';
 import { notFound, permanentRedirect } from 'next/navigation';
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/schema';
 
 type Props = {
   params: Promise<{ page: string }>;
@@ -22,7 +23,7 @@ function parsePage(value: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = parsePage((await params).page);
-  const url = `https://lokmanyilmaz.com.tr${blogPageHref(page)}`;
+  const url = `https://www.lokmanyilmaz.com.tr${blogPageHref(page)}`;
 
   return {
     title: `Blog - Sayfa ${page} | Psikoloji Yazıları - Uzman Psk. Lokman Yılmaz`,
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: url
     },
     openGraph: {
+      images: [OG_IMAGE],
       title: `Blog - Sayfa ${page} | Uzman Psk. Lokman Yılmaz`,
       url,
       siteName: 'Uzman Psk. Lokman Yılmaz',

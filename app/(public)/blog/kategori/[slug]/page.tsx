@@ -4,6 +4,7 @@ import { BlogCard } from '@/components/blog/blog-card';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/schema';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -24,12 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: category.description || `${category.name} kategorisindeki blog yazıları. Samsun psikolog Lokman Yılmaz tarafından hazırlanan içerikler.`,
         keywords: `${category.name}, psikoloji blog, ${category.slug}, samsun psikolog`,
         alternates: {
-            canonical: `https://lokmanyilmaz.com.tr/blog/kategori/${slug}`
+            canonical: `https://www.lokmanyilmaz.com.tr/blog/kategori/${slug}`
         },
         openGraph: {
+            images: [OG_IMAGE],
             title: `${category.name} | Blog Kategorisi`,
             description: category.description || `${category.name} kategorisindeki blog yazıları`,
-            url: `https://lokmanyilmaz.com.tr/blog/kategori/${slug}`,
+            url: `https://www.lokmanyilmaz.com.tr/blog/kategori/${slug}`,
             type: 'website'
         }
     };

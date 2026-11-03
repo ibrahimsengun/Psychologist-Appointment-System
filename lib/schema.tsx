@@ -15,6 +15,14 @@ export const PERSON_IMAGE =
 
 export const ORG_NAME = 'Psikodemy';
 
+// Sayfa kendi openGraph'ını tanımlayınca layout'taki görsel kaybolur; her sayfa bunu eklemeli
+export const OG_IMAGE = {
+    url: `${SITE_URL}/og-image.png`,
+    width: 1200,
+    height: 630,
+    alt: `Uzman Psikolog ${PERSON_NAME} - Samsun Aile Danışmanı`,
+};
+
 export const ADDRESS_SAMSUN = {
     '@type': 'PostalAddress' as const,
     streetAddress: 'Cumhuriyet Mahallesi 93. Sokak No:21 Daire 12',
