@@ -7,27 +7,16 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel';
 import { SectionHeading } from '@/components/section-heading';
+import { StarRating as BaseStarRating } from '@/components/star-rating';
+import { formatRating, summarizeReviews } from '@/lib/reviews';
+import Link from 'next/link';
+
+function StarRating({ rating }: { rating: number }) {
+    return <BaseStarRating rating={rating} emptyClassName="text-primary-foreground/25" />;
+}
 
 interface ReviewsSectionProps {
     reviews: Review[];
-}
-
-function StarRating({ rating }: { rating: number }) {
-    return (
-        <div className="flex items-center gap-0.5" aria-label={`5 üzerinden ${rating} puan`}>
-            {[1, 2, 3, 4, 5].map((star) => (
-                <svg
-                    key={star}
-                    className={`w-3.5 h-3.5 ${star <= rating ? 'text-amber-300' : 'text-primary-foreground/25'}`}
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    aria-hidden="true"
-                >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-            ))}
-        </div>
-    );
 }
 
 function Author({ review }: { review: Review }) {
@@ -59,12 +48,34 @@ function Author({ review }: { review: Review }) {
 export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
     if (reviews.length === 0) return null;
 
-    const [featured, ...rest] = reviews;
+    const [featured, ...others] = reviews;
+    // Anasayfada birkaç yorum yeterli; tamamı /yorumlar sayfasında
+    const rest = others.slice(0, 8);
+    const summary = summarizeReviews(reviews)!;
 
     return (
         <section id="yorumlar" className="bg-primary text-primary-foreground py-16 md:py-24 overflow-hidden scroll-mt-20">
             <div className="container">
-                <SectionHeading invert index="03" label="Danışan Yorumları" title="Danışanlarımız ne diyor?" />
+                <SectionHeading
+                    invert
+                    index="03"
+                    label="Danışan Yorumları"
+                    title="Danışanlarımız ne diyor?"
+                    action={
+                        <div className="flex flex-col items-start md:items-end gap-3">
+                            <div className="flex items-center gap-3">
+                                <span className="font-heading text-4xl leading-none">{formatRating(summary.average)}</span>
+                                <div>
+                                    <StarRating rating={summary.average} />
+                                    <p className="mt-1 text-xs text-primary-foreground/70">{summary.count} Google yorumu</p>
+                                </div>
+                            </div>
+                            <Link href="/yorumlar" className="link-underline">
+                                Tüm yorumları oku <span aria-hidden="true">→</span>
+                            </Link>
+                        </div>
+                    }
+                />
 
                 {/* Öne çıkan yorum */}
                 <figure className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 md:mb-20">
