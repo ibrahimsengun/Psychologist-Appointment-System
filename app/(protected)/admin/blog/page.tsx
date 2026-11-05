@@ -37,7 +37,7 @@ export default async function BlogPostsPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Son Güncelleme
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="sticky right-0 bg-gray-50 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   İşlemler
                 </th>
               </tr>
@@ -45,8 +45,10 @@ export default async function BlogPostsPage() {
             <tbody className="bg-white divide-y divide-gray-200">
               {posts.map((post) => (
                 <tr key={post.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{post.title}</div>
+                  <td className="px-6 py-4 min-w-[16rem]">
+                    <div className="text-sm font-medium text-gray-900 line-clamp-2 break-words" title={post.title}>
+                      {post.title}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
@@ -62,9 +64,9 @@ export default async function BlogPostsPage() {
                     {format(new Date(post.created_at), 'PPP', { locale: tr })}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {format(new Date(post.created_at), 'PPP', { locale: tr })}
+                    {format(new Date(post.updated_at), 'PPP', { locale: tr })}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="sticky right-0 bg-white px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center justify-end gap-2">
                       <Button asChild variant="ghost" size="sm">
                         <Link href={`/blog/${post.slug}`} target="_blank" prefetch={false} className="flex items-center gap-1">

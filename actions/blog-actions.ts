@@ -3,7 +3,7 @@
 import { BlogPost, BlogPostFormValues, BlogPostListItem } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
 // Liste ekranları için gereken kolonlar (yazı içeriği hariç; içerik çok büyük)
@@ -158,7 +158,8 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     throw new Error('Blog yazısı oluşturulamadı');
   }
 
-  revalidateTag('blog-posts', 'default');
+  revalidateTag('blog-posts', { expire: 0 });
+  revalidatePath('/', 'layout');
 
   return {
     id: data.id,
@@ -238,7 +239,8 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     throw new Error('Blog yazısı güncellendi ancak veri getirilemedi');
   }
 
-  revalidateTag('blog-posts', 'default');
+  revalidateTag('blog-posts', { expire: 0 });
+  revalidatePath('/', 'layout');
 
   return {
     id: updatedPost.id,
@@ -280,7 +282,8 @@ export async function deleteBlogPost(id: string): Promise<void> {
     throw new Error('Blog yazısı silinemedi');
   }
 
-  revalidateTag('blog-posts', 'default');
+  revalidateTag('blog-posts', { expire: 0 });
+  revalidatePath('/', 'layout');
 }
 
 // Public: Yayında olan blog yazılarını cache'li getir (anasayfa için)
