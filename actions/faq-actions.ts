@@ -3,12 +3,12 @@
 import { FAQ, FAQFormValues } from '@/types/faq';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
+import { unstable_cache } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 
 // Public sayfalar statik/ISR olduğu için admin değişikliklerinden sonra önbelleği temizle
 function revalidateFAQPages() {
-    revalidateTag('faqs', 'default');
-    revalidatePath('/', 'layout');
+    revalidatePublicContent('faqs');
 }
 
 // Public: Aktif FAQ'ları sıralı getir

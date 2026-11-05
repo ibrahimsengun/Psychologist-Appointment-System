@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { ReviewFormValues } from '@/types/review';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import { unstable_cache } from 'next/cache';
 
 // Public: Aktif yorumları cache'li getir
@@ -67,9 +67,7 @@ export async function createReview(data: ReviewFormValues) {
         throw new Error('Yorum eklenirken bir hata oluştu');
     }
 
-    revalidateTag('reviews', 'default');
-    revalidatePath('/admin/reviews');
-    revalidatePath('/');
+    revalidatePublicContent('reviews');
 }
 
 export async function updateReview(id: string, data: Partial<ReviewFormValues & { sort_order: number; is_active: boolean }>) {
@@ -84,9 +82,7 @@ export async function updateReview(id: string, data: Partial<ReviewFormValues & 
         throw new Error('Yorum güncellenirken bir hata oluştu');
     }
 
-    revalidateTag('reviews', 'default');
-    revalidatePath('/admin/reviews');
-    revalidatePath('/');
+    revalidatePublicContent('reviews');
 }
 
 export async function deleteReview(id: string) {
@@ -101,9 +97,7 @@ export async function deleteReview(id: string) {
         throw new Error('Yorum silinirken bir hata oluştu');
     }
 
-    revalidateTag('reviews', 'default');
-    revalidatePath('/admin/reviews');
-    revalidatePath('/');
+    revalidatePublicContent('reviews');
 }
 
 export async function toggleReviewActive(id: string, isActive: boolean) {
@@ -118,7 +112,5 @@ export async function toggleReviewActive(id: string, isActive: boolean) {
         throw new Error('Yorum durumu güncellenirken bir hata oluştu');
     }
 
-    revalidateTag('reviews', 'default');
-    revalidatePath('/admin/reviews');
-    revalidatePath('/');
+    revalidatePublicContent('reviews');
 }

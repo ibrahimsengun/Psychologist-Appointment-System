@@ -3,7 +3,7 @@
 import { Category, CategoryFormValues } from '@/types/category';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import slugify from 'slugify';
 
 // Tüm kategorileri getir
@@ -97,8 +97,7 @@ export async function createCategory(formData: CategoryFormValues): Promise<Cate
         throw new Error('Kategori oluşturulamadı');
     }
 
-    revalidateTag('blog-posts', 'default');
-    revalidatePath('/', 'layout');
+    revalidatePublicContent('blog-posts');
     return data as Category;
 }
 
@@ -144,8 +143,7 @@ export async function updateCategory(id: string, formData: CategoryFormValues): 
         throw new Error('Kategori güncellenemedi');
     }
 
-    revalidateTag('blog-posts', 'default');
-    revalidatePath('/', 'layout');
+    revalidatePublicContent('blog-posts');
     return data as Category;
 }
 
@@ -181,8 +179,7 @@ export async function deleteCategory(id: string): Promise<void> {
         throw new Error('Kategori silinemedi');
     }
 
-    revalidateTag('blog-posts', 'default');
-    revalidatePath('/', 'layout');
+    revalidatePublicContent('blog-posts');
 }
 
 // Blog yazısının kategorilerini getir
@@ -265,6 +262,5 @@ export async function updateBlogPostCategories(blogPostId: string, categoryIds: 
         }
     }
 
-    revalidateTag('blog-posts', 'default');
-    revalidatePath('/', 'layout');
+    revalidatePublicContent('blog-posts');
 }

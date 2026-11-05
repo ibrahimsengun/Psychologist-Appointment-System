@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { VideoFormValues } from '@/types/video';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import { unstable_cache } from 'next/cache';
 
 // Public: Aktif videoları cache'li getir
@@ -79,9 +79,7 @@ export async function createVideo(data: VideoFormValues) {
         throw new Error('Video eklenirken bir hata oluştu');
     }
 
-    revalidateTag('videos', 'default');
-    revalidatePath('/admin/videos');
-    revalidatePath('/');
+    revalidatePublicContent('videos');
 }
 
 export async function updateVideo(id: string, data: Partial<VideoFormValues & { sort_order: number; is_active: boolean }>) {
@@ -96,9 +94,7 @@ export async function updateVideo(id: string, data: Partial<VideoFormValues & { 
         throw new Error('Video güncellenirken bir hata oluştu');
     }
 
-    revalidateTag('videos', 'default');
-    revalidatePath('/admin/videos');
-    revalidatePath('/');
+    revalidatePublicContent('videos');
 }
 
 export async function deleteVideo(id: string) {
@@ -113,9 +109,7 @@ export async function deleteVideo(id: string) {
         throw new Error('Video silinirken bir hata oluştu');
     }
 
-    revalidateTag('videos', 'default');
-    revalidatePath('/admin/videos');
-    revalidatePath('/');
+    revalidatePublicContent('videos');
 }
 
 export async function toggleVideoActive(id: string, isActive: boolean) {
@@ -130,7 +124,5 @@ export async function toggleVideoActive(id: string, isActive: boolean) {
         throw new Error('Video durumu güncellenirken bir hata oluştu');
     }
 
-    revalidateTag('videos', 'default');
-    revalidatePath('/admin/videos');
-    revalidatePath('/');
+    revalidatePublicContent('videos');
 }

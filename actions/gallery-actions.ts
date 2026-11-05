@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidatePath } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import { unstable_cache } from 'next/cache';
 
 // Public: Aktif galeri görsellerini cache'li getir
@@ -68,8 +68,7 @@ export async function createGalleryImage(data: {
         throw new Error('Görsel eklenirken bir hata oluştu');
     }
 
-    revalidatePath('/admin/gallery');
-    revalidatePath('/galeri');
+    revalidatePublicContent('gallery');
 }
 
 // Admin: Galeri görseli sil
@@ -85,8 +84,7 @@ export async function deleteGalleryImage(id: string) {
         throw new Error('Görsel silinirken bir hata oluştu');
     }
 
-    revalidatePath('/admin/gallery');
-    revalidatePath('/galeri');
+    revalidatePublicContent('gallery');
 }
 
 // Admin: Galeri görseli aktif/pasif toggle
@@ -102,8 +100,7 @@ export async function toggleGalleryImageActive(id: string, isActive: boolean) {
         throw new Error('Görsel durumu güncellenirken bir hata oluştu');
     }
 
-    revalidatePath('/admin/gallery');
-    revalidatePath('/galeri');
+    revalidatePublicContent('gallery');
 }
 
 // Admin: Galeri görseli güncelle
@@ -123,6 +120,5 @@ export async function updateGalleryImage(id: string, data: {
         throw new Error('Görsel güncellenirken bir hata oluştu');
     }
 
-    revalidatePath('/admin/gallery');
-    revalidatePath('/galeri');
+    revalidatePublicContent('gallery');
 }
