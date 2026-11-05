@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidatePath } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import { unstable_cache } from 'next/cache';
 
 export interface WhatsAppSettings {
@@ -84,7 +84,5 @@ export async function updateWhatsAppSettings(
         console.error('WhatsApp mesaj güncelleme hatası:', messageError);
         throw new Error('WhatsApp mesajı güncellenemedi');
     }
-
-    revalidatePath('/');
-    revalidatePath('/admin/settings');
+    revalidatePublicContent('site-settings');
 }

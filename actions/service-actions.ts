@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { Service, ServiceFormValues } from '@/types/service';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePublicContent } from '@/lib/revalidate-public';
 import { unstable_cache } from 'next/cache';
 import slugify from 'slugify';
 
@@ -146,10 +146,7 @@ export async function createService(formData: ServiceFormValues): Promise<Servic
     throw new Error('Hizmet oluşturulurken bir hata oluştu');
   }
 
-  revalidateTag('services', 'default');
-  revalidatePath('/admin/services');
-  revalidatePath('/hizmetler');
-  revalidatePath('/');
+  revalidatePublicContent('services');
 
   return data as Service;
 }
@@ -190,10 +187,7 @@ export async function updateService(id: string, formData: ServiceFormValues): Pr
     throw new Error('Hizmet güncellendi ancak veri getirilemedi');
   }
 
-  revalidateTag('services', 'default');
-  revalidatePath('/admin/services');
-  revalidatePath('/hizmetler');
-  revalidatePath('/');
+  revalidatePublicContent('services');
 
   return updatedService as Service;
 }
@@ -210,8 +204,5 @@ export async function deleteService(id: string) {
     throw new Error('Hizmet silinirken bir hata oluştu');
   }
 
-  revalidateTag('services', 'default');
-  revalidatePath('/admin/services');
-  revalidatePath('/hizmetler');
-  revalidatePath('/');
+  revalidatePublicContent('services');
 }
