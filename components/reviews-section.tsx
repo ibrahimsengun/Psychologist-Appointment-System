@@ -6,6 +6,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel';
+import { formatRating, summarizeReviews } from '@/lib/reviews';
+import Link from 'next/link';
 
 interface ReviewsSectionProps {
     reviews: Review[];
@@ -97,6 +99,8 @@ function ProfileAvatar({ name, photoUrl }: { name: string; photoUrl?: string | n
 export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
     if (reviews.length === 0) return null;
 
+    const summary = summarizeReviews(reviews)!;
+
     return (
         <section className="py-16 md:py-24 bg-zinc-900 overflow-hidden">
             <div className="container mx-auto px-4">
@@ -110,6 +114,18 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                         büyük motivasyonu sağlıyor. Her yorum, güvene dayalı ilişkimizin
                         bir yansımasıdır.
                     </p>
+                    <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-3">
+                        <div className="flex items-center gap-3">
+                            <span className="text-3xl font-bold text-amber-100">{formatRating(summary.average)}</span>
+                            <div className="text-left">
+                                <StarRating rating={Math.round(summary.average)} />
+                                <p className="mt-1 text-xs text-zinc-400">{summary.count} Google yorumu</p>
+                            </div>
+                        </div>
+                        <Link href="/yorumlar" className="font-medium text-amber-100 underline-offset-4 hover:underline">
+                            Tüm yorumları oku <span aria-hidden="true">→</span>
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Reviews Carousel */}
@@ -121,7 +137,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                     className="w-full max-w-6xl mx-auto overflow-hidden"
                 >
                     <CarouselContent>
-                        {reviews.map((review) => (
+                        {reviews.slice(0, 8).map((review) => (
                             <CarouselItem
                                 key={review.id}
                                 className="basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
