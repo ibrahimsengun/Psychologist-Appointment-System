@@ -2,14 +2,17 @@ import { BlogPostListItem } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import { cleanBlogTitle } from '@/lib/blog-title';
 
 interface BlogCardProps {
   post: BlogPostListItem;
 }
 
 export function BlogCard({ post }: BlogCardProps) {
+  const title = cleanBlogTitle(post.title);
+
   return (
-    <Link href={`/blog/${post.slug}`} title={post.title} className="group">
+    <Link href={`/blog/${post.slug}`} title={title} className="group">
       <article className="relative bg-background rounded-2xl border border-border/50 overflow-hidden 
                          transition-all duration-500 ease-out
                          hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-2">
@@ -18,7 +21,7 @@ export function BlogCard({ post }: BlogCardProps) {
           {post.cover_image && (
             <Image
               src={post.cover_image}
-              alt={post.title}
+              alt={title}
               fill
               sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -46,7 +49,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
           {/* Başlık */}
           <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-            {post.title}
+            {title}
           </h3>
 
           {/* Kategoriler */}

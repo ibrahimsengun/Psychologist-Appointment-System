@@ -12,7 +12,6 @@ export type AnalyticsEvent =
   | 'click_email'
   | 'click_contact'
   | 'click_instagram'
-  | 'test_completed'
   | 'generate_lead';
 
 export type LeadForm = 'appointment' | 'contact' | 'question';
@@ -26,7 +25,6 @@ export type EventSource =
   | 'cta_section'
   | 'landing_hero'
   | 'landing_cta'
-  | 'test_result'
   | 'sss'
   | 'floating_button';
 

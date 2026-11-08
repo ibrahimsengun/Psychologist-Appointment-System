@@ -1,4 +1,4 @@
-import { getServices } from '@/actions/service-actions';
+import { getPublishedServices } from '@/actions/service-actions';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -80,7 +80,7 @@ const uzmanlikAlanlari = [
 ];
 
 export default async function SamsunPsikologPage() {
-    const services = await getServices();
+    const services = await getPublishedServices();
 
     const localBusinessJsonLd = buildLocalBusinessSchema({
         id: 'samsun-psikolog',
@@ -348,7 +348,7 @@ export default async function SamsunPsikologPage() {
                          hover:shadow-xl hover:border-primary/30 transition-all duration-300"
                             >
                                 <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                                    {service.name}
+                                    <Link href={`/hizmetler/${service.slug}`}>{service.name}</Link>
                                 </h3>
                                 {service.description && (
                                     <p className="text-muted-foreground">{service.description}</p>

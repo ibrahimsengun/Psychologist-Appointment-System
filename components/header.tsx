@@ -58,7 +58,7 @@ export default function Header() {
               Ana Sayfa
             </Link>
             <Link
-              href="/#hakkimda"
+              href="/hakkimda"
               title="Hakkımda Detaylı Bilgi"
               className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
             >
@@ -137,7 +137,7 @@ export default function Header() {
               Ana Sayfa
             </Link>
             <Link
-              href="/#hakkimda"
+              href="/hakkimda"
               title="Hakkımda Detaylı Bilgi"
               className="px-4 py-3 text-foreground hover:bg-muted rounded-lg transition-colors"
               onClick={() => setIsOpen(false)}

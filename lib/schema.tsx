@@ -86,7 +86,7 @@ export function buildPersonSchema(overrides?: {
         jobTitle: PERSON_TITLE,
         description: overrides?.description ?? `Samsun Atakum'da psikolog ve aile danışmanlığı hizmeti veren uzman psikolog`,
         image: PERSON_IMAGE,
-        url: overrides?.url ?? `${SITE_URL}/#hakkimda`,
+        url: overrides?.url ?? `${SITE_URL}/hakkimda`,
         address: overrides?.address ?? ADDRESS_SAMSUN,
         telephone: PERSON_PHONE,
         email: PERSON_EMAIL,
@@ -213,12 +213,12 @@ export function buildBlogPostSchema(post: {
         author: {
             '@type': 'Person',
             name: PERSON_NAME,
-            url: `${SITE_URL}/#hakkimda`,
+            url: `${SITE_URL}/hakkimda`,
         },
         publisher: {
             '@type': 'Person',
             name: PERSON_NAME,
-            url: `${SITE_URL}/#hakkimda`,
+            url: `${SITE_URL}/hakkimda`,
         },
         mainEntityOfPage: {
             '@type': 'WebPage',
@@ -245,7 +245,7 @@ export function buildServiceSchema(service: {
         provider: {
             '@type': 'Person',
             name: PERSON_NAME,
-            url: `${SITE_URL}/#hakkimda`,
+            url: `${SITE_URL}/hakkimda`,
         },
         areaServed: {
             '@type': 'City',

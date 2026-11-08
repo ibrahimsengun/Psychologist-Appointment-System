@@ -129,7 +129,8 @@ function generateExcerpt(content: string, maxLength: number = 300): string {
 export async function createBlogPost(formData: BlogPostFormValues): Promise<BlogPost> {
   const supabase = await createClient();
 
-  const slug = slugify(formData.title, {
+  // slugify "|" karakterini "or" yapıyor; yeni adreslere bu ek girmesin
+  const slug = slugify(formData.title.replace(/\|/g, ' '), {
     lower: true,
     strict: true,
     locale: 'tr'

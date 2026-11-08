@@ -53,18 +53,6 @@ export function useAnalytics() {
     [track]
   );
 
-  const trackTestCompleted = useCallback(
-    (testName: string, score: number, resultLabel: string) => {
-      trackEvent('test_completed', {
-        page: pathname,
-        test_name: testName,
-        score,
-        result_label: resultLabel,
-      });
-    },
-    [pathname]
-  );
-
   // Form başarıyla gönderildiğinde çağrılır (GA4 önerilen event'i, Key Event olarak işaretlenebilir)
   const trackLead = useCallback(
     (form: LeadForm) => {
@@ -84,7 +72,6 @@ export function useAnalytics() {
     trackEmailClick,
     trackContactClick,
     trackInstagramClick,
-    trackTestCompleted,
     trackLead,
   };
 }

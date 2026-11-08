@@ -11,7 +11,6 @@ const ALLOWED_SOURCES = new Set([
   'cta_section',
   'landing_hero',
   'landing_cta',
-  'test_result',
   'sss',
   'floating_button'
 ]);

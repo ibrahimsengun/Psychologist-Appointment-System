@@ -1,10 +1,17 @@
 import { getPublishedPosts } from '@/actions/blog-actions';
 import { POSTS_PER_PAGE, blogPageHref } from '@/components/blog/blog-pagination';
 import { getPublishedServices } from '@/actions/service-actions';
+import { getPublicQuestions } from '@/actions/question-actions';
 import { MetadataRoute } from 'next';
+
+// Yeni blog yazıları deploy beklemeden sitemap'e girsin
+export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.lokmanyilmaz.com.tr';
+    const hasPublicQuestions = await getPublicQuestions()
+        .then((questions) => questions.length > 0)
+        .catch(() => true);
 
     // Static pages
     const staticPages: MetadataRoute.Sitemap = [
@@ -62,11 +69,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'weekly',
             priority: 0.7
         },
+        ...(hasPublicQuestions
+            ? [{
+                url: `${baseUrl}/soru-cevap`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.7
+            }]
+            : []),
         {
-            url: `${baseUrl}/soru-cevap`,
+            url: `${baseUrl}/hakkimda`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.7
+            changeFrequency: 'monthly',
+            priority: 0.8
         },
         {
             url: `${baseUrl}/soru-sor`,

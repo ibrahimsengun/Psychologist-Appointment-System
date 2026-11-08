@@ -11,6 +11,9 @@ import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME, OG_IMAGE } from '@/lib/schema';
 import { CallToAction } from '@/components/call-to-action';
+import { RelatedServices } from '@/components/blog/related-services';
+import { getPublishedServices } from '@/actions/service-actions';
+import { cleanBlogTitle } from '@/lib/blog-title';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -53,12 +56,13 @@ export async function generateMetadata(
 
   // Meta description: öncelikle meta_description, yoksa excerpt kullan
   const description = post.meta_description || post.excerpt;
+  const title = cleanBlogTitle(post.title);
 
   return {
-    title: `${post.title} | Samsun Psikolog ${PERSON_NAME}`,
+    title: `${title} | Uzm. Psk. ${PERSON_NAME}`,
     description: description,
     openGraph: {
-      title: post.title,
+      title,
       description: description,
       type: 'article',
       publishedTime: post.created_at,
@@ -68,15 +72,12 @@ export async function generateMetadata(
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title,
       description: description,
       images: post.cover_image ? [post.cover_image] : [OG_IMAGE.url]
     },
     alternates: {
-      canonical: `${SITE_URL}/blog/${slug}`,
-      languages: {
-        'tr-TR': `/tr-TR/blog/${slug}`
-      }
+      canonical: `${SITE_URL}/blog/${slug}`
     }
   };
 }
@@ -92,15 +93,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const readingTime = calculateReadingTime(post.content);
   const wordCount = getWordCount(post.content);
   const description = post.meta_description || post.excerpt;
+  const title = cleanBlogTitle(post.title);
 
   // Load categories
   const categories = await getBlogPostCategories(post.id);
+  const services = await getPublishedServices();
 
   // Load related posts
   const relatedPosts = await getRelatedPosts(post.id, 3);
 
   const jsonLd = buildBlogPostSchema({
-    title: post.title,
+    title,
     description: description,
     slug: slug,
     coverImage: post.cover_image,
@@ -115,7 +118,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <article className="container py-8 max-w-6xl">
       <BlogViewTracker slug={slug} />
       <Breadcrumb
-        items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]}
+        items={[{ label: 'Blog', href: '/blog' }, { label: title }]}
       />
       <script
         type="application/ld+json"
@@ -131,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       )}
 
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+      <h1 className="text-4xl font-bold mb-4">{title}</h1>
 
       <div className="flex items-center gap-4 text-muted-foreground mb-8">
         <span>
@@ -162,7 +165,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="relative aspect-video mb-8">
           <Image
             src={post.cover_image}
-            alt={post.title}
+            alt={title}
             fill
             className="object-cover rounded-lg"
             priority
@@ -174,6 +177,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         className="prose prose-lg dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <RelatedServices categorySlugs={categories.map((category) => category.slug)} services={services} />
 
       {/* CTA Banner Section (Before Related Posts) */}
       <div className="mt-12 mb-16">

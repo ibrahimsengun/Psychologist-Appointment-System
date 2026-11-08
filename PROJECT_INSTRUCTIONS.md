@@ -1,6 +1,6 @@
 # Proje Talimatları
 
-Uzman Psk. Lokman Yılmaz'ın web sitesi: tanıtım sayfaları, blog, online randevu, soru-cevap, psikolojik testler ve admin paneli.
+Uzman Psk. Lokman Yılmaz'ın web sitesi: tanıtım sayfaları, blog, online randevu, soru-cevap ve admin paneli.
 
 ## Teknoloji
 
