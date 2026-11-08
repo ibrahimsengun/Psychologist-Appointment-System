@@ -1,4 +1,5 @@
 import { getServiceById, updateService } from '@/actions/service-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { ServiceForm } from '@/components/forms/service-form';
 import { notFound } from 'next/navigation';
 
@@ -14,7 +15,7 @@ export default async function EditServicePage({ params }: { params: Promise<{ id
 
     return (
         <div className="container mx-auto py-8">
-            <h1 className="text-3xl font-bold mb-8">Hizmet Düzenle</h1>
+            <AdminPageHeader title="Hizmet Düzenle" />
             <ServiceForm initialData={service} onSubmit={updateService} />
         </div>
     );

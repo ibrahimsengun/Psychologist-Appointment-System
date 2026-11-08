@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { Category } from '@/types/category';
 import { getCategories } from '@/actions/category-actions';
 import { CategoriesTable } from '@/components/categories-table';
@@ -56,18 +57,16 @@ export function CategoriesClient({ initialCategories }: { initialCategories: Cat
 
     return (
         <div className="container my-8 space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold">Blog Kategorileri</h1>
-                    <p className="text-muted-foreground mt-1">
-                        Blog yazılarınız için kategori oluşturun ve yönetin
-                    </p>
-                </div>
+            <AdminPageHeader
+                title="Blog Kategorileri"
+                description="Yazılarınızı konularına göre gruplayın. Her kategorinin sitede kendi sayfası olur."
+                action={
                 <Button onClick={handleOpenNew}>
                     <Plus className="mr-2 h-4 w-4" />
                     Yeni Kategori
                 </Button>
-            </div>
+                }
+            />
 
             <CategoriesTable
                 categories={categories}

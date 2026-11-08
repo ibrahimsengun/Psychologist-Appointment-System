@@ -1,17 +1,19 @@
 import { getContactMessages } from '@/actions/contact-messages-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import ContactMessagesTable from '@/components/contact-messages-table';
 
 export default async function MessagesPage() {
   const messages = await getContactMessages();
-  console.log({ messages });
   return (
     <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-xl md:text-3xl font-bold">Mesajlar</h1>
-      </div>
+      <AdminPageHeader title="Mesajlar" description="Sitedeki iletişim formundan gönderilen mesajlar." />
 
-      <div className="bg-white shadow-md rounded-lg">
-        <ContactMessagesTable contactMessages={messages} />
+      <div className="rounded-lg border bg-card">
+        {messages.length > 0 ? (
+          <ContactMessagesTable contactMessages={messages} />
+        ) : (
+          <p className="py-10 text-center text-sm text-muted-foreground">Henüz mesaj gelmedi.</p>
+        )}
       </div>
     </div>
   );

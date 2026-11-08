@@ -1,4 +1,5 @@
 import { getAllGalleryImages } from '@/actions/gallery-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { GalleryTable } from '@/components/gallery-table';
 import { UploadGalleryDialog } from '@/components/gallery/upload-gallery-dialog';
 import { GalleryImage } from '@/types/gallery';
@@ -8,17 +9,13 @@ export default async function GalleryAdminPage() {
 
     return (
         <div className="container mx-auto py-8">
-            <div className="flex justify-between items-center mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold">Galeri</h1>
-                    <p className="text-muted-foreground mt-1">
-                        {images.length} görsel
-                    </p>
-                </div>
-                <UploadGalleryDialog />
-            </div>
+            <AdminPageHeader
+                title="Galeri"
+                description={`Galeri sayfasında görünen fotoğraflar. Şu an ${images.length} görsel var.`}
+                action={<UploadGalleryDialog />}
+            />
 
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="rounded-lg border bg-card p-6">
                 <GalleryTable images={images} />
             </div>
         </div>

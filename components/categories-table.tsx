@@ -36,7 +36,7 @@ export function CategoriesTable({ categories, onEdit, onDelete }: CategoriesTabl
     if (categories.length === 0) {
         return (
             <div className="text-center py-12 border border-dashed rounded-lg">
-                <p className="text-muted-foreground">Henüz kategori eklenmemiş</p>
+                <p className="text-muted-foreground">Henüz kategori yok. &quot;Yeni Kategori&quot; ile ekleyebilirsiniz.</p>
             </div>
         );
     }

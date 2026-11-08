@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { FAQ } from '@/types/faq';
 import { getAllFAQs } from '@/actions/faq-actions';
 import { FAQsTable } from '@/components/faqs-table';
@@ -56,18 +57,16 @@ export function FAQsClient({ initialFAQs }: { initialFAQs: FAQ[] }) {
 
     return (
         <div className="container my-8 space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold">Sıkça Sorulan Sorular</h1>
-                    <p className="text-muted-foreground mt-1">
-                        Anasayfada görüntülenecek SSS bölümünü yönetin
-                    </p>
-                </div>
+            <AdminPageHeader
+                title="Sık Sorulanlar"
+                description="Anasayfada ve Sık Sorulan Sorular sayfasında görünen soru ve cevaplar."
+                action={
                 <Button onClick={handleOpenNew}>
                     <Plus className="mr-2 h-4 w-4" />
                     Yeni Soru
                 </Button>
-            </div>
+                }
+            />
 
             <FAQsTable
                 faqs={faqs}

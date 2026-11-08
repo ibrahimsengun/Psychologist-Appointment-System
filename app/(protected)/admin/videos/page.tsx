@@ -1,4 +1,5 @@
 import { getAllVideos } from '@/actions/video-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { VideosTable } from '@/components/videos-table';
 import { CreateVideoDialog } from '@/components/videos/create-video-dialog';
 import { Video } from '@/types/video';
@@ -8,12 +9,13 @@ export default async function VideosPage() {
 
     return (
         <div className="container mx-auto py-8">
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold">Videolar</h1>
-                <CreateVideoDialog />
-            </div>
+            <AdminPageHeader
+                title="Videolar"
+                description="Eklediğiniz videolar anasayfada ve Videolar sayfasında görünür."
+                action={<CreateVideoDialog />}
+            />
 
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="rounded-lg border bg-card p-6">
                 <VideosTable videos={videos} />
             </div>
         </div>

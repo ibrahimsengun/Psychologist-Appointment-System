@@ -1,6 +1,7 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { AppointmentsList } from '@/components/appointments-list';
 import { useAppointments } from '@/hooks/use-appointments';
 import { isAfter } from 'date-fns';
@@ -23,14 +24,10 @@ export default function AppointmentsPage() {
 
   return (
     <div className="container py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Randevular</h1>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
-            Toplam aktif randevu: {activeAppointments.length}
-          </span>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Randevular"
+        description="Danışanların aldığı randevuları onaylayın veya iptal edin. Onay ve iptal, danışana e-postayla bildirilir."
+      />
 
       <Tabs defaultValue="active" className="space-y-4">
         <TabsList>

@@ -83,7 +83,7 @@ export function FAQsTable({ faqs, onEdit, onRefresh }: FAQsTableProps) {
     if (faqs.length === 0) {
         return (
             <div className="text-center py-12 bg-muted/50 rounded-lg">
-                <p className="text-muted-foreground">Henüz soru eklenmemiş</p>
+                <p className="text-muted-foreground">Henüz soru yok. &quot;Yeni Soru&quot; ile ekleyebilirsiniz.</p>
             </div>
         );
     }

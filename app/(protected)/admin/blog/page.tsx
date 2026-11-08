@@ -1,4 +1,5 @@
 import { getBlogPostViewCounts, getBlogPosts } from '@/actions/blog-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
@@ -10,17 +11,20 @@ export default async function BlogPostsPage() {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-xl md:text-3xl font-bold">Blog Yazıları</h1>
-        <Button asChild>
+      <AdminPageHeader
+        title="Blog Yazıları"
+        description="Yayınladığınız yazılar anasayfada ve Blog sayfasında görünür. Her yazının okunma sayısını buradan takip edebilirsiniz."
+        action={
+          <Button asChild>
           <Link href="/admin/blog/new" className="flex items-center gap-2">
             <PlusCircle className="w-4 h-4" />
             Yeni Yazı
           </Link>
         </Button>
-      </div>
+        }
+      />
 
-      <div className="bg-white shadow-md rounded-lg">
+      <div className="rounded-lg border bg-card">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -91,7 +95,7 @@ export default async function BlogPostsPage() {
               {posts.length === 0 && (
                 <tr>
                   <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
-                    Henüz blog yazısı bulunmuyor
+                    Henüz blog yazısı yok. &quot;Yeni Yazı&quot; ile ilk yazınızı ekleyebilirsiniz.
                   </td>
                 </tr>
               )}

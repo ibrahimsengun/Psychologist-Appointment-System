@@ -1,4 +1,5 @@
 import { getAllReviews } from '@/actions/review-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { ReviewsTable } from '@/components/reviews-table';
 import { CreateReviewDialog } from '@/components/reviews/create-review-dialog';
 import { Review } from '@/types/review';
@@ -8,12 +9,13 @@ export default async function ReviewsPage() {
 
     return (
         <div className="container mx-auto py-8">
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold">Yorumlar</h1>
-                <CreateReviewDialog />
-            </div>
+            <AdminPageHeader
+                title="Yorumlar"
+                description="Danışan yorumları anasayfada ve Danışan Yorumları sayfasında görünür."
+                action={<CreateReviewDialog />}
+            />
 
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="rounded-lg border bg-card p-6">
                 <ReviewsTable reviews={reviews} />
             </div>
         </div>

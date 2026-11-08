@@ -1,4 +1,5 @@
 import { getWhatsAppSettings } from '@/actions/settings-actions';
+import { AdminPageHeader } from '@/components/admin/page-header';
 import { WhatsAppSettingsForm } from '@/components/whatsapp-settings-form';
 
 export default async function SettingsPage() {
@@ -6,12 +7,7 @@ export default async function SettingsPage() {
 
     return (
         <div className="container py-8">
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold">Site Ayarları</h1>
-                <p className="text-muted-foreground mt-1">
-                    Site ayarlarını buradan yönetebilirsiniz.
-                </p>
-            </div>
+            <AdminPageHeader title="Site Ayarları" description="Sitedeki WhatsApp butonunun ayarları." />
 
             <WhatsAppSettingsForm initialSettings={whatsappSettings} />
         </div>
