@@ -1,5 +1,5 @@
 import { getQuestions } from '@/actions/question-actions';
-import QuestionsTable from '@/components/questions-table';
+import QuestionsList from '@/components/questions-list';
 
 export default async function QuestionsPage() {
   const questions = await getQuestions();
@@ -9,7 +9,7 @@ export default async function QuestionsPage() {
         <h1 className="text-xl md:text-3xl font-bold">Sorular</h1>
       </div>
       <div className="bg-white shadow-md rounded-lg">
-        <QuestionsTable questions={questions} />
+        <QuestionsList questions={questions} />
       </div>
     </div>
   );

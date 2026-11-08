@@ -1,14 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -61,7 +53,7 @@ function StatusBadge({ status, isPublic }: { status: Question['status']; isPubli
   );
 }
 
-export default function QuestionsTable({ questions }: { questions: Question[] }) {
+export default function QuestionsList({ questions }: { questions: Question[] }) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
@@ -99,7 +91,7 @@ export default function QuestionsTable({ questions }: { questions: Question[] })
     return questions.filter((q) => q.status === status);
   };
 
-  const renderTable = (filteredQuestions: Question[]) => {
+  const renderList = (filteredQuestions: Question[]) => {
     if (filteredQuestions.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
@@ -111,99 +103,74 @@ export default function QuestionsTable({ questions }: { questions: Question[] })
     }
 
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Tarih</TableHead>
-            <TableHead className="min-w-[300px]">Soru</TableHead>
-            <TableHead>Gönderen</TableHead>
-            <TableHead>Durum</TableHead>
-            <TableHead className="w-[140px]">İşlemler</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredQuestions.map((question) => (
-            <TableRow key={question.id}>
-              <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                {format(new Date(question.created_at), 'd MMM yyyy HH:mm', { locale: tr })}
-              </TableCell>
-              <TableCell className="text-sm">
-                {question.question_text.length > 80
-                  ? `${question.question_text.slice(0, 80)}...`
-                  : question.question_text}
-              </TableCell>
-              <TableCell className="text-sm">
-                {question.name || 'Anonim'}
-              </TableCell>
-              <TableCell>
-                <StatusBadge status={question.status} isPublic={question.is_public} />
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-1">
-                  {question.status === 'pending' && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      title="Cevapla"
-                      onClick={() => openDialog(question)}
-                      className="text-primary hover:text-primary hover:bg-primary/10"
+      <div className="grid grid-cols-1 gap-3 p-4 lg:grid-cols-2">
+        {filteredQuestions.map((question) => (
+          <article key={question.id} className="flex flex-col gap-3 rounded-lg border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="text-sm">
+                <p className="font-medium">{question.name || 'Anonim'}</p>
+                <p className="text-xs text-muted-foreground">
+                  {format(new Date(question.created_at), 'd MMM yyyy HH:mm', { locale: tr })}
+                </p>
+              </div>
+              <StatusBadge status={question.status} isPublic={question.is_public} />
+            </div>
+
+            <p className="line-clamp-4 whitespace-pre-line text-sm">{question.question_text}</p>
+
+            <div className="mt-auto flex items-center justify-between gap-2">
+              {question.status === 'pending' ? (
+                <Button size="sm" onClick={() => openDialog(question)}>
+                  <PenLine className="mr-1 h-4 w-4" />
+                  Cevapla
+                </Button>
+              ) : (
+                <Button size="sm" variant="outline" onClick={() => openDialog(question)}>
+                  <Eye className="mr-1 h-4 w-4" />
+                  Görüntüle
+                </Button>
+              )}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    disabled={deletingId === question.id}
+                  >
+                    <Trash2 className="mr-1 h-4 w-4" />
+                    Sil
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Soruyu Sil</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Bu soruyu silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>İptal</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => handleDelete(question.id)}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
-                      <PenLine className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {(question.status === 'answered' || question.status === 'rejected') && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      title="Görüntüle"
-                      onClick={() => openDialog(question)}
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                  )}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                        disabled={deletingId === question.id}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Soruyu Sil</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Bu soruyu silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>İptal</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDelete(question.id)}
-                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                        >
-                          Sil
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                      Sil
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </article>
+        ))}
+      </div>
     );
   };
 
   return (
     <>
-      <Tabs defaultValue="all" className="w-full">
-        <div className="px-4 pt-4">
+      <Tabs defaultValue={pendingCount > 0 ? 'pending' : 'all'} className="w-full">
+        <div className="overflow-x-auto px-4 pt-4">
           <TabsList>
             <TabsTrigger value="all" className="gap-2">
               Tümü
@@ -235,10 +202,10 @@ export default function QuestionsTable({ questions }: { questions: Question[] })
           </TabsList>
         </div>
 
-        <TabsContent value="all">{renderTable(filterQuestions())}</TabsContent>
-        <TabsContent value="pending">{renderTable(filterQuestions('pending'))}</TabsContent>
-        <TabsContent value="answered">{renderTable(filterQuestions('answered'))}</TabsContent>
-        <TabsContent value="rejected">{renderTable(filterQuestions('rejected'))}</TabsContent>
+        <TabsContent value="all">{renderList(filterQuestions())}</TabsContent>
+        <TabsContent value="pending">{renderList(filterQuestions('pending'))}</TabsContent>
+        <TabsContent value="answered">{renderList(filterQuestions('answered'))}</TabsContent>
+        <TabsContent value="rejected">{renderList(filterQuestions('rejected'))}</TabsContent>
       </Tabs>
 
       {selectedQuestion && (

@@ -79,7 +79,7 @@ function AppointmentRow({
           {showDate && <span className="text-muted-foreground">{formatDay(appointment.date)} · </span>}
           {appointment.name}
         </p>
-        <a href={`tel:${appointment.phone}`} className="text-xs text-muted-foreground hover:underline">
+        <a href={`tel:${appointment.phone.replace(/\s/g, '')}`} className="text-xs text-muted-foreground hover:underline">
           {appointment.phone}
         </a>
       </div>

@@ -1,12 +1,12 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AppointmentsTable } from '@/components/appointments-table';
+import { AppointmentsList } from '@/components/appointments-list';
 import { useAppointments } from '@/hooks/use-appointments';
 import { isAfter } from 'date-fns';
 
-export default function AdminPage() {
-  const { appointments, updateAppointmentStatus } = useAppointments();
+export default function AppointmentsPage() {
+  const { appointments, isLoading, updateAppointmentStatus } = useAppointments();
   const today = new Date();
 
   const activeAppointments = appointments.filter((appointment) =>
@@ -16,6 +16,10 @@ export default function AdminPage() {
   const pastAppointments = appointments.filter(
     (appointment) => !isAfter(new Date(`${appointment.date} ${appointment.time}`), today)
   );
+
+  if (isLoading) {
+    return <p className="container py-8 text-sm text-muted-foreground">Randevular yükleniyor…</p>;
+  }
 
   return (
     <div className="container py-8">
@@ -42,14 +46,14 @@ export default function AdminPage() {
         </TabsList>
 
         <TabsContent value="active" className="space-y-4">
-          <AppointmentsTable
+          <AppointmentsList
             appointments={activeAppointments}
             onStatusChange={updateAppointmentStatus}
           />
         </TabsContent>
 
         <TabsContent value="past" className="space-y-4">
-          <AppointmentsTable
+          <AppointmentsList
             appointments={pastAppointments}
             onStatusChange={updateAppointmentStatus}
             isPastView
