@@ -3,7 +3,7 @@
 import { Category, CategoryFormValues } from '@/types/category';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
-import { revalidatePublicContent } from '@/lib/revalidate-public';
+import { revalidateBlogListing, revalidatePublicContent } from '@/lib/revalidate-public';
 import slugify from 'slugify';
 
 // Tüm kategorileri getir
@@ -262,5 +262,5 @@ export async function updateBlogPostCategories(blogPostId: string, categoryIds: 
         }
     }
 
-    revalidatePublicContent('blog-posts');
+    revalidateBlogListing();
 }

@@ -1,18 +1,30 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 
 /**
- * Admin panelinden herkese açık içerik değiştiğinde çağrılır.
+ * Admin panelinden herkese açık içerik değiştiğinde çağrılır (yalnızca Server
+ * Action içinden; updateTag başka yerde hata fırlatır).
  *
- * - Veri önbelleğini (unstable_cache etiketi) hemen düşürür. 'default' profili
- *   stale-while-revalidate olduğu için ilk istek yine eski veriyi alıp sayfayı
- *   1 gün boyunca eski haliyle önbelleğe yazabiliyordu.
- * - Tüm sayfaları (layout dahil) yeniler; içerik anasayfa, liste, detay,
- *   footer/header gibi birden çok yerde kullanıldığı için tek tek path saymıyoruz.
- *   Sayfalar yalnızca bir sonraki ziyarette yeniden üretilir.
+ * - updateTag veri önbelleğini anında düşürür; sayfa yeniden üretilirken eski
+ *   veriyi okuyup 1 gün daha eski haliyle önbelleğe yazmasını engeller.
+ * - Tüm sayfaları (layout dahil) yeniler. Her yeniden üretim Vercel ISR yazma
+ *   kotasından düşer, bu yüzden sık yapılan blog yayını için
+ *   revalidateBlogListing kullanılır.
  */
 export function revalidatePublicContent(...tags: string[]) {
   for (const tag of tags) {
-    revalidateTag(tag, { expire: 0 });
+    updateTag(tag);
   }
   revalidatePath('/', 'layout');
+}
+
+/**
+ * Blog yayını/düzenlemesi: yalnızca yazı listesi gösteren sayfaları (anasayfa,
+ * /blog, sayfalama, kategoriler) ve varsa düzenlenen yazının kendi sayfasını yeniler.
+ * Diğer ~150 yazı sayfasına dokunmaz.
+ */
+export function revalidateBlogListing(slug?: string) {
+  updateTag('blog-list');
+  if (slug) {
+    updateTag(`blog-post-${slug}`);
+  }
 }

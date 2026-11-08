@@ -4,39 +4,52 @@ import { BlogPost, BlogPostFormValues, BlogPostListItem } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { unstable_cache } from 'next/cache';
-import { revalidatePublicContent } from '@/lib/revalidate-public';
+import { revalidateBlogListing, revalidatePublicContent } from '@/lib/revalidate-public';
 import slugify from 'slugify';
 
 // Liste ekranları için gereken kolonlar (yazı içeriği hariç; içerik çok büyük)
 const LIST_COLUMNS =
   'id, title, slug, excerpt, cover_image, meta_description, status, published_at, author_id, created_at, updated_at';
 
+async function fetchPublishedPosts(): Promise<BlogPostListItem[]> {
+  const supabase = createPublicClient();
+
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select(`${LIST_COLUMNS}, blog_post_categories (categories (id, name, slug))`)
+    .eq('status', 'published')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data.map(({ blog_post_categories, ...post }: any) => ({
+    ...post,
+    categories: (blog_post_categories ?? [])
+      .map((rel: any) => rel.categories)
+      .filter(Boolean)
+  })) as BlogPostListItem[];
+}
+
 // Public: Yayındaki tüm yazılar, kategorileriyle birlikte tek sorguda (içerik hariç)
 export async function getPublishedPosts(): Promise<BlogPostListItem[]> {
   const cachedFn = unstable_cache(
-    async () => {
-      const supabase = createPublicClient();
-
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select(`${LIST_COLUMNS}, blog_post_categories (categories (id, name, slug))`)
-        .eq('status', 'published')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      return data.map(({ blog_post_categories, ...post }: any) => ({
-        ...post,
-        categories: (blog_post_categories ?? [])
-          .map((rel: any) => rel.categories)
-          .filter(Boolean)
-      })) as BlogPostListItem[];
-    },
+    fetchPublishedPosts,
     ['all-published-posts-with-categories'],
-    { revalidate: 86400, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-list', 'blog-posts'] }
   );
+
+  return cachedFn();
+}
+
+// Public: "Benzer yazılar" kaynağı. Listeden ayrı önbelleklenir; böylece yeni bir yazı
+// yayınlanınca ~150 yazı sayfasının tamamı yeniden üretilmez.
+export async function getPostsForRelated(): Promise<BlogPostListItem[]> {
+  const cachedFn = unstable_cache(fetchPublishedPosts, ['related-posts-source'], {
+    revalidate: 86400,
+    tags: ['blog-posts']
+  });
 
   return cachedFn();
 }
@@ -61,7 +74,7 @@ export async function getPublishedPostBySlug(slug: string) {
       return data as BlogPost | null;
     },
     ['published-post-by-slug', slug],
-    { revalidate: 86400, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-posts', `blog-post-${slug}`] }
   );
 
   return cachedFn();
@@ -159,7 +172,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     throw new Error('Blog yazısı oluşturulamadı');
   }
 
-  revalidatePublicContent('blog-posts');
+  revalidateBlogListing();
 
   return {
     id: data.id,
@@ -239,7 +252,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     throw new Error('Blog yazısı güncellendi ancak veri getirilemedi');
   }
 
-  revalidatePublicContent('blog-posts');
+  revalidateBlogListing(existingPost.slug);
 
   return {
     id: updatedPost.id,
@@ -305,7 +318,7 @@ export async function getPublishedBlogPosts(limit = 3): Promise<BlogPostListItem
       return data as BlogPostListItem[];
     },
     ['published-blog-posts', String(limit)],
-    { revalidate: 86400, tags: ['blog-posts'] }
+    { revalidate: 86400, tags: ['blog-list', 'blog-posts'] }
   );
 
   return cachedFn();

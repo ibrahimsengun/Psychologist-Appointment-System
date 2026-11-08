@@ -1,7 +1,7 @@
 'use server';
 
 import { BlogPostListItem } from '@/types/blog';
-import { getPublishedPosts } from './blog-actions';
+import { getPostsForRelated } from './blog-actions';
 
 /**
  * Get related posts based on:
@@ -13,7 +13,7 @@ export async function getRelatedPosts(
     currentPostId: string,
     limit: number = 3
 ): Promise<BlogPostListItem[]> {
-    const allPosts = await getPublishedPosts();
+    const allPosts = await getPostsForRelated();
 
     // Exclude current post
     const otherPosts = allPosts.filter(post => post.id !== currentPostId);
@@ -28,7 +28,7 @@ export async function getRelatedPosts(
         return otherPosts.slice(0, limit);
     }
 
-    // Categories already come with each post from getPublishedPosts (single cached query)
+    // Categories already come with each post from getPostsForRelated (single cached query)
     const currentCategoryIds = (currentPost.categories ?? []).map(c => c.id);
 
     // Score each post
