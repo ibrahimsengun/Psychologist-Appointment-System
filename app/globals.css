@@ -79,6 +79,10 @@
   * {
     @apply border-border;
   }
+  html {
+    /* Inter projeye paket olarak dahil: build sırasında Google Fonts'a bağlı değil */
+    font-family: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
   body {
     @apply bg-background text-foreground;
   }

@@ -1,4 +1,5 @@
-import { Inter } from 'next/font/google';
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/inter/wght-italic.css';
 import { Toaster } from 'sonner';
 import './globals.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -52,13 +53,6 @@ export const metadata: Metadata = {
   }
 };
 
-const geistSans = Inter({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  style: ['normal', 'italic'],
-  preload: true
-});
 
 export default function RootLayout({
   children
@@ -70,7 +64,7 @@ export default function RootLayout({
   });
 
   return (
-    <html lang="tr" className={geistSans.className} suppressHydrationWarning>
+    <html lang="tr" suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
         <JsonLd data={personSchema} />
