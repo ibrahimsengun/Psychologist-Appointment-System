@@ -1,6 +1,7 @@
 'use server';
 
 import { QuestionFormData, Question, PublicQuestion } from '@/types/questions';
+import { requireAdmin } from '@/utils/auth';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { Resend } from 'resend';
@@ -59,13 +60,17 @@ export async function getQuestionByTrackingCode(code: string): Promise<{
 } | null> {
   const supabase = createPublicClient();
   const { data, error } = await supabase
-    .from(QUESTIONS_TABLE)
-    .select('question_text, answer_text, status, created_at, answered_at')
-    .eq('tracking_code', code.toUpperCase().trim())
-    .single();
+    .rpc('get_question_by_tracking_code', { p_code: code })
+    .maybeSingle();
 
   if (error || !data) return null;
-  return data;
+  return data as {
+    question_text: string;
+    answer_text: string | null;
+    status: string;
+    created_at: string;
+    answered_at: string | null;
+  };
 }
 
 // Public: Herkese açık cevaplanan soruları getir
@@ -84,7 +89,7 @@ export async function getPublicQuestions(): Promise<PublicQuestion[]> {
 
 // Admin: Tüm soruları getir (opsiyonel durum filtresi)
 export async function getQuestions(status?: string): Promise<Question[]> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   let query = supabase
     .from(QUESTIONS_TABLE)
     .select('*')
@@ -105,7 +110,7 @@ export async function answerQuestion(
   answerText: string,
   isPublic: boolean
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   // Önce soruyu bul (e-posta kontrolü için)
   const { data: question } = await supabase
@@ -152,7 +157,7 @@ export async function answerQuestion(
 
 // Admin: Soruyu reddet
 export async function rejectQuestion(id: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   const { error } = await supabase
     .from(QUESTIONS_TABLE)
     .update({
@@ -168,7 +173,7 @@ export async function rejectQuestion(id: string): Promise<void> {
 
 // Admin: Soruyu sil
 export async function deleteQuestion(id: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   const { error } = await supabase.from(QUESTIONS_TABLE).delete().eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath('/soru-cevap');
@@ -189,7 +194,7 @@ export async function getPendingQuestionCount(): Promise<number> {
 
 // Admin: Herkese açık görünürlüğü değiştir
 export async function toggleQuestionPublic(id: string, isPublic: boolean): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   const { error } = await supabase
     .from(QUESTIONS_TABLE)
     .update({ is_public: isPublic, updated_at: new Date().toISOString() })

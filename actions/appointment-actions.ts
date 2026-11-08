@@ -16,6 +16,8 @@ import {
   sendAppointmentRejectedEmail,
   sendAppointmentRequestEmail
 } from '@/utils/email';
+import { randomInt } from 'crypto';
+import { requireAdmin } from '@/utils/auth';
 import { createClient } from '@/utils/supabase/server';
 import { generateToken } from '@/utils/token';
 
@@ -26,84 +28,32 @@ export async function createAppointment(formData: AppointmentFormValues): Promis
   try {
     // İptal token ve kodu oluştur
     const cancelToken = generateToken();
-    const cancelCode = Math.random().toString().slice(2, 8); // 6 haneli kod
+    const cancelCode = randomInt(0, 1_000_000).toString().padStart(6, '0');
+    const phone = formData.phone.replace(/\s/g, ''); // Boşlukları kaldır
 
-    // Önce zaman aralığının müsait olup olmadığını kontrol et
-    const { data: timeSlot, error: timeSlotError } = await supabase
-      .from('available_time_slots')
-      .select('*')
-      .eq('date', formData.date)
-      .eq('start_time', formData.time)
-      .eq('is_booked', false)
-      .single();
-
-    if (timeSlotError || !timeSlot) {
-      throw new Error('Seçilen randevu saati artık müsait değil');
-    }
-
-    // Aynı tarih ve saatte aktif (iptal edilmemiş) randevu var mı kontrol et
-    const { data: existingAppointment, error: existingError } = await supabase
-      .from('appointments')
-      .select('*')
-      .eq('date', formData.date)
-      .eq('time', formData.time)
-      .neq('status', 'canceled')
-      .single();
-
-    if (existingAppointment) {
-      throw new Error('Seçilen randevu saati dolu');
-    }
-
-    // Randevuyu oluştur
-    const { data, error } = await supabase
-      .from('appointments')
-      .insert({
-        date: formData.date,
-        time: formData.time,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone.replace(/\s/g, ''), // Boşlukları kaldır
-        birth_date: formData.birthDate,
-        note: formData.note,
-        status: 'pending' as AppointmentStatus,
-        cancel_token: cancelToken,
-        cancel_code: cancelCode,
-        created_at: new Date().toISOString()
-      })
-      .select()
-      .single();
+    // Müsaitlik kontrolü ve kayıt veritabanında tek işlemde yapılır
+    const { data: appointmentId, error } = await supabase.rpc('book_appointment', {
+      p_date: formData.date,
+      p_time: formData.time,
+      p_name: formData.name,
+      p_email: formData.email,
+      p_phone: phone,
+      p_birth_date: formData.birthDate,
+      p_note: formData.note ?? null,
+      p_cancel_token: cancelToken,
+      p_cancel_code: cancelCode
+    });
 
     if (error) {
       console.error('Randevu oluşturma hatası:', error);
+      if (error.message === 'slot_unavailable') {
+        throw new Error('Seçilen randevu saati artık müsait değil');
+      }
+      if (error.message === 'invalid_input') {
+        throw new Error('Randevu bilgileri geçersiz');
+      }
       throw new Error('Randevu kaydı oluşturulamadı');
     }
-
-    // Zaman aralığını dolu olarak işaretle (eski sistem için)
-    const { error: updateError } = await supabase
-      .from('available_time_slots')
-      .update({ is_booked: true })
-      .eq('id', timeSlot.id);
-
-    if (updateError) {
-      console.error('Zaman aralığı güncelleme hatası:', updateError);
-      // Randevuyu geri al
-      await supabase.from('appointments').delete().eq('id', data.id);
-      throw new Error('Randevu kaydedildi ancak zaman aralığı güncellenemedi');
-    }
-
-    // Yeni sistem için: time_blocks tablosuna da ekle
-    const nextHour = parseInt(formData.time.split(':')[0]) + 1;
-    const endTime = `${nextHour.toString().padStart(2, '0')}:00`;
-
-    await supabase.from('time_blocks').insert({
-      date: formData.date,
-      start_time: formData.time,
-      end_time: endTime,
-      reason: 'Site üzerinden randevu',
-      block_type: 'booked',
-      appointment_id: data.id,
-      created_at: new Date().toISOString()
-    });
 
     // Onay e-postası gönder
     try {
@@ -125,16 +75,16 @@ export async function createAppointment(formData: AppointmentFormValues): Promis
     }
 
     return {
-      id: data.id,
-      date: data.date,
-      time: data.time,
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      birthDate: data.birth_date,
-      note: data.note,
-      status: data.status,
-      createdAt: data.created_at
+      id: appointmentId,
+      date: formData.date,
+      time: formData.time,
+      name: formData.name,
+      email: formData.email,
+      phone,
+      birthDate: formData.birthDate,
+      note: formData.note,
+      status: 'pending' as AppointmentStatus,
+      createdAt: new Date().toISOString()
     };
   } catch (error) {
     console.error('Genel hata:', error);
@@ -147,7 +97,7 @@ export async function updateAppointmentStatus(
   id: string,
   status: AppointmentStatus
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   // Önce randevuyu bul
   const { data: appointment } = await supabase
@@ -174,6 +124,16 @@ export async function updateAppointmentStatus(
     if (updateError) {
       throw new Error(updateError.message);
     }
+
+    const { error: blockError } = await supabase
+      .from('time_blocks')
+      .delete()
+      .eq('appointment_id', id);
+
+    if (blockError) {
+      throw new Error(blockError.message);
+    }
+
     await sendAppointmentRejectedEmail({
       to: appointment.email,
       name: appointment.name,
@@ -196,7 +156,7 @@ export async function updateAppointmentStatus(
 
 // Randevuları listeleme
 export async function getAppointments(): Promise<Appointment[]> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   const { data, error } = await supabase
     .from('appointments')
@@ -226,7 +186,7 @@ export async function getAppointments(): Promise<Appointment[]> {
 export async function createAvailableTimeSlot(
   formData: AvailableTimeSlotFormValues
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   // Başlangıç ve bitiş saatlerini parse et
   const startHour = parseInt(formData.startTime.split(':')[0]);
@@ -281,7 +241,7 @@ export async function getAvailableTimeSlots(): Promise<AvailableTimeSlot[]> {
 
 // Müsait zaman aralığını silme
 export async function deleteAvailableTimeSlot(id: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   const { error } = await supabase.from('available_time_slots').delete().eq('id', id);
 
@@ -312,40 +272,20 @@ export async function getAvailableTimesForDate(date: string): Promise<string[]> 
 export async function cancelAppointmentByToken(token: string): Promise<void> {
   const supabase = await createClient();
 
-  // Önce randevuyu bul
-  const { data: appointment, error: findError } = await supabase
-    .from('appointments')
-    .select('*')
-    .eq('cancel_token', token)
-    .single();
+  const { data: result, error } = await supabase.rpc('cancel_appointment_public', {
+    p_token: token
+  });
 
-  if (findError || !appointment) {
-    throw new Error("Geçersiz iptal token'ı veya randevu bulunamadı");
-  }
-
-  if (appointment.status === 'canceled') {
-    throw new Error('Bu randevu zaten iptal edilmiş');
-  }
-
-  // Randevuyu iptal et
-  const { error: updateError } = await supabase
-    .from('appointments')
-    .update({ status: 'canceled' })
-    .eq('id', appointment.id);
-
-  if (updateError) {
+  if (error) {
     throw new Error('Randevu iptal edilirken bir hata oluştu');
   }
 
-  // Zaman aralığını tekrar müsait yap
-  const { error: timeSlotError } = await supabase
-    .from('available_time_slots')
-    .update({ is_booked: false })
-    .eq('date', appointment.date)
-    .eq('start_time', appointment.time);
+  if (result === 'not_found') {
+    throw new Error("Geçersiz iptal token'ı veya randevu bulunamadı");
+  }
 
-  if (timeSlotError) {
-    console.error('Zaman aralığı güncellenirken hata:', timeSlotError);
+  if (result === 'already_canceled') {
+    throw new Error('Bu randevu zaten iptal edilmiş');
   }
 }
 
@@ -353,48 +293,22 @@ export async function cancelAppointmentByToken(token: string): Promise<void> {
 export async function cancelAppointmentByCode(phone: string, cancelCode: string): Promise<void> {
   const supabase = await createClient();
 
-  // Randevuyu bul
-  const { data: appointment, error: findError } = await supabase
-    .from('appointments')
-    .select('*')
-    .eq('phone', phone)
-    .eq('cancel_code', cancelCode)
-    .single();
+  const { data: result, error } = await supabase.rpc('cancel_appointment_public', {
+    p_phone: phone.replace(/\s/g, ''),
+    p_code: cancelCode
+  });
 
-  if (findError || !appointment) {
-    throw new Error('Geçersiz telefon numarası veya iptal kodu');
-  }
-
-  if (appointment.status === 'canceled') {
-    throw new Error('Bu randevu zaten iptal edilmiş');
-  }
-
-  // Randevuyu iptal et
-  const { error: updateError } = await supabase
-    .from('appointments')
-    .update({ status: 'canceled' })
-    .eq('id', appointment.id);
-
-  if (updateError) {
+  if (error) {
     throw new Error('Randevu iptal edilirken bir hata oluştu');
   }
 
-  // Zaman aralığını tekrar müsait yap
-  const { error: timeSlotError } = await supabase
-    .from('available_time_slots')
-    .update({ is_booked: false })
-    .eq('date', appointment.date)
-    .eq('start_time', appointment.time);
-
-  if (timeSlotError) {
-    console.error('Zaman aralığı güncellenirken hata:', timeSlotError);
+  if (result === 'not_found') {
+    throw new Error('Geçersiz telefon numarası veya iptal kodu');
   }
 
-  // Yeni sistemde: time_blocks tablosundan da sil
-  await supabase
-    .from('time_blocks')
-    .delete()
-    .eq('appointment_id', appointment.id);
+  if (result === 'already_canceled') {
+    throw new Error('Bu randevu zaten iptal edilmiş');
+  }
 }
 
 // ============================================
@@ -429,7 +343,7 @@ export async function getWeeklySchedule(): Promise<WeeklyScheduleDay[]> {
 export async function updateWeeklySchedule(
   schedule: Omit<WeeklyScheduleDay, 'id'>[]
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   // Her gün için güncelleme yap
   for (const day of schedule) {
@@ -452,7 +366,7 @@ export async function updateWeeklySchedule(
 
 // Zaman bloklarını getir
 export async function getTimeBlocks(): Promise<TimeBlock[]> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   const { data, error } = await supabase
     .from('time_blocks')
@@ -480,7 +394,7 @@ export async function getTimeBlocks(): Promise<TimeBlock[]> {
 
 // Yeni zaman bloğu oluştur
 export async function createTimeBlock(formData: TimeBlockFormValues): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   const { error } = await supabase.from('time_blocks').insert({
     date: formData.date,
@@ -499,7 +413,7 @@ export async function createTimeBlock(formData: TimeBlockFormValues): Promise<vo
 
 // Zaman bloğu sil
 export async function deleteTimeBlock(id: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
 
   const { error } = await supabase.from('time_blocks').delete().eq('id', id);
 

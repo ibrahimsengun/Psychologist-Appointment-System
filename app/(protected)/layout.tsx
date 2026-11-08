@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { getAdminBadgeCounts } from '@/actions/dashboard-actions';
 import { AdminLayoutClient } from '@/components/admin-layout-client';
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   robots: {
@@ -17,7 +18,12 @@ export default async function ProtectedLayout({
 }>) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const badgeCounts = user ? await getAdminBadgeCounts() : { appointments: 0, questions: 0 };
+
+  if (!user) {
+    redirect('/sign-in');
+  }
+
+  const badgeCounts = await getAdminBadgeCounts();
 
   return (
     <AdminLayoutClient userEmail={user?.email ?? null} badgeCounts={badgeCounts}>

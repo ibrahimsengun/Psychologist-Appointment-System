@@ -1,7 +1,7 @@
 'use server';
 
 import { AdminBadgeCounts, DashboardAppointment, DashboardData } from '@/types/dashboard';
-import { createClient } from '@/utils/supabase/server';
+import { requireAdmin } from '@/utils/auth';
 
 const SITE_TIME_ZONE = 'Europe/Istanbul';
 
@@ -44,7 +44,7 @@ function isStillUpcoming(appointment: { date: string; time: string }, now: { dat
 }
 
 export async function getAdminBadgeCounts(): Promise<AdminBadgeCounts> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   const now = getLocalNow();
 
   const [appointments, questions] = await Promise.all([
@@ -59,7 +59,7 @@ export async function getAdminBadgeCounts(): Promise<AdminBadgeCounts> {
 }
 
 export async function getDashboardData(): Promise<DashboardData> {
-  const supabase = await createClient();
+  const supabase = await requireAdmin();
   const now = getLocalNow();
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
