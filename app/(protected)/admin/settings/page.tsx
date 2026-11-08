@@ -7,7 +7,7 @@ export default async function SettingsPage() {
     return (
         <div className="container py-8">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold">Ayarlar</h1>
+                <h1 className="text-3xl font-bold">Site Ayarları</h1>
                 <p className="text-muted-foreground mt-1">
                     Site ayarlarını buradan yönetebilirsiniz.
                 </p>

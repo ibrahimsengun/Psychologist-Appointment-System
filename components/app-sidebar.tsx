@@ -9,6 +9,7 @@ import {
     SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
+    SidebarMenuBadge,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
@@ -25,6 +26,7 @@ import {
     Calendar,
     ChartBarStacked,
     ChevronUp,
+    Clock,
     HelpCircle,
     Home,
     MessageCircleQuestion,
@@ -32,34 +34,52 @@ import {
     LogOut,
     Mail,
     MessageSquareText,
-    Users,
+    LayoutDashboard,
     Video,
     Settings,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from '@/actions/auth-actions';
+import { AdminBadgeCounts } from '@/types/dashboard';
 
-const adminLinks = [
-    { name: 'Randevular', url: '/admin', icon: Calendar },
-    { name: 'Müsait Zamanlar', url: '/admin/available-times', icon: Users },
-    { name: 'Blog Yazıları', url: '/admin/blog', icon: BookText },
-    { name: 'Blog Kategorileri', url: '/admin/categories', icon: ChartBarStacked },
-    { name: 'SSS Yönetimi', url: '/admin/faqs', icon: HelpCircle },
-    { name: 'İletişim Mesajları', url: '/admin/messages', icon: Mail },
-    { name: 'Sorular', url: '/admin/questions', icon: MessageCircleQuestion },
-    { name: 'Hizmetler', url: '/admin/services', icon: Briefcase },
-    { name: 'Videolar', url: '/admin/videos', icon: Video },
-    { name: 'Galeri', url: '/admin/gallery', icon: ImageIcon },
-    { name: 'Yorumlar', url: '/admin/reviews', icon: MessageSquareText },
-    { name: 'Ayarlar', url: '/admin/settings', icon: Settings },
+const adminGroups = [
+    {
+        label: 'Günlük İşler',
+        links: [
+            { name: 'Bugün', url: '/admin', icon: LayoutDashboard },
+            { name: 'Randevular', url: '/admin/appointments', icon: Calendar, badge: 'appointments' as const },
+            { name: 'Sorular', url: '/admin/questions', icon: MessageCircleQuestion, badge: 'questions' as const },
+            { name: 'Mesajlar', url: '/admin/messages', icon: Mail },
+        ],
+    },
+    {
+        label: 'Site İçeriği',
+        links: [
+            { name: 'Blog Yazıları', url: '/admin/blog', icon: BookText },
+            { name: 'Blog Kategorileri', url: '/admin/categories', icon: ChartBarStacked },
+            { name: 'Hizmetler', url: '/admin/services', icon: Briefcase },
+            { name: 'Yorumlar', url: '/admin/reviews', icon: MessageSquareText },
+            { name: 'Videolar', url: '/admin/videos', icon: Video },
+            { name: 'Galeri', url: '/admin/gallery', icon: ImageIcon },
+            { name: 'Sık Sorulanlar', url: '/admin/faqs', icon: HelpCircle },
+        ],
+    },
+    {
+        label: 'Ayarlar',
+        links: [
+            { name: 'Çalışma Saatleri', url: '/admin/available-times', icon: Clock },
+            { name: 'Site Ayarları', url: '/admin/settings', icon: Settings },
+        ],
+    },
 ];
 
 interface AppSidebarProps {
     userEmail: string | null;
+    badgeCounts: AdminBadgeCounts;
 }
 
-export function AppSidebar({ userEmail }: AppSidebarProps) {
+export function AppSidebar({ userEmail, badgeCounts }: AppSidebarProps) {
     const pathname = usePathname();
 
     const isActive = (path: string) => {
@@ -90,27 +110,34 @@ export function AppSidebar({ userEmail }: AppSidebarProps) {
             </SidebarHeader>
 
             <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Yönetim</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            {adminLinks.map((link) => {
-                                const Icon = link.icon;
-                                const active = isActive(link.url);
-                                return (
-                                    <SidebarMenuItem key={link.url}>
-                                        <SidebarMenuButton asChild isActive={active}>
-                                            <Link href={link.url}>
-                                                <Icon className="w-4 h-4" />
-                                                <span>{link.name}</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                );
-                            })}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
+                {adminGroups.map((group) => (
+                    <SidebarGroup key={group.label}>
+                        <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {group.links.map((link) => {
+                                    const Icon = link.icon;
+                                    const count = 'badge' in link && link.badge ? badgeCounts[link.badge] : 0;
+                                    return (
+                                        <SidebarMenuItem key={link.url}>
+                                            <SidebarMenuButton asChild isActive={isActive(link.url)}>
+                                                <Link href={link.url}>
+                                                    <Icon className="w-4 h-4" />
+                                                    <span>{link.name}</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                            {count > 0 && (
+                                                <SidebarMenuBadge className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200">
+                                                    {count}
+                                                </SidebarMenuBadge>
+                                            )}
+                                        </SidebarMenuItem>
+                                    );
+                                })}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                ))}
 
                 <SidebarGroup>
                     <SidebarGroupLabel>Hızlı Erişim</SidebarGroupLabel>

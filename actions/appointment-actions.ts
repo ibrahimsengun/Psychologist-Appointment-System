@@ -10,6 +10,7 @@ import {
   TimeBlockFormValues,
   WeeklyScheduleDay
 } from '@/types/appointments';
+import { revalidatePath } from 'next/cache';
 import {
   sendAppointmentConfirmedEmail,
   sendAppointmentRejectedEmail,
@@ -188,6 +189,8 @@ export async function updateAppointmentStatus(
       time: appointment.time
     });
   }
+
+  revalidatePath('/admin', 'layout');
 }
 
 

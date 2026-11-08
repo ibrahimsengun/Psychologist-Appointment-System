@@ -36,7 +36,7 @@ export default async function AvailableTimesPage() {
   return (
     <div className="px-4 md:container md:mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-xl md:text-3xl font-bold">Müsait Zamanlar</h1>
+        <h1 className="text-xl md:text-3xl font-bold">Çalışma Saatleri</h1>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">

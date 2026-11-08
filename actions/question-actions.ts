@@ -129,6 +129,7 @@ export async function answerQuestion(
 
   if (error) throw new Error(error.message);
   revalidatePath('/soru-cevap');
+  revalidatePath('/admin', 'layout');
 
   // E-posta varsa bildirim gönder
   if (question.email) {
@@ -162,6 +163,7 @@ export async function rejectQuestion(id: string): Promise<void> {
 
   if (error) throw new Error(error.message);
   revalidatePath('/soru-cevap');
+  revalidatePath('/admin', 'layout');
 }
 
 // Admin: Soruyu sil
@@ -170,6 +172,7 @@ export async function deleteQuestion(id: string): Promise<void> {
   const { error } = await supabase.from(QUESTIONS_TABLE).delete().eq('id', id);
   if (error) throw new Error(error.message);
   revalidatePath('/soru-cevap');
+  revalidatePath('/admin', 'layout');
 }
 
 // Admin: Bekleyen soru sayısı (sidebar badge için)
@@ -194,4 +197,5 @@ export async function toggleQuestionPublic(id: string, isPublic: boolean): Promi
 
   if (error) throw new Error(error.message);
   revalidatePath('/soru-cevap');
+  revalidatePath('/admin', 'layout');
 }

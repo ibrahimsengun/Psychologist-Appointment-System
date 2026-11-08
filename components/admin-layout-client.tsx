@@ -2,16 +2,18 @@
 
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
+import { AdminBadgeCounts } from '@/types/dashboard';
 
 interface AdminLayoutClientProps {
     children: React.ReactNode;
     userEmail: string | null;
+    badgeCounts: AdminBadgeCounts;
 }
 
-export function AdminLayoutClient({ children, userEmail }: AdminLayoutClientProps) {
+export function AdminLayoutClient({ children, userEmail, badgeCounts }: AdminLayoutClientProps) {
     return (
         <SidebarProvider>
-            <AppSidebar userEmail={userEmail} />
+            <AppSidebar userEmail={userEmail} badgeCounts={badgeCounts} />
             <SidebarInset>
                 <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4">
                     <SidebarTrigger className="-ml-1" />
