@@ -25,6 +25,13 @@ function getLocalNow() {
   };
 }
 
+// YYYY-MM-DD biçimindeki tarihten n gün öncesini verir
+function daysBefore(date: string, days: number) {
+  const value = new Date(`${date}T00:00:00Z`);
+  value.setUTCDate(value.getUTCDate() - days);
+  return value.toISOString().slice(0, 10);
+}
+
 function getGreeting(hour: number) {
   if (hour >= 5 && hour < 12) return 'Günaydın';
   if (hour >= 12 && hour < 18) return 'İyi günler';
@@ -56,7 +63,7 @@ export async function getDashboardData(): Promise<DashboardData> {
   const now = getLocalNow();
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-  const [appointmentsResult, questionsResult, messagesResult, viewsResult] = await Promise.all([
+  const [appointmentsResult, questionsResult, messagesResult, viewsResult, whatsappResult] = await Promise.all([
     supabase
       .from('appointments')
       .select('id, date, time, name, phone, status')
@@ -71,10 +78,11 @@ export async function getDashboardData(): Promise<DashboardData> {
       .order('created_at', { ascending: false })
       .limit(5),
     supabase.from('contact_messages').select('*', { count: 'exact', head: true }).gte('createdAt', sevenDaysAgo),
-    supabase.from('blog_post_views').select('views, blog_posts (title, slug)').order('views', { ascending: false })
+    supabase.from('blog_post_views').select('views, blog_posts (title, slug)').order('views', { ascending: false }),
+    supabase.from('whatsapp_clicks').select('day, clicks')
   ]);
 
-  for (const result of [appointmentsResult, questionsResult, messagesResult, viewsResult]) {
+  for (const result of [appointmentsResult, questionsResult, messagesResult, viewsResult, whatsappResult]) {
     if (result.error) {
       console.error('Bugün ekranı verisi alınamadı:', result.error.message);
     }
@@ -83,6 +91,9 @@ export async function getDashboardData(): Promise<DashboardData> {
   const appointments = (appointmentsResult.data ?? []) as DashboardAppointment[];
   const upcoming = appointments.filter((a) => isStillUpcoming(a, now));
   const views = (viewsResult.data ?? []) as any[];
+  const whatsappRows = whatsappResult.data ?? [];
+  const sumClicksSince = (firstDay: string) =>
+    whatsappRows.filter((row) => row.day >= firstDay).reduce((sum, row) => sum + Number(row.clicks), 0);
 
   return {
     greeting: getGreeting(now.hour),
@@ -100,6 +111,12 @@ export async function getDashboardData(): Promise<DashboardData> {
     topPosts: views
       .filter((row) => row.blog_posts)
       .slice(0, 5)
-      .map((row) => ({ title: row.blog_posts.title, slug: row.blog_posts.slug, views: Number(row.views) }))
+      .map((row) => ({ title: row.blog_posts.title, slug: row.blog_posts.slug, views: Number(row.views) })),
+    whatsappClicks: {
+      today: sumClicksSince(now.date),
+      last7Days: sumClicksSince(daysBefore(now.date, 6)),
+      last30Days: sumClicksSince(daysBefore(now.date, 29)),
+      total: sumClicksSince('0000-01-01')
+    }
   };
 }

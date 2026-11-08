@@ -19,6 +19,13 @@ export interface DashboardTopPost {
   views: number;
 }
 
+export interface DashboardWhatsAppClicks {
+  today: number;
+  last7Days: number;
+  last30Days: number;
+  total: number;
+}
+
 export interface DashboardData {
   greeting: string;
   todayAppointments: DashboardAppointment[];
@@ -30,6 +37,7 @@ export interface DashboardData {
   messagesLast7Days: number;
   totalViews: number;
   topPosts: DashboardTopPost[];
+  whatsappClicks: DashboardWhatsAppClicks;
 }
 
 export interface AdminBadgeCounts {

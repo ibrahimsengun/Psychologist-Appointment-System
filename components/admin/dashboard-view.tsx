@@ -178,6 +178,25 @@ export function DashboardView({ data }: { data: DashboardData }) {
           </Section>
         )}
 
+        <Section title="WhatsApp butonuna tıklayanlar">
+          <dl className="grid grid-cols-4 gap-2 text-center">
+            {[
+              ['Bugün', data.whatsappClicks.today],
+              ['7 gün', data.whatsappClicks.last7Days],
+              ['30 gün', data.whatsappClicks.last30Days],
+              ['Toplam', data.whatsappClicks.total]
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-md bg-muted/60 py-3">
+                <dd className="text-xl font-semibold tabular-nums">{value.toLocaleString('tr-TR')}</dd>
+                <dt className="mt-0.5 text-xs text-muted-foreground">{label}</dt>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Aynı ziyarette birden fazla tıklama bir kişi sayılır.
+          </p>
+        </Section>
+
         <Section title="En çok okunan yazılar" href="/admin/blog" linkLabel="Tüm yazılar">
           {data.topPosts.length > 0 ? (
             <ul className="divide-y">

@@ -43,10 +43,37 @@ declare global {
 }
 
 /**
+ * Admin panelindeki WhatsApp sayacı. GA'dan bağımsızdır (reklam engelleyicide de çalışır).
+ * Aynı tarayıcı oturumunda bir kez sayılır; böylece sayı yaklaşık kişi sayısını gösterir.
+ */
+function recordWhatsAppClick(source: EventSource) {
+  if (typeof window === 'undefined' || navigator.webdriver) return;
+
+  const key = 'whatsapp-clicked';
+  try {
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+  } catch {
+    // sessionStorage kapalıysa yine de sayılır
+  }
+
+  fetch('/api/whatsapp-click', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source }),
+    keepalive: true
+  }).catch(() => {});
+}
+
+/**
  * GA4'e event gönderir.
  * gtag yüklü değilse sessizce atlar (SSR, ad-blocker vb.).
  */
 export function trackEvent(eventName: AnalyticsEvent, params?: EventParams) {
+  if (eventName === 'click_whatsapp' && params?.source) {
+    recordWhatsAppClick(params.source);
+  }
+
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, {
       ...params,
