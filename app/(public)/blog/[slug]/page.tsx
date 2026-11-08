@@ -4,6 +4,7 @@ import { getRelatedPosts } from '@/actions/related-posts-actions';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Badge } from '@/components/ui/badge';
 import { RelatedPosts } from '@/components/blog/related-posts';
+import { BlogViewTracker } from '@/components/blog/blog-view-tracker';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -112,6 +113,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="container py-8 max-w-6xl">
+      <BlogViewTracker slug={slug} />
       <Breadcrumb
         items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]}
       />

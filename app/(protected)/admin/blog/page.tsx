@@ -1,4 +1,4 @@
-import { getBlogPosts } from '@/actions/blog-actions';
+import { getBlogPostViewCounts, getBlogPosts } from '@/actions/blog-actions';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
@@ -6,7 +6,7 @@ import { Edit, ExternalLink, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function BlogPostsPage() {
-  const posts = await getBlogPosts();
+  const [posts, viewCounts] = await Promise.all([getBlogPosts(), getBlogPostViewCounts()]);
 
   return (
     <div className="container mx-auto py-8">
@@ -30,6 +30,9 @@ export default async function BlogPostsPage() {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Durum
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Okunma
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Oluşturulma Tarihi
@@ -60,6 +63,9 @@ export default async function BlogPostsPage() {
                       {post.status === 'published' ? 'Yayında' : 'Taslak'}
                     </span>
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm tabular-nums text-gray-900">
+                    {(viewCounts[post.id] ?? 0).toLocaleString('tr-TR')}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {format(new Date(post.created_at), 'PPP', { locale: tr })}
                   </td>
@@ -84,7 +90,7 @@ export default async function BlogPostsPage() {
               ))}
               {posts.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500">
+                  <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
                     Henüz blog yazısı bulunmuyor
                   </td>
                 </tr>

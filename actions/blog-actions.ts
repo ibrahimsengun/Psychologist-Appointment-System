@@ -355,6 +355,20 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 
+// Admin: Yazı başına okunma sayıları (post id -> okunma)
+export async function getBlogPostViewCounts(): Promise<Record<string, number>> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from('blog_post_views').select('post_id, views');
+
+  if (error) {
+    console.error('Okunma sayıları alınamadı:', error);
+    return {};
+  }
+
+  return Object.fromEntries(data.map((row) => [row.post_id, Number(row.views)]));
+}
+
 // Blog yazısı detayını getirme
 export async function getBlogPost(slug: string): Promise<BlogPost> {
   const supabase = await createClient();
