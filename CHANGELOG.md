@@ -2,6 +2,12 @@
 
 Bu projedeki önemli değişiklikler burada tutulur. Sürümler [SemVer](https://semver.org/lang/tr/) kuralını izler.
 
+## [1.1.2] - 2026-11-09
+
+### Düzeltildi
+
+- Blog yazılarının arama sonucu başlığına "Samsun Psikolog Lokman Yılmaz" ifadesi geri eklendi; sayfada görünen başlık temiz kalıyor.
+
 ## [1.1.1] - 2026-11-09
 
 ### Değişti

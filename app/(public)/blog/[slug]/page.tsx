@@ -59,7 +59,7 @@ export async function generateMetadata(
   const title = cleanBlogTitle(post.title);
 
   return {
-    title: `${title} | Uzm. Psk. ${PERSON_NAME}`,
+    title: `${title} | Samsun Psikolog ${PERSON_NAME}`,
     description: description,
     openGraph: {
       title,
