@@ -82,6 +82,11 @@ Kayıt biçimi:
 
 Boş başlıklar yazılmaz. Kayıtlar, kullanıcının ne değiştiğini anlayacağı kısa Türkçe cümlelerle yazılır.
 
+## Dal kullanımı
+
+- Kullanıcı özellikle başka bir dal belirtmedikçe tüm çalışmalar doğrudan `master` üzerinde yapılır; ayrı dal açılmaz.
+- `master-preview` dalı genel olarak tasarım ve yeni özellik denemelerini barındırır. Bu dalda yalnızca kullanıcı istediğinde çalışılır.
+
 ## Commit biçimi
 
 Conventional Commits: `feat(admin): ...`, `fix(blog): ...`, `fix(security): ...`

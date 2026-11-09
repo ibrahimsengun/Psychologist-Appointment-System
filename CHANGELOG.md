@@ -2,6 +2,12 @@
 
 Bu projedeki önemli değişiklikler burada tutulur. Sürümler [SemVer](https://semver.org/lang/tr/) kuralını izler.
 
+## [1.1.1] - 2026-11-09
+
+### Değişti
+
+- Proje talimatlarına dal kullanımı kuralı eklendi: çalışmalar `master` üzerinde, denemeler `master-preview` dalında yapılıyor.
+
 ## [1.1.0] - 2026-11-09
 
 ### Eklendi
