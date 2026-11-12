@@ -2,6 +2,13 @@
 
 Bu projedeki önemli değişiklikler burada tutulur. Sürümler [SemVer](https://semver.org/lang/tr/) kuralını izler.
 
+## [1.1.3] - 2026-11-12
+
+### Düzeltildi
+
+- Yeni blog yazıları `/blog` listesinde ve kategori sayfalarında gecikmeden görünüyor; liste verisi artık ikinci bir önbellekte bekletilmiyor.
+- Yazı yayınlanınca anasayfa, blog listesi, sayfalama, kategori sayfaları ve sitemap doğrudan yenileniyor.
+
 ## [1.1.2] - 2026-11-09
 
 ### Düzeltildi

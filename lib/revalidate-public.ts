@@ -19,11 +19,15 @@ export function revalidatePublicContent(...tags: string[]) {
 
 /**
  * Blog yayını/düzenlemesi: yalnızca yazı listesi gösteren sayfaları (anasayfa,
- * /blog, sayfalama, kategoriler) ve varsa düzenlenen yazının kendi sayfasını yeniler.
- * Diğer ~150 yazı sayfasına dokunmaz.
+ * /blog, sayfalama, kategoriler, sitemap) ve varsa düzenlenen yazının kendi sayfasını
+ * yeniler. Diğer ~150 yazı sayfasına dokunmaz.
  */
 export function revalidateBlogListing(slug?: string) {
-  updateTag('blog-list');
+  revalidatePath('/');
+  revalidatePath('/blog');
+  revalidatePath('/blog/sayfa/[page]', 'page');
+  revalidatePath('/blog/kategori/[slug]', 'page');
+  revalidatePath('/sitemap.xml');
   if (slug) {
     updateTag(`blog-post-${slug}`);
   }

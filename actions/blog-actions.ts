@@ -32,15 +32,12 @@ async function fetchPublishedPosts(): Promise<BlogPostListItem[]> {
   })) as BlogPostListItem[];
 }
 
-// Public: Yayındaki tüm yazılar, kategorileriyle birlikte tek sorguda (içerik hariç)
+// Public: Yayındaki tüm yazılar, kategorileriyle birlikte tek sorguda (içerik hariç).
+// Bilerek unstable_cache kullanılmaz: liste sayfaları zaten ISR ile önbelleklenir. Araya ikinci
+// bir veri önbelleği girince sayfa yeniden üretilirken eski listeyi okuyup bir gün daha
+// saklayabiliyordu.
 export async function getPublishedPosts(): Promise<BlogPostListItem[]> {
-  const cachedFn = unstable_cache(
-    fetchPublishedPosts,
-    ['all-published-posts-with-categories'],
-    { revalidate: 86400, tags: ['blog-list', 'blog-posts'] }
-  );
-
-  return cachedFn();
+  return fetchPublishedPosts();
 }
 
 // Public: "Benzer yazılar" kaynağı. Listeden ayrı önbelleklenir; böylece yeni bir yazı
@@ -298,31 +295,24 @@ export async function deleteBlogPost(id: string): Promise<void> {
   revalidatePublicContent('blog-posts');
 }
 
-// Public: Yayında olan blog yazılarını cache'li getir (anasayfa için)
+// Public: Yayında olan son blog yazıları (anasayfa için). getPublishedPosts gibi veri
+// önbelleği kullanmaz; anasayfanın ISR önbelleği yeterlidir.
 export async function getPublishedBlogPosts(limit = 3): Promise<BlogPostListItem[]> {
-  const cachedFn = unstable_cache(
-    async () => {
-      const supabase = createPublicClient();
+  const supabase = createPublicClient();
 
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select(LIST_COLUMNS)
-        .eq('status', 'published')
-        .order('created_at', { ascending: false })
-        .limit(limit);
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select(LIST_COLUMNS)
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+    .limit(limit);
 
-      if (error) {
-        console.error('Blog yazıları listeleme hatası:', error);
-        throw new Error('Blog yazıları listelenemedi');
-      }
+  if (error) {
+    console.error('Blog yazıları listeleme hatası:', error);
+    throw new Error('Blog yazıları listelenemedi');
+  }
 
-      return data as BlogPostListItem[];
-    },
-    ['published-blog-posts', String(limit)],
-    { revalidate: 86400, tags: ['blog-list', 'blog-posts'] }
-  );
-
-  return cachedFn();
+  return data as BlogPostListItem[];
 }
 
 // Admin: Tüm blog yazılarını getir (auth gerektirir)
