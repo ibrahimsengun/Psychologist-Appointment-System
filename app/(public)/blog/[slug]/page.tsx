@@ -9,7 +9,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { buildBlogPostSchema, JsonLd, SITE_URL, PERSON_NAME, OG_IMAGE } from '@/lib/schema';
+import { buildBlogPostSchema, buildFAQSchema, JsonLd, SITE_URL, PERSON_NAME, OG_IMAGE } from '@/lib/schema';
+import { normalizeBlogFaqs } from '@/types/blog';
+import { BlogFaqSection } from '@/components/blog/blog-faq-section';
 import { CallToAction } from '@/components/call-to-action';
 import { RelatedServices } from '@/components/blog/related-services';
 import { getPublishedServices } from '@/actions/service-actions';
@@ -114,16 +116,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     section: categories.length > 0 ? categories[0].name : 'Genel',
   });
 
+  const faqs = normalizeBlogFaqs(post.faqs);
+
   return (
     <article className="container py-8 max-w-6xl">
       <BlogViewTracker slug={slug} />
       <Breadcrumb
         items={[{ label: 'Blog', href: '/blog' }, { label: title }]}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      {faqs.length > 0 && <JsonLd data={buildFAQSchema(faqs)} />}
 
       {post.status !== 'published' && (
         <div className="mb-6 flex items-center gap-3 rounded-xl border-2 border-yellow-500/30 bg-yellow-50 dark:bg-yellow-950/30 px-5 py-3">
@@ -177,6 +179,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         className="prose prose-lg dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <BlogFaqSection faqs={faqs} />
 
       <RelatedServices categorySlugs={categories.map((category) => category.slug)} services={services} />
 

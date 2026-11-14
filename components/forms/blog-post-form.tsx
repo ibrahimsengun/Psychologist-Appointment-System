@@ -17,7 +17,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { BlogPost, BlogPostFormValues, blogPostFormSchema } from '@/types/blog';
+import {
+  BLOG_FAQ_COUNT,
+  BlogFaq,
+  BlogPost,
+  BlogPostFormValues,
+  blogPostFormSchema,
+  normalizeBlogFaqs
+} from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, Save } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -37,6 +44,12 @@ interface BlogPostFormProps {
   | ((id: string, data: BlogPostFormValues) => Promise<any>);
 }
 
+// Formda her zaman 3 soru-cevap satırı gösterilir; kayıtlı olanlar başa yerleşir
+function padFaqs(faqs?: BlogFaq[]): BlogFaq[] {
+  const filled = normalizeBlogFaqs(faqs);
+  return Array.from({ length: BLOG_FAQ_COUNT }, (_, i) => filled[i] ?? { question: '', answer: '' });
+}
+
 export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,14 +57,17 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
 
   const form = useForm<BlogPostFormValues>({
     resolver: zodResolver(blogPostFormSchema),
-    defaultValues: initialData || {
-      title: '',
-      content: '',
-      cover_image: '',
-      meta_description: '',
-      status: 'draft',
-      category_ids: []
-    }
+    defaultValues: initialData
+      ? { ...initialData, faqs: padFaqs(initialData.faqs) }
+      : {
+          title: '',
+          content: '',
+          cover_image: '',
+          meta_description: '',
+          faqs: padFaqs(),
+          status: 'draft',
+          category_ids: []
+        }
   });
 
   // Load initial categories if editing
@@ -291,6 +307,60 @@ export function BlogPostForm({ initialData, onSubmit }: BlogPostFormProps) {
                     </FormItem>
                   )}
                 />
+              </div>
+
+              {/* Sık Sorulan Sorular */}
+              <div className="bg-card border rounded-lg p-4 shadow-sm space-y-4">
+                <div className="space-y-1">
+                  <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                    Sık Sorulan Sorular
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    İsteğe bağlı. Doldurulan sorular yazının sonunda gösterilir ve arama motorlarına
+                    iletilir. Boş bırakılan satırlar yayınlanmaz.
+                  </p>
+                </div>
+                {Array.from({ length: BLOG_FAQ_COUNT }, (_, index) => (
+                  <div key={index} className="space-y-2 border-t pt-4">
+                    <FormField
+                      control={form.control}
+                      name={`faqs.${index}.question`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm">Soru {index + 1}</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              value={field.value ?? ''}
+                              placeholder="Örn. Bu durum ne kadar sürer?"
+                              maxLength={200}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`faqs.${index}.answer`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="sr-only">Cevap {index + 1}</FormLabel>
+                          <FormControl>
+                            <textarea
+                              {...field}
+                              value={field.value ?? ''}
+                              className="w-full min-h-[90px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y"
+                              placeholder="Cevap..."
+                              maxLength={1000}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

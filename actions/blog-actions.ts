@@ -1,6 +1,6 @@
 'use server';
 
-import { BlogPost, BlogPostFormValues, BlogPostListItem } from '@/types/blog';
+import { BlogPost, BlogPostFormValues, BlogPostListItem, normalizeBlogFaqs } from '@/types/blog';
 import { createClient } from '@/utils/supabase/server';
 import { createPublicClient } from '@/utils/supabase/public';
 import { unstable_cache } from 'next/cache';
@@ -153,6 +153,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
       excerpt,
       cover_image: formData.cover_image,
       meta_description: formData.meta_description,
+      faqs: normalizeBlogFaqs(formData.faqs),
       status: formData.status,
       published_at: formData.status === 'published' ? now : null,
       author_id: user.id,
@@ -180,6 +181,7 @@ export async function createBlogPost(formData: BlogPostFormValues): Promise<Blog
     excerpt: data.excerpt,
     cover_image: data.cover_image,
     meta_description: data.meta_description,
+    faqs: normalizeBlogFaqs(data.faqs),
     status: data.status,
     published_at: data.published_at,
     created_at: data.created_at,
@@ -227,6 +229,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
       excerpt,
       cover_image: formData.cover_image,
       meta_description: formData.meta_description,
+      faqs: normalizeBlogFaqs(formData.faqs),
       status: formData.status,
       published_at: publishedAt,
       updated_at: now
@@ -260,6 +263,7 @@ export async function updateBlogPost(id: string, formData: BlogPostFormValues): 
     excerpt: updatedPost.excerpt,
     cover_image: updatedPost.cover_image,
     meta_description: updatedPost.meta_description,
+    faqs: normalizeBlogFaqs(updatedPost.faqs),
     status: updatedPost.status,
     published_at: updatedPost.published_at,
     created_at: updatedPost.created_at,
@@ -337,6 +341,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     excerpt: post.excerpt,
     cover_image: post.cover_image,
     meta_description: post.meta_description,
+    faqs: normalizeBlogFaqs(post.faqs),
     status: post.status,
     published_at: post.published_at,
     created_at: post.created_at,
@@ -379,6 +384,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost> {
     excerpt: data.excerpt,
     cover_image: data.cover_image,
     meta_description: data.meta_description,
+    faqs: normalizeBlogFaqs(data.faqs),
     status: data.status,
     published_at: data.published_at,
     created_at: data.created_at,

@@ -2,6 +2,20 @@
 
 Bu projedeki önemli değişiklikler burada tutulur. Sürümler [SemVer](https://semver.org/lang/tr/) kuralını izler.
 
+## [1.2.0] - 2026-11-14
+
+### Eklendi
+
+- Blog yazılarına yazıya özel 3 soruluk "Sık Sorulan Sorular" bölümü eklendi. Admin panelinde yazı düzenlerken SEO ayarlarının altından doldurulur; doldurulan sorular yazının sonunda gösterilir ve arama motorlarına FAQ yapısal verisi olarak iletilir. Boş bırakılan sorular yayınlanmaz.
+
+### Değişti
+
+- `009_add_faqs_to_blog_posts.sql` migration'ı canlı veritabanına uygulandı; `blog_posts` tablosuna boş varsayılanlı `faqs` sütunu eklendi, mevcut yazılar değişmedi.
+
+### Güvenlik
+
+- Sayfalara eklenen yapısal veri (JSON-LD) içindeki `<` karakteri kaçırılıyor; metin içindeki bir etiket sayfa koduna karışamıyor.
+
 ## [1.1.3] - 2026-11-12
 
 ### Düzeltildi

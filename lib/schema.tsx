@@ -260,7 +260,8 @@ export function JsonLd({ data }: { data: object }): JSX.Element {
     return (
         <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+            // "<" kaçırılır; metin içindeki "</script>" etiketi kapatamaz
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }}
         />
     );
 }
